@@ -37,7 +37,7 @@ class Request
         }
 
         if (is_null($body)) {
-            $stream = fopen('php://input', 'r+');
+            $stream = null;
         } elseif (is_scalar($body)) {
             $stream = fopen('php://temp', 'r+');
             if (!empty($body)) {
@@ -95,7 +95,7 @@ class Request
     /**
      * Retrieves body.
      *
-     * @return resource
+     * @return resource|null
      */
     function getBody() {
         return $this->body;

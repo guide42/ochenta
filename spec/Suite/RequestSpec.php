@@ -27,8 +27,8 @@ describe('Request', function() {
             expect($req->getHeaders()['HOST'])->toBe(['example.com']);
         });
 
-        it('assigns body, defaults to php://input', function() {
-            expect((new Request('GET', '/'))->getBody())->toBeA('resource');
+        it('assigns body, defaults to null', function() {
+            expect((new Request('GET', '/'))->getBody())->toBeNull();
         });
     });
 });
