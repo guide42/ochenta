@@ -2,9 +2,8 @@
 
 namespace Ochenta;
 
-/**
- * An HTTP request for PHP's SAPI.
- */
+/** An HTTP request for PHP's SAPI.
+  */
 class ServerRequest extends Request
 {
     private $query;
@@ -32,20 +31,18 @@ class ServerRequest extends Request
         );
     }
 
-    /**
-     * Retrieve query string parameters.
-     *
-     * @return string[]
-     */
+    /** Retrieve query string parameters.
+      *
+      * @return string[]
+      */
     function getQuery() {
         return $this->query;
     }
 
-    /**
-     * Retrieve parameters provided in the request body.
-     *
-     * @return string[]
-     */
+    /** Retrieve parameters provided in the request body.
+      *
+      * @return string[]
+      */
     function getParsedBody() {
         return $this->xargs;
         // TODO check Content-Type is either application/x-www-form-urlencoded
@@ -53,11 +50,10 @@ class ServerRequest extends Request
         //      otherwise content negotation
     }
 
-    /**
-     * Retrieve normalized file uploads.
-     *
-     * @return UploadedFile[]
-     */
+    /** Retrieve normalized file uploads.
+      *
+      * @return UploadedFile[]
+      */
     function getFiles() {
         return $this->files;
     }

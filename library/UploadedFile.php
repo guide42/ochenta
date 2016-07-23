@@ -2,9 +2,8 @@
 
 namespace Ochenta;
 
-/**
- * Value object representing a file uploaded through an HTTP request.
- */
+/** Value object representing a file uploaded through an HTTP request.
+  */
 class UploadedFile
 {
     private $tmp;
@@ -29,38 +28,34 @@ class UploadedFile
         $this->type = $clientType;
     }
 
-    /**
-     * Retrieve temporal filename.
-     *
-     * @return string
-     */
+    /** Retrieve temporal filename.
+      *
+      * @return string
+      */
     function getFilename() {
         return $this->tmp;
     }
 
-    /**
-     * Retrieve file size in bytes.
-     *
-     * @return int
-     */
+    /** Retrieve file size in bytes.
+      *
+      * @return int
+      */
     function getSize() {
         return $this->size;
     }
 
-    /**
-     * Retrieve the filename sent by the client.
-     *
-     * @return string|null
-     */
+    /** Retrieve the filename sent by the client.
+      *
+      * @return string|null
+      */
     function getClientName() {
         return $this->name;
     }
 
-    /**
-     * Retrieve the media type sent by the client.
-     *
-     * @return string|null
-     */
+    /** Retrieve the media type sent by the client.
+      *
+      * @return string|null
+      */
     function getClientType() {
         return $this->type;
     }

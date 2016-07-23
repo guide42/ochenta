@@ -2,9 +2,8 @@
 
 namespace Ochenta;
 
-/**
- * HTTP/1.1 request implementation.
- */
+/** HTTP/1.1 request implementation.
+  */
 class Request
 {
     private $method;
@@ -54,49 +53,44 @@ class Request
         $this->body = $stream;
     }
 
-    /**
-     * Retrieves HTTP method.
-     *
-     * @return string
-     */
+    /** Retrieves HTTP method.
+      *
+      * @return string
+      */
     function getMethod() {
         return $this->method;
     }
 
-    /**
-     * Retrieves original URI parts.
-     *
-     * @return string[] result of php.net/parse_url function
-     */
+    /** Retrieves original URI parts.
+      *
+      * @return string[] result of php.net/parse_url function
+      */
     function getUri() {
         return $this->uri;
     }
 
-    /**
-     * Retrieves the request target.
-     *
-     * @return string
-     */
+    /** Retrieves the request target.
+      *
+      * @return string
+      */
     function getTarget() {
         return $this->uri['path'] ?? '/';
     }
 
-    /**
-     * Retrieves all headers.
-     *
-     * @return string[][] associative array with each key is the normalizer
-     *                    header name, and each value an array of strings for
-     *                    that header
-     */
+    /** Retrieves all headers.
+      *
+      * @return string[][] associative array with each key is the normalizer
+      *                    header name, and each value an array of strings for
+      *                    that header
+      */
     function getHeaders() {
         return $this->headers;
     }
 
-    /**
-     * Retrieves body.
-     *
-     * @return resource|null
-     */
+    /** Retrieves body.
+      *
+      * @return resource|null
+      */
     function getBody() {
         return $this->body;
     }
