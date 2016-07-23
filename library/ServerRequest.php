@@ -62,7 +62,7 @@ class ServerRequest extends Request
         return $this->files;
     }
 
-    private $extraHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];
+    private $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];
     private $invalidHeaders = ['HTTP_PROXY'];
 
     private function parseServerHeaders(array $server) {
@@ -71,7 +71,7 @@ class ServerRequest extends Request
                 !in_array($key, $this->invalidHeaders)
             ) {
                 yield str_replace('_', '-', substr($key, 5)) => $value;
-            } elseif (in_array($key, $this->extraHeaders)) {
+            } elseif (in_array($key, $this->specialHeaders)) {
                 yield str_replace('_', '-', $key) => $value;
             }
         }
