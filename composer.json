@@ -1,0 +1,16 @@
+{
+    "name": "guide42/ochenta",
+    "description": "HTTP request/response implementation",
+    "license": "ISC",
+    "type": "library",
+    "authors": [
+        {"name": "Juan M", "email": "jm@guide42.com"}
+    ],
+    "autoload": {
+        "psr-4": {"Ochenta\\": "library/"}
+    },
+    "require-dev": {
+        "crysalead/kahlan": "*"
+    },
+    "require": {}
+}
