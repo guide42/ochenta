@@ -38,6 +38,7 @@ describe('ServerRequest', function() {
                 'CONTENT_LENGTH' => 0,
             ]);
 
+            expect($req->getHeaders())->toBeA('array')->toContainKey('CONTENT-TYPE')->toContainKey('CONTENT-LENGTH');
             expect($req->getHeaders()['CONTENT-TYPE'])->toBe(['text/plain']);
             expect($req->getHeaders()['CONTENT-LENGTH'])->toBe([0]);
         });
