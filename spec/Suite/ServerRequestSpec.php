@@ -32,6 +32,16 @@ describe('ServerRequest', function() {
             expect($req->getParsedBody()['foo'])->toBe('bar');
         });
 
+        it('assigns content headers from server', function() {
+            $req = new ServerRequest([
+                'CONTENT_TYPE'   => 'text/plain',
+                'CONTENT_LENGTH' => 0,
+            ]);
+
+            expect($req->getHeaders()['CONTENT-TYPE'])->toBe(['text/plain']);
+            expect($req->getHeaders()['CONTENT-LENGTH'])->toBe([0]);
+        });
+
         it('throws InvalidArgumentException with invalid uploaded file', function() {
             expect(function() {
               new ServerRequest(null, null, null, ['/tmp/phpXXXXXX']);
