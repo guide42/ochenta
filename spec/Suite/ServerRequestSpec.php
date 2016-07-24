@@ -12,7 +12,7 @@ describe('ServerRequest', function() {
 
         it('assigns uri from REQUEST_URI', function() {
             $req = new ServerRequest([
-              'REQUEST_URI' => 'http://user:pass@example.com/path?queryString',
+              'REQUEST_URI' => 'http://user:pass@example.com/path',
             ]);
 
             expect($req->getTarget())->toBe('/path');

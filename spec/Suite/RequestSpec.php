@@ -41,11 +41,11 @@ describe('Request', function() {
 
     describe('->getTarget', function() {
         it('return forward slash when path component of the uri is not defined', function() {
-            expect((new Request('GET', '?queryString'))->getTarget())->toBe('/');
+            expect((new Request('GET', '?queryString'))->getTarget())->toBe('/?queryString');
         });
 
-        it('return path of the uri', function() {
-            expect((new Request('GET', 'http://example.com/path?queryString'))->getTarget())->toBe('/path');
+        it('return path and query string of the uri', function() {
+            expect((new Request('GET', 'http://example.com/path?queryString'))->getTarget())->toBe('/path?queryString');
         });
     });
 

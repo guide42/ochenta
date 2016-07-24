@@ -64,7 +64,7 @@ class Request
       * @return string
       */
     function getTarget(): string {
-        return $this->uri['path'] ?? '/';
+        return rtrim(($this->uri['path'] ?? '/') . '?' . ($this->uri['query'] ?? ''), '?');
     }
 
     /** Retrieves all headers.
