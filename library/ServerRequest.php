@@ -133,7 +133,7 @@ class ServerRequest extends Request
             }
         }
         if (empty($parts['port']) && ($server['SERVER_PORT'] ?? 80) !== 80) {
-            $parts['port'] = $server['SERVER_PORT'];
+            $parts['port'] = (int) $server['SERVER_PORT'];
         }
 
         return $parts;

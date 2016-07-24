@@ -200,7 +200,7 @@ describe('ServerRequest', function() {
         it('returns port from SERVER_PORT environment variable', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => '/path?queryString',
-                'SERVER_PORT' => 443,
+                'SERVER_PORT' => '443',
             ]);
 
             expect($req->getUri())->toContainKey('port');
