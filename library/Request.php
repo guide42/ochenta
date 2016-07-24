@@ -57,7 +57,7 @@ class Request
       *
       * @return string
       */
-    function getMethod() {
+    function getMethod(): string {
         return $this->method;
     }
 
@@ -65,7 +65,7 @@ class Request
       *
       * @return string[] result of php.net/parse_url function
       */
-    function getUri() {
+    function getUri(): array {
         return $this->uri;
     }
 
@@ -73,7 +73,7 @@ class Request
       *
       * @return string
       */
-    function getTarget() {
+    function getTarget(): string {
         return $this->uri['path'] ?? '/';
     }
 
@@ -83,7 +83,7 @@ class Request
       *                    header name, and each value an array of strings for
       *                    that header
       */
-    function getHeaders() {
+    function getHeaders(): array {
         return $this->headers;
     }
 

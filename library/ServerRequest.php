@@ -35,7 +35,7 @@ class ServerRequest extends Request
       *
       * @return string[]
       */
-    function getQuery() {
+    function getQuery(): array {
         return $this->query;
     }
 
@@ -43,7 +43,7 @@ class ServerRequest extends Request
       *
       * @return string[]
       */
-    function getParsedBody() {
+    function getParsedBody(): array {
         return $this->xargs;
         // TODO check Content-Type is either application/x-www-form-urlencoded
         //      or multipart/form-data, and the request method is POST,
@@ -54,7 +54,7 @@ class ServerRequest extends Request
       *
       * @return UploadedFile[]
       */
-    function getFiles() {
+    function getFiles(): array {
         return $this->files;
     }
 

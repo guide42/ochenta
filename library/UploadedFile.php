@@ -32,7 +32,7 @@ class UploadedFile
       *
       * @return string
       */
-    function getFilename() {
+    function getFilename(): string {
         return $this->tmp;
     }
 
@@ -40,7 +40,7 @@ class UploadedFile
       *
       * @return int
       */
-    function getSize() {
+    function getSize(): int {
         return $this->size;
     }
 

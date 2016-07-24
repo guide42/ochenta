@@ -25,7 +25,7 @@ class Response
       *
       * @return int
       */
-    function getStatusCode() {
+    function getStatusCode(): int {
         return $this->statusCode;
     }
 
@@ -34,7 +34,7 @@ class Response
       * @see Ochenta\Request::getHeaders()
       * @return string[][] associative array
       */
-    function getHeaders() {
+    function getHeaders(): array {
         return $this->headers;
     }
 
