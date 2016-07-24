@@ -109,6 +109,10 @@ class ServerRequest extends Request
     private function normalizeUrl(string $url, array $server) {
         $parts = parse_url($url);
 
+        if ($parts === false) {
+            throw new \InvalidArgumentException('Invalid uri');
+        }
+
         if (empty($parts['scheme'])) {
             $parts['scheme'] = ($server['HTTPS'] ?? 'off') === 'on' ? 'https' : 'http';
         }
