@@ -31,11 +31,11 @@ describe('Response', function() {
         });
 
         it('assigns content type, defaults to text/html', function() {
-            expect((new Response(200, []))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html; charset=UTF-8']);
+            expect((new Response(200, []))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html;charset=utf-8']);
         });
 
         it('assigns content type charset, defaults to utf-8', function() {
-           expect((new Response(200, ['Content-Type' => 'text/html']))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html; charset=UTF-8']);
+           expect((new Response(200, ['Content-Type' => 'text/html']))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html;charset=utf-8']);
         });
     });
 
