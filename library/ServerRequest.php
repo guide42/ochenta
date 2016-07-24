@@ -66,9 +66,9 @@ class ServerRequest extends Request
             if (strncmp($key, 'HTTP_', 5) === 0 &&
                 !in_array($key, $this->invalidHeaders)
             ) {
-                yield str_replace('_', '-', substr($key, 5)) => $value;
+                yield str_replace('_', '-', substr($key, 5)) => (array) $value;
             } elseif (in_array($key, $this->specialHeaders)) {
-                yield str_replace('_', '-', $key) => $value;
+                yield str_replace('_', '-', $key) => (array) $value;
             }
         }
     }

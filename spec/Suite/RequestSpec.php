@@ -10,7 +10,7 @@ describe('Request', function() {
         });
 
         it('assigns headers with keys in uppercase', function() {
-            $req = new Request('GET', '/', ['Host' => 'example.com', 'Content-Type' => 'text/plain']);
+            $req = new Request('GET', '/', ['Host' => ['example.com'], 'Content-Type' => ['text/plain']]);
 
             expect($req->getHeaders())->toBeA('array')->toContainKey('HOST')->toContainKey('CONTENT-TYPE');
             expect($req->getHeaders()['HOST'])->toBe(['example.com']);
