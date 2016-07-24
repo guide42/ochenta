@@ -19,7 +19,7 @@ describe('Response', function() {
         });
 
         it('assigns headers as array if scalar value given', function() {
-            expect((new Response(200, ['Host' => 'example.com']))->getHeaders()['Host'])->toBe(['example.com']);
+            expect((new Response(200, ['Host' => 'example.com']))->getHeaders()['HOST'])->toBe(['example.com']);
         });
     });
 });

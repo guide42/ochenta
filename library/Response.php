@@ -23,6 +23,8 @@ class Response
             }
         }
 
+        $headers = array_change_key_case($headers, CASE_UPPER);
+
         $this->statusCode = $statusCode;
         $this->headers = $headers;
         $this->body = $body;
