@@ -11,14 +11,9 @@ class Request
     private $headers;
     private $body;
 
-    function __construct(
-        string $method,
-        string $uri,
-        array $headers=[],
-        $body=null
-    ) {
+    function __construct(string $method, $uri, array $headers=[], $body=null) {
         $this->method = mb_convert_case($method, MB_CASE_UPPER);
-        $this->uri = parse_url($uri);
+        $this->uri = is_array($uri) ? $uri : parse_url($uri);
 
         if ($this->uri === false) {
             throw new \InvalidArgumentException('Invalid uri');

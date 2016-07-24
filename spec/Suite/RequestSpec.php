@@ -9,6 +9,17 @@ describe('Request', function() {
             expect((new Request('gET', '/'))->getMethod())->toBe('GET');
         });
 
+        it('assigns uri from parse_url array', function() {
+            $uri = [
+                'scheme' => 'http',
+                'host'   => 'example.com',
+                'path'   => '/path',
+                'query'  => '?queryString',
+            ];
+
+            expect((new Request('GET', $uri))->getUri())->toBeA('array')->toContainKey('host');
+        });
+
         it('assigns headers with keys in uppercase', function() {
             $req = new Request('GET', '/', ['Host' => ['example.com'], 'Content-Type' => ['text/plain']]);
 
@@ -34,7 +45,7 @@ describe('Request', function() {
         });
 
         it('return path of the uri', function() {
-            expect((new Request('GET', 'http://user:pass@example.com/path?queryString'))->getTarget())->toBe('/path');
+            expect((new Request('GET', 'http://example.com/path?queryString'))->getTarget())->toBe('/path');
         });
     });
 });
