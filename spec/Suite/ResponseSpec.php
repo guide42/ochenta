@@ -28,5 +28,13 @@ describe('Response', function() {
             expect($req->getHeaders())->not->toContainKey('CONTENT-TYPE');
             expect($req->getBody())->toBeNull();
         });
+
+        it('assigns content type, defaults to text/html', function() {
+            expect((new Response(200, []))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html; charset=UTF-8']);
+        });
+
+        it('assigns content type charset, defaults to utf-8', function() {
+           expect((new Response(200, ['Content-Type' => 'text/html']))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html; charset=UTF-8']);
+        });
     });
 });

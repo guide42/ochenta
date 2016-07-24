@@ -29,6 +29,13 @@ class Response
             unset($headers['CONTENT-TYPE']);
             unset($headers['CONTENT-LENGTH']);
             $body = null;
+        } elseif (!isset($headers['CONTENT-TYPE'])) {
+            $headers['CONTENT-TYPE'] = ['text/html; charset=UTF-8'];
+        } elseif (
+            stripos($headers['CONTENT-TYPE'][0], 'text/') === 0 &&
+            stripos($headers['CONTENT-TYPE'][0], 'charset') === false
+        ) {
+            $headers['CONTENT-TYPE'][0] .= '; charset=UTF-8';
         }
 
         $this->statusCode = $statusCode;
