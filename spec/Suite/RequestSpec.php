@@ -62,4 +62,18 @@ describe('Request', function() {
             expect((new Request('GET', '/', ['Content-Type' => ['text/plain;charset=ISO-8859-4']]))->getMediaType())->toBe('text/plain');
         });
     });
+
+    describe('->getCharset', function() {
+        it('returns null when Content-Type is not defined', function() {
+            expect((new Request('GET', '/'))->getCharset())->toBeNull();
+        });
+
+        it('returns null when Content-Type charset is not given', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['text/plain;important=yes']]))->getCharset())->toBeNull();
+        });
+
+        it('returns normalized Content-Type charset', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['text/plain;CHARSET="UTF-8"']]))->getCharset())->toBe('utf-8');
+        });
+    });
 });

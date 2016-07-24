@@ -88,6 +88,23 @@ class Request
         }
     }
 
+    /** Returns normalized content type charset.
+      *
+      * @return string|null
+      */
+    function getCharset() {
+        if (isset($this->headers['CONTENT-TYPE'])) {
+            $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
+                      current($this->headers['CONTENT-TYPE'])))), 1);
+            foreach ($params as $param) {
+                $parts = explode('=', $param, 2);
+                if (current($parts) === 'charset') {
+                    return trim(array_pop($parts), '"');
+                }
+            }
+        }
+    }
+
     /** Retrieves body.
       *
       * @return resource|null
