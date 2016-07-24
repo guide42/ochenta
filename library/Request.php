@@ -77,6 +77,17 @@ class Request
         return $this->headers;
     }
 
+    /** Returns normalized content type without parameters.
+      *
+      * @return string|null
+      */
+    function getMediaType() {
+        if (isset($this->headers['CONTENT-TYPE'])) {
+            return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
+                   current($this->headers['CONTENT-TYPE'])))));
+        }
+    }
+
     /** Retrieves body.
       *
       * @return resource|null

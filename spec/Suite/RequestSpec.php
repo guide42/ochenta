@@ -48,4 +48,18 @@ describe('Request', function() {
             expect((new Request('GET', 'http://example.com/path?queryString'))->getTarget())->toBe('/path');
         });
     });
+
+    describe('->getMediaType', function() {
+        it('returns null when Content-Type is not defined', function() {
+            expect((new Request('GET', '/'))->getMediaType())->toBeNull();
+        });
+
+        it('returns Content-Type header in lowercase', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['TEXT/PLAIN']]))->getMediaType())->toBe('text/plain');
+        });
+
+        it('returns Content-Type header without charset', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['text/plain;charset=ISO-8859-4']]))->getMediaType())->toBe('text/plain');
+        });
+    });
 });
