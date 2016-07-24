@@ -124,6 +124,13 @@ class ServerRequest extends Request
         }
         if (empty($parts['host'])) {
             $parts['host'] = $server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost';
+            if (strpos($parts['host'], ':') !== false) {
+                list($host, $port) = explode(':', $parts['host'], 2);
+                $parts['host'] = $host;
+                if (empty($parts['port']) && $port != 80) {
+                    $parts['port'] = (int) $port;
+                }
+            }
         }
         if (empty($parts['port']) && ($server['SERVER_PORT'] ?? 80) !== 80) {
             $parts['port'] = $server['SERVER_PORT'];

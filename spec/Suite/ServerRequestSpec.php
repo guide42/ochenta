@@ -175,6 +175,28 @@ describe('ServerRequest', function() {
             expect($req->getUri()['host'])->toBe('localhost');
         });
 
+        it('returns host and port from HOST header', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'HTTP_HOST' => 'ochenta:8080',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+            expect($req->getUri()['port'])->toBe(8080);
+        });
+
+        it('returns host from HOST header but not port when is 80', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'HTTP_HOST' => 'ochenta:80',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+            expect($req->getUri())->not->toContainKey('port');
+        });
+
         it('returns port from SERVER_PORT environment variable', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => '/path?queryString',
