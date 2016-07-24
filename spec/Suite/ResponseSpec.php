@@ -1,6 +1,7 @@
 <?php
 
 use Ochenta\Response;
+use Ochenta\Request;
 
 describe('Response', function() {
     describe('->__construct', function() {
@@ -35,6 +36,23 @@ describe('Response', function() {
 
         it('assigns content type charset, defaults to utf-8', function() {
            expect((new Response(200, ['Content-Type' => 'text/html']))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html; charset=UTF-8']);
+        });
+    });
+
+    describe('->prepare', function() {
+        it('returns a clone of the response', function() {
+            $old = new Response(200);
+            $new = $old->prepare(new Request('GET', '/'));
+
+            expect($old)->not->toBe($new);
+            expect($new)->toBeAnInstanceOf(Response::class);
+        });
+
+        it('removes body if request is HEAD', function() {
+            $res = new Response(200, [], 'Hello World');
+            $req = new Request('HEAD', '/');
+
+            expect($res->prepare($req)->getBody())->toBeNull();
         });
     });
 });

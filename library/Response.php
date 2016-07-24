@@ -43,6 +43,20 @@ class Response
         $this->body = $body;
     }
 
+    /** Sets the response in corcondance with the given request.
+      *
+      * @return self
+      */
+    function prepare(Request $req): self {
+        $res = clone $this;
+
+        if ($req->getMethod() === 'HEAD') {
+            $res->body = null;
+        }
+
+        return $res;
+    }
+
     /** Retrieves status code.
       *
       * @return int
