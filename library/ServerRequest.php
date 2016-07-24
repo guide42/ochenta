@@ -26,7 +26,7 @@ class ServerRequest extends Request
 
         parent::__construct(
           $server['REQUEST_METHOD'] ?? 'GET',
-          $server['REQUEST_URI'] ?? '/',
+          $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server),
           iterator_to_array($this->parseServerHeaders($server))
         );
     }
@@ -104,5 +104,27 @@ class ServerRequest extends Request
                 yield $key => iterator_to_array($this->parseFiles($indexed));
             }
         }
+    }
+
+    private function normalizeUrl(string $url, array $server) {
+        $parts = parse_url($url);
+
+        if (empty($parts['scheme'])) {
+            $parts['scheme'] = ($server['HTTPS'] ?? 'off') === 'on' ? 'https' : 'http';
+        }
+        if (empty($parts['user']) && isset($server['PHP_AUTH_USER'])) {
+            $parts['user'] = $server['PHP_AUTH_USER'];
+        }
+        if (empty($parts['pass']) && isset($server['PHP_AUTH_PW'])) {
+            $parts['pass'] = $server['PHP_AUTH_PW'];
+        }
+        if (empty($parts['host'])) {
+            $parts['host'] = $server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost';
+        }
+        if (empty($parts['port']) && ($server['SERVER_PORT'] ?? 80) !== 80) {
+            $parts['port'] = $server['SERVER_PORT'];
+        }
+
+        return $parts;
     }
 }

@@ -114,4 +114,75 @@ describe('ServerRequest', function() {
             expect($req->getFiles()['someform']['avatars'][0])->toBeAnInstanceOf(UploadedFile::class);
         });
     });
+
+    describe('->normalizeUrl', function() {
+        it('returns parse_url parts from REQUEST_URI', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'http://user:pass@example.com/path?queryString',
+            ]);
+
+            expect($req->getUri())->toBeA('array');
+        });
+
+        it('returns scheme from HTTPS server variable', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '//user:pass@example.com/path?queryString',
+                'HTTPS' => 'on',
+            ]);
+
+            expect($req->getUri())->toContainKey('scheme');
+            expect($req->getUri()['scheme'])->toBe('https');
+        });
+
+        it('returns user and pass from PHP_AUTH environment variable', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'http://example.com/path?queryString',
+                'PHP_AUTH_USER' => 'root',
+                'PHP_AUTH_PW' => 'toor',
+            ]);
+
+            expect($req->getUri())->toContainKey('user')->toContainKey('pass');
+            expect($req->getUri()['user'])->toBe('root');
+            expect($req->getUri()['pass'])->toBe('toor');
+        });
+
+        it('returns host from HOST header', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'HTTP_HOST' => 'ochenta',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+        });
+
+        it('returns host from SERVER_NAME environment variable', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'SERVER_NAME' => 'ochenta',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+        });
+
+        it('returns host, defaults to localhost', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('localhost');
+        });
+
+        it('returns port from SERVER_PORT environment variable', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'SERVER_PORT' => 443,
+            ]);
+
+            expect($req->getUri())->toContainKey('port');
+            expect($req->getUri()['port'])->toEqual(443);
+        });
+    });
 });
