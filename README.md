@@ -1,5 +1,5 @@
-Ochenta: HTTP/1.1 request/response implementation
-=================================================
+Ochenta: HTTP request/response implementation
+=============================================
 
 This is just a PoC. DO NOT USE IT IN PRODUCTION.
 
