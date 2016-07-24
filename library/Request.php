@@ -12,7 +12,7 @@ class Request
     private $body;
 
     function __construct(string $method, $uri, array $headers=[], $body=null) {
-        $this->method = mb_convert_case($method, MB_CASE_UPPER);
+        $this->method = strtoupper($method);
         $this->uri = is_array($uri) ? $uri : parse_url($uri);
 
         if ($this->uri === false) {
