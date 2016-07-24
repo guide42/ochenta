@@ -1,5 +1,6 @@
 <?php
 
+use Kahlan\Plugin\Monkey;
 use Ochenta\ServerRequest;
 use Ochenta\UploadedFile;
 
@@ -112,6 +113,26 @@ describe('ServerRequest', function() {
             expect($req->getFiles()['someform'])->toBeA('array')->toContainKey('avatars');
             expect($req->getFiles()['someform']['avatars'])->toBeA('array');
             expect($req->getFiles()['someform']['avatars'][0])->toBeAnInstanceOf(UploadedFile::class);
+        });
+
+        it('assigns the body to be php://input when it has Content-Length', function() {
+            Monkey::patch('fopen', function($filename, $mode) {
+                if ($filename === 'php://input') {
+                    $input = fopen('php://temp', 'r+');
+                    fwrite($input, 'Hello World');
+                    fseek($input, 0);
+                    return $input;
+                }
+                return fopen($filename, $mode);
+            });
+
+            $req = new ServerRequest([
+                'CONTENT_TYPE' => 'text/plain',
+                'CONTENT_LENGTH' => 11,
+            ]);
+
+            expect($req->getBody())->toBeA('resource');
+            expect(fread($req->getBody(), 11))->toBe('Hello World');
         });
     });
 

@@ -24,10 +24,18 @@ class ServerRequest extends Request
           $server = $_SERVER;
         }
 
+        $headers = iterator_to_array($this->parseServerHeaders($server));
+        $body = null;
+
+        if (isset($headers['CONTENT-LENGTH']) || isset($headers['TRANSFER-ENCODING'])) {
+            $body = fopen('php://input', 'rb');
+        }
+
         parent::__construct(
           $server['REQUEST_METHOD'] ?? 'GET',
           $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server),
-          iterator_to_array($this->parseServerHeaders($server))
+          $headers,
+          $body
         );
     }
 
