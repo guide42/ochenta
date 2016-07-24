@@ -110,7 +110,7 @@ class ServerRequest extends Request
         $parts = parse_url($url);
 
         if ($parts === false) {
-            throw new \InvalidArgumentException('Invalid uri');
+            throw new \RuntimeException('Invalid uri');
         }
 
         if (empty($parts['scheme'])) {
