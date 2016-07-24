@@ -12,8 +12,15 @@ class Response
 
     function __construct(int $statusCode=200, array $headers=[], $body=null) {
         if ($statusCode < 100 || $statusCode >= 600) {
-            throw new \InvalidArgumentException(
-                'Status code must be between 100 and 600');
+            throw new \InvalidArgumentException('Status code must be between 100 and 600');
+        }
+
+        foreach ($headers as $name => $header) {
+            if (is_scalar($header)) {
+                $headers[$name] = [$header];
+            } elseif (!is_array($header)) {
+                throw new \InvalidArgumentException('Invalid header ' . $name);
+            }
         }
 
         $this->statusCode = $statusCode;
