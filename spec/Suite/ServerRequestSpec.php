@@ -184,5 +184,14 @@ describe('ServerRequest', function() {
             expect($req->getUri())->toContainKey('port');
             expect($req->getUri()['port'])->toEqual(443);
         });
+
+        it('doesn\'t returns port when SERVER_PORT is 80', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'SERVER_PORT' => 80,
+            ]);
+
+            expect($req->getUri())->not->toContainKey('port');
+        });
     });
 });
