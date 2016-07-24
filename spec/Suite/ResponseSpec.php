@@ -21,5 +21,12 @@ describe('Response', function() {
         it('assigns headers as array if scalar value given', function() {
             expect((new Response(200, ['Host' => 'example.com']))->getHeaders()['HOST'])->toBe(['example.com']);
         });
+
+        it('removes content for empty responses status codes', function() {
+            $req = new Response(204, ['Content-Type' => 'text/plain'], 'Hello World');
+
+            expect($req->getHeaders())->not->toContainKey('CONTENT-TYPE');
+            expect($req->getBody())->toBeNull();
+        });
     });
 });

@@ -25,6 +25,12 @@ class Response
 
         $headers = array_change_key_case($headers, CASE_UPPER);
 
+        if (($statusCode >= 100 && $statusCode < 200) || in_array($statusCode, [204, 304])) {
+            unset($headers['CONTENT-TYPE']);
+            unset($headers['CONTENT-LENGTH']);
+            $body = null;
+        }
+
         $this->statusCode = $statusCode;
         $this->headers = $headers;
         $this->body = $body;
