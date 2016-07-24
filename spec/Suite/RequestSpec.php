@@ -9,10 +9,6 @@ describe('Request', function() {
             expect((new Request('gET', '/'))->getMethod())->toBe('GET');
         });
 
-        it('assigns target without host', function() {
-            expect((new Request('GET', 'http://user:pass@example.com/path?queryString'))->getTarget())->toBe('/path');
-        });
-
         it('assigns headers with keys in uppercase', function() {
             $req = new Request('GET', '/', ['Host' => 'example.com', 'Content-Type' => 'text/plain']);
 
@@ -29,6 +25,16 @@ describe('Request', function() {
 
         it('assigns body, defaults to null', function() {
             expect((new Request('GET', '/'))->getBody())->toBeNull();
+        });
+    });
+
+    describe('->getTarget', function() {
+        it('return forward slash when path component of the uri is not defined', function() {
+            expect((new Request('GET', '?queryString'))->getTarget())->toBe('/');
+        });
+
+        it('return path of the uri', function() {
+            expect((new Request('GET', 'http://user:pass@example.com/path?queryString'))->getTarget())->toBe('/path');
         });
     });
 });
