@@ -51,11 +51,11 @@ describe('ServerRequest', function() {
             expect($req->getHeaders()['CONTENT-LENGTH'])->toBe([0]);
         });
 
-        it('throws InvalidArgumentException with invalid uploaded file', function() {
+        it('throws UnexpectedValueException with invalid uploaded file', function() {
             expect(function() {
               new ServerRequest(null, null, null, ['/tmp/phpXXXXXX']);
             })
-            ->toThrow(new InvalidArgumentException);
+            ->toThrow(new UnexpectedValueException);
         });
 
         it('assigns simple files', function() {

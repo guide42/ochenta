@@ -10,6 +10,7 @@ class ServerRequest extends Request
     private $xargs;
     private $files;
 
+    /** @throws UnexpectedValueException */
     function __construct(
         array $server=null,
         array $query=null,
@@ -95,7 +96,7 @@ class ServerRequest extends Request
     private function parseFiles(array $files) {
         foreach ($files as $key => $file) {
             if (!is_array($file)) {
-                throw new \InvalidArgumentException('Invalid uploaded file');
+                throw new \UnexpectedValueException('Invalid uploaded file');
             }
 
             if (!isset($file['error'])) {
@@ -127,9 +128,8 @@ class ServerRequest extends Request
 
     private function normalizeUrl(string $url, array $server) {
         $parts = parse_url($url);
-
         if ($parts === false) {
-            throw new \RuntimeException('Invalid uri');
+            throw new \UnexpectedValueException('Invalid uri');
         }
 
         if (empty($parts['scheme'])) {
