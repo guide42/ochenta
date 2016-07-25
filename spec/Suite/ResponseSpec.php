@@ -55,4 +55,10 @@ describe('Response', function() {
             expect($res->prepare($req)->getBody())->toBeNull();
         });
     });
+
+    describe('->isRedirect', function() {
+        it('returns true when status code is 302', function() {
+            expect((new Response(302))->isRedirect())->toBeTruthy();
+        });
+    });
 });
