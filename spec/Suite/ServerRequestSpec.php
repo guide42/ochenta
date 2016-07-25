@@ -143,7 +143,7 @@ describe('ServerRequest', function() {
         });
     });
 
-    describe('->getParsedBody()', function() {
+    describe('->getParsedBody', function() {
         it('returns parsed body when is application/x-www-form-urlencoded', function() {
             Monkey::patch('fopen', function($filename, $mode) {
                 if ($filename === 'php://input') {
