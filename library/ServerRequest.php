@@ -16,12 +16,19 @@ class ServerRequest extends Request
         array $xargs=null,
         array $files=null
     ) {
+        if (empty($server)) {
+          $server = $_SERVER;
+        }
+
         $this->query = $query ?: $_GET;
         $this->xargs = $xargs ?: $_POST;
         $this->files = iterator_to_array($this->parseFiles($files ?: $_FILES));
 
-        if (empty($server)) {
-          $server = $_SERVER;
+        $method = $server['REQUEST_METHOD'] ?? 'GET';
+        $uri = $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server);
+
+        if (empty($this->query)) {
+            parse_str($uri['query'] ?? '', $this->query);
         }
 
         $headers = iterator_to_array($this->parseServerHeaders($server));
@@ -32,8 +39,8 @@ class ServerRequest extends Request
         }
 
         parent::__construct(
-          $server['REQUEST_METHOD'] ?? 'GET',
-          $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server),
+          $method,
+          $uri,
           $headers,
           $body
         );

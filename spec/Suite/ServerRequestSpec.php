@@ -26,6 +26,13 @@ describe('ServerRequest', function() {
             expect($req->getQuery()['foo'])->toBe('bar');
         });
 
+        it('assigns query from query string', function() {
+            $req = new ServerRequest(['REQUEST_URI' => '/path?foo=bar'], []);
+
+            expect($req->getQuery())->toBeA('array')->toContainKey('foo');
+            expect($req->getQuery()['foo'])->toBe('bar');
+        });
+
         it('assigns xargs as form parameters', function() {
             $req = new ServerRequest(null, null, ['foo' => 'bar']);
 
