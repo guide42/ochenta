@@ -247,6 +247,15 @@ describe('ServerRequest', function() {
             expect($req->getUri())->not->toContainKey('port');
         });
 
+        it('throws UnexpectedValueException when invalid host', function() {
+            expect(function() {
+                new ServerRequest([
+                    'REQUEST_URI' => 'http://☃.com/path?queryString',
+                ]);
+            })
+            ->toThrow(new UnexpectedValueException);
+        });
+
         it('returns port from SERVER_PORT environment variable', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => '/path?queryString',

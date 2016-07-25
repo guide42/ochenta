@@ -151,6 +151,11 @@ class ServerRequest extends Request
                 }
             }
         }
+        if (!empty($parts['host']) &&
+            preg_replace('/[a-zA-Z0-9-:\[\]]+\.?/', '', $parts['host']) !== ''
+        ) {
+            throw new \UnexpectedValueException('Invalid host');
+        }
         if (empty($parts['port']) && ($server['SERVER_PORT'] ?? 80) !== 80) {
             $parts['port'] = (int) $server['SERVER_PORT'];
         }
