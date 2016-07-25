@@ -27,8 +27,8 @@ class ServerRequest extends Request
         $method = $server['REQUEST_METHOD'] ?? 'GET';
         $uri = $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server);
 
-        if (empty($this->query)) {
-            parse_str($uri['query'] ?? '', $this->query);
+        if (empty($this->query) && isset($uri['query'])) {
+            parse_str($uri['query'], $this->query);
         }
 
         $headers = iterator_to_array($this->parseServerHeaders($server));
