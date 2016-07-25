@@ -52,10 +52,14 @@ class ServerRequest extends Request
       * @return string[]
       */
     function getParsedBody(): array {
+        if (empty($thix->xargs) &&
+            !is_null($this->getBody()) &&
+            in_array($this->getMethod(), ['POST']) &&
+            in_array($this->getMediaType(), ['application/x-www-form-urlencoded'])
+        ) {
+            parse_str(stream_get_contents($this->getBody()), $this->xargs);
+        }
         return $this->xargs;
-        // TODO check Content-Type is either application/x-www-form-urlencoded
-        //      or multipart/form-data, and the request method is POST,
-        //      otherwise content negotation
     }
 
     /** Retrieve normalized file uploads.

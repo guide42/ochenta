@@ -136,6 +136,28 @@ describe('ServerRequest', function() {
         });
     });
 
+    describe('->getParsedBody()', function() {
+        it('returns parsed body when is application/x-www-form-urlencoded', function() {
+            Monkey::patch('fopen', function($filename, $mode) {
+                if ($filename === 'php://input') {
+                    $input = fopen('php://temp', 'r+');
+                    fwrite($input, 'hello=world&foo=bar');
+                    fseek($input, 0);
+                    return $input;
+                }
+                return fopen($filename, $mode);
+            });
+
+            $req = new ServerRequest([
+                'REQUEST_METHOD' => 'POST',
+                'CONTENT_TYPE' => 'application/x-www-form-urlencoded',
+                'CONTENT_LENGTH' => 17,
+            ]);
+
+            expect($req->getParsedBody())->toBe(['hello' => 'world', 'foo' => 'bar']);
+        });
+    });
+
     describe('->normalizeUrl', function() {
         it('returns parse_url parts from REQUEST_URI', function() {
             $req = new ServerRequest([
