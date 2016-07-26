@@ -152,6 +152,7 @@ class ServerRequest extends Request
                 }
             }
         }
+        $parts['host'] = strtolower($parts['host']);
         if (!empty($parts['host']) &&
             preg_replace('/[a-zA-Z0-9-:\[\]]+\.?/', '', $parts['host']) !== ''
         ) {

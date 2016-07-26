@@ -259,6 +259,16 @@ describe('ServerRequest', function() {
             expect($req->getUri())->not->toContainKey('port');
         });
 
+        it('returns host in lowercase', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => '/path?queryString',
+                'HTTP_HOST' => 'OcHeNtA',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+        });
+
         it('throws UnexpectedValueException when invalid host', function() {
             expect(function() {
                 new ServerRequest([
