@@ -247,6 +247,18 @@ describe('ServerRequest', function() {
             expect($req->getUri())->not->toContainKey('port');
         });
 
+        it('returns host from HOST header but not port when is 443 in HTTPS', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'https://ochenta/path?queryString',
+                'HTTP_HOST' => 'ochenta:80',
+                'HTTPS' => 'on',
+            ]);
+
+            expect($req->getUri())->toContainKey('host');
+            expect($req->getUri()['host'])->toBe('ochenta');
+            expect($req->getUri())->not->toContainKey('port');
+        });
+
         it('throws UnexpectedValueException when invalid host', function() {
             expect(function() {
                 new ServerRequest([
@@ -270,6 +282,16 @@ describe('ServerRequest', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => '/path?queryString',
                 'SERVER_PORT' => 80,
+            ]);
+
+            expect($req->getUri())->not->toContainKey('port');
+        });
+
+        it('doesn\'t returns port when SERVER_PORT is 443 in HTTPS', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'https://example.com/path?queryString',
+                'SERVER_PORT' => 443,
+                'HTTPS' => 'on',
             ]);
 
             expect($req->getUri())->not->toContainKey('port');

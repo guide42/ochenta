@@ -135,6 +135,7 @@ class ServerRequest extends Request
         if (empty($parts['scheme'])) {
             $parts['scheme'] = ($server['HTTPS'] ?? 'off') === 'on' ? 'https' : 'http';
         }
+        $defaultPort = $parts['scheme'] === 'https' ? 443 : 80;
         if (empty($parts['user']) && isset($server['PHP_AUTH_USER'])) {
             $parts['user'] = $server['PHP_AUTH_USER'];
         }
@@ -146,7 +147,7 @@ class ServerRequest extends Request
             if (strpos($parts['host'], ':') !== false) {
                 list($host, $port) = explode(':', $parts['host'], 2);
                 $parts['host'] = $host;
-                if (empty($parts['port']) && $port != 80) {
+                if (empty($parts['port']) && $port != $defaultPort) {
                     $parts['port'] = (int) $port;
                 }
             }
@@ -156,7 +157,7 @@ class ServerRequest extends Request
         ) {
             throw new \UnexpectedValueException('Invalid host');
         }
-        if (empty($parts['port']) && ($server['SERVER_PORT'] ?? 80) !== 80) {
+        if (empty($parts['port']) && ($server['SERVER_PORT'] ?? $defaultPort) !== $defaultPort) {
             $parts['port'] = (int) $server['SERVER_PORT'];
         }
 
