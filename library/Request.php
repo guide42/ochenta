@@ -6,10 +6,10 @@ namespace Ochenta;
   */
 class Request
 {
-    private $method;
-    private $uri;
-    private $headers;
-    private $body;
+    protected $method;
+    protected $uri;
+    protected $headers;
+    protected $body;
 
     function __construct(string $method, $uri, array $headers=[], $body=null) {
         $this->method = strtoupper($method);

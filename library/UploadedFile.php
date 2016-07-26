@@ -6,12 +6,12 @@ namespace Ochenta;
   */
 class UploadedFile
 {
-    private $tmp;
-    private $size;
-    private $error;
+    protected $tmp;
+    protected $size;
+    protected $error;
 
-    private $name;
-    private $type;
+    protected $name;
+    protected $type;
 
     function __construct(
         string $tmp,

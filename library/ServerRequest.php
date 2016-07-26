@@ -6,9 +6,9 @@ namespace Ochenta;
   */
 class ServerRequest extends Request
 {
-    private $query;
-    private $xargs;
-    private $files;
+    protected $query;
+    protected $xargs;
+    protected $files;
 
     /** @throws UnexpectedValueException */
     function __construct(

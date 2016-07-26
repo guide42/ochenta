@@ -6,9 +6,9 @@ namespace Ochenta;
   */
 class Response
 {
-    private $statusCode;
-    private $headers;
-    private $body;
+    protected $statusCode;
+    protected $headers;
+    protected $body;
 
     function __construct(int $statusCode=200, array $headers=[], $body=null) {
         if ($statusCode < 100 || $statusCode >= 600) {
