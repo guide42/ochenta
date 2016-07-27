@@ -12,5 +12,11 @@
     "require-dev": {
         "crysalead/kahlan": "*"
     },
-    "require": {}
+    "require": {
+        "php": ">=7.0",
+        "psr/http-message": "*"
+    },
+    "provide": {
+        "psr/http-message-implementation": "1.0"
+    }
 }
