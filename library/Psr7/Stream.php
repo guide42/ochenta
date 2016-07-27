@@ -21,7 +21,7 @@ class Stream implements StreamInterface
     }
 
     function __construct($resource) {
-        if ($resource instanceof StreamInterface) {
+        if ($resource instanceof Stream) {
             $this->resource = $resource->extract();
         } else {
             $this->resource = $resource;

@@ -17,7 +17,7 @@ describe('Psr7\\Stream', function() {
         });
     });
     describe('->__construct', function() {
-        it('accepts an StreamInterface and extracts it\'s resource', function() {
+        it('accepts an Stream and extracts it\'s resource', function() {
             expect((new Stream(new Stream('Hello')))->extract())->toBe('Hello');
         });
     });
