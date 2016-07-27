@@ -197,6 +197,14 @@ describe('ServerRequest', function() {
     });
 
     describe('->normalizeUrl', function() {
+        it('throws UnexpectedValueException on invalid REQUEST_URI', function() {
+            expect(function() {
+                new ServerRequest([
+                    'REQUEST_URI' => 'http://@/',
+                ]);
+            })
+            ->toThrow(new UnexpectedValueException);
+        });
         it('returns parse_url parts from REQUEST_URI', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => 'http://user:pass@example.com/path?queryString',
