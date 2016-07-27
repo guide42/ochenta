@@ -44,8 +44,6 @@ class Response
     }
 
     /** Sets the response in corcondance with the given request.
-      *
-      * @return self
       */
     function prepare(Request $req): self {
         $res = clone $this;
@@ -58,35 +56,26 @@ class Response
     }
 
     /** Retrieves status code.
-      *
-      * @return int
       */
     function getStatusCode()/*: int*//* is not type-hinted because overlaps with Psr7 */ {
         return $this->statusCode;
     }
 
     /** Returns true if response is a redirection, false otherwise.
-      *
-      * @return bool
       */
     function isRedirect(): bool {
         return in_array($this->statusCode, [301, 302]);
     }
 
-    /** Retrieves headers.
-      *
-      * @see Ochenta\Request::getHeaders()
-      * @return string[][] associative array
+    /** Retrieves headers. @see Ochenta\Request::getHeaders()
       */
-    function getHeaders(): array {
+    function getHeaders(): array/* string[][] */ {
         return $this->headers;
     }
 
     /** Retrieves body.
-      *
-      * @return resource|null
       */
-    function getBody() {
+    function getBody()/* resource|null */ {
         return $this->body;
     }
 }

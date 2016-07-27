@@ -36,7 +36,7 @@ class Stream implements StreamInterface
         return new self(call_user_func($fn, $this));
     }
 
-    function close() {
+    function close()/* void*/ {
         if (is_resource($this->resource)) {
             fclose($this->resource);
         }
@@ -49,7 +49,7 @@ class Stream implements StreamInterface
         return $this->resource;
     }
 
-    function getSize() {
+    function getSize()/* int|null */ {
         if (is_resource($this->resource)) {
             return fstat($this->resource)['size'];
         }
@@ -73,13 +73,13 @@ class Stream implements StreamInterface
         return stream_get_meta_data($this->resource)['seekable'];
     }
 
-    function seek(/*int */$offset, /*int */$whence=SEEK_SET) {
+    function seek(/*int */$offset, /*int */$whence=SEEK_SET)/* void*/ {
         if (!$this->isSeekable() || fseek($this->resource, $offset, $whence) === -1) {
             throw new \RuntimeException('Could not seek');
         }
     }
 
-    function rewind() {
+    function rewind()/* void*/ {
         $this->seek(0);
     }
 

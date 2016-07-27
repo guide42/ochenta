@@ -30,44 +30,35 @@ class Request
     }
 
     /** Retrieves HTTP method.
-      *
-      * @return string
       */
     function getMethod(): string {
         return $this->method;
     }
 
     /** Retrieves original URI parts.
-      *
-      * @return string[] result of php.net/parse_url function
       */
-    function getUri()/*: array*//* is not type-hinted because overlaps with Psr7 */ {
+    function getUri()/* string[] result of php.net/parse_url function *//* is not type-hinted
+                      *          because overlaps with Psr7 */ {
         return $this->uri;
     }
 
     /** Retrieves the request target.
-      *
-      * @return string
       */
     function getTarget(): string {
         return rtrim(($this->uri['path'] ?? '/') . '?' . ($this->uri['query'] ?? ''), '?');
     }
 
     /** Retrieves all headers.
-      *
-      * @return string[][] associative array with each key is the normalizer
-      *                    header name, and each value an array of strings for
-      *                    that header
       */
-    function getHeaders(): array {
+    function getHeaders(): array/* string[][] associative array with each key is the normalizer
+                                 *            header name, and each value an array of strings for
+                                 *            that header. */ {
         return $this->headers;
     }
 
     /** Returns normalized content type without parameters.
-      *
-      * @return string|null
       */
-    function getMediaType() {
+    function getMediaType()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
                    current($this->headers['CONTENT-TYPE'])))));
@@ -75,10 +66,8 @@ class Request
     }
 
     /** Returns normalized content type charset.
-      *
-      * @return string|null
       */
-    function getCharset() {
+    function getCharset()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
                       current($this->headers['CONTENT-TYPE'])))), 1);
@@ -92,10 +81,8 @@ class Request
     }
 
     /** Retrieves body.
-      *
-      * @return resource|null
       */
-    function getBody() {
+    function getBody()/* resource|null */ {
         return $this->body;
     }
 }

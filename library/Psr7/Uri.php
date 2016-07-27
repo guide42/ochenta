@@ -91,7 +91,7 @@ class Uri implements UriInterface
         return $this->components['host'] ?? '';
     }
 
-    function getPort() {
+    function getPort()/* int|null */ {
         if ($this->isSchemeAllowed()) {
             return null;
         }

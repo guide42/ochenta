@@ -49,18 +49,14 @@ class ServerRequest extends Request
     }
 
     /** Retrieve query string parameters.
-      *
-      * @return string[]
       */
-    function getQuery(): array {
+    function getQuery(): array/* string[] */ {
         return $this->query;
     }
 
     /** Retrieve parameters provided in the request body.
-      *
-      * @return string[]
       */
-    function getParsedBody(): array {
+    function getParsedBody(): array/* string[] */ {
         if (empty($thix->xargs) &&
             !is_null($this->getBody()) &&
             in_array($this->getMethod(), ['POST']) &&
@@ -72,10 +68,8 @@ class ServerRequest extends Request
     }
 
     /** Retrieve normalized file uploads.
-      *
-      * @return array[]
       */
-    function getFiles(): array {
+    function getFiles(): array/* array[] */ {
         return $this->files;
     }
 

@@ -2,6 +2,7 @@
 
 namespace Ochenta;
 
+/** @throws InvalidArgumentException */
 function resource_for($resource) {
     if (is_null($resource)) {
         return null;

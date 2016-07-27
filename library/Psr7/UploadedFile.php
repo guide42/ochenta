@@ -40,7 +40,7 @@ class UploadedFile implements UploadedFileInterface
         return new Stream(fopen($this->tmp, 'r+'));
     }
 
-    function moveTo(/*string */$targetPath)/*: void*/ {
+    function moveTo(/*string */$targetPath)/* void*/ {
         if (empty($targetPath)) {
             throw new \InvalidArgumentException('Invalid target path');
         }
@@ -65,11 +65,11 @@ class UploadedFile implements UploadedFileInterface
         return $this->error;
     }
 
-    function getClientFilename() {
+    function getClientFilename()/* string|null */ {
         return $this->name;
     }
 
-    function getClientMediaType() {
+    function getClientMediaType()/* string|null */ {
         return $this->type;
     }
 }
