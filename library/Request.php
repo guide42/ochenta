@@ -55,7 +55,7 @@ class Request
       *
       * @return string[] result of php.net/parse_url function
       */
-    function getUri(): array {
+    function getUri()/*: array*//* is not type-hinted because overlaps with Psr7 */ {
         return $this->uri;
     }
 

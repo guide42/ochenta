@@ -61,7 +61,7 @@ class Response
       *
       * @return int
       */
-    function getStatusCode(): int {
+    function getStatusCode()/*: int*//* is not type-hinted because overlaps with Psr7 */ {
         return $this->statusCode;
     }
 
