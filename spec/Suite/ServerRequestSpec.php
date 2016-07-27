@@ -57,6 +57,13 @@ describe('ServerRequest', function() {
             ->toThrow(new UnexpectedValueException);
         });
 
+        it('throws UnexpectedValueException with an uploaded file without error', function() {
+            expect(function() {
+              new ServerRequest(null, null, null, [['tmp_name' => '/tmp/phpXXXXXX']]);
+            })
+            ->toThrow(new UnexpectedValueException);
+        });
+
         it('assigns simple files', function() {
             $req = new ServerRequest(null, null, null, [
               'avatar' => array(

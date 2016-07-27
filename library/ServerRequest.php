@@ -96,7 +96,7 @@ class ServerRequest extends Request
 
     private function parseFiles(array $files) {
         foreach ($files as $key => $file) {
-            if (!is_array($file)) {
+            if (!is_array($file) || !isset($file['error'])) {
                 throw new \UnexpectedValueException('Invalid uploaded file');
             }
 
