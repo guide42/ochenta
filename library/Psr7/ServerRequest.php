@@ -31,6 +31,11 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
         $this->cookie = $cookie ?: $_COOKIE;
 
         parent::__construct($server, $query, $xargs, $files);
+
+        foreach ($this->headers as $name => $header) {
+            $this->headerNames[$name] = str_replace(' ', '-', ucwords(
+                                        str_replace('-', ' ', strtolower($name))));
+        }
     }
 
     function getRequestTarget(): string {

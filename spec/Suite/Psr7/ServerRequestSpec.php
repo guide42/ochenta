@@ -4,6 +4,15 @@ use Ochenta\Psr7\ServerRequest;
 use Ochenta\Psr7\UploadedFile;
 
 describe('Psr7\\ServerRequest', function() {
+    describe('->getHeaders', function() {
+        it('returns headers with keys in the original name', function() {
+            $message = new ServerRequest([
+                'REQUEST_URI' => 'http://ochenta/',
+            ]);
+
+            expect($message->getHeaders())->toBe(['Host' => ['ochenta']]);
+        });
+    });
     describe('->getRequestTarget', function() {
         it('returns the same value as ->getTarget', function() {
             $req = new ServerRequest;
