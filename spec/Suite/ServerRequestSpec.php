@@ -165,6 +165,27 @@ describe('ServerRequest', function() {
         });
     });
 
+    describe('->normalizeServer', function() {
+        it('returns HTTPS when SCRIPT_URI starts with https://', function() {
+            $req = new ServerRequest([
+                'HTTPS' => 'off',
+                'SCRIPT_URI' => 'https://ochenta/',
+            ]);
+
+            expect($req->getUri())->toContainKey('scheme');
+            expect($req->getUri()['scheme'])->toBe('https');
+        });
+
+        it('returns REQUEST_METHOD overriden by HTTP_X_HTTP_METHOD_OVERRIDE if present', function() {
+            $req = new ServerRequest([
+                'REQUEST_METHOD' => 'POST',
+                'HTTP_X_HTTP_METHOD_OVERRIDE' => 'PUT',
+            ]);
+
+            expect($req->getMethod())->toBe('PUT');
+        });
+    });
+
     describe('->normalizeUrl', function() {
         it('returns parse_url parts from REQUEST_URI', function() {
             $req = new ServerRequest([

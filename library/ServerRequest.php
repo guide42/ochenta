@@ -25,6 +25,7 @@ class ServerRequest extends Request
         $this->xargs = $xargs ?: $_POST;
         $this->files = iterator_to_array($this->parseFiles($files ?: $_FILES));
 
+        $server = $this->normalizeServer($server);
         $method = $server['REQUEST_METHOD'] ?? 'GET';
         $uri = $this->normalizeUrl($server['REQUEST_URI'] ?? '/', $server);
 
@@ -124,6 +125,16 @@ class ServerRequest extends Request
                 yield $key => iterator_to_array($this->parseFiles($indexed));
             }
         }
+    }
+
+    private function normalizeServer(array $server): array {
+        if (isset($server['SCRIPT_URI'])) {
+            $server['HTTPS'] = strpos($server['SCRIPT_URI'], 'https://') === 0 ? 'on' : 'off';
+        }
+        if (isset($server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+            $server['REQUEST_METHOD'] = $server['HTTP_X_HTTP_METHOD_OVERRIDE'];
+        }
+        return $server;
     }
 
     private function normalizeUrl(string $url, array $server) {
