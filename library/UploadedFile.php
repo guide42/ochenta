@@ -44,6 +44,14 @@ class UploadedFile
         return $this->size;
     }
 
+    /** Return true if there wasn't any error, false otherwise.
+      *
+      * @return bool
+      */
+    function isOK(): bool {
+        return $this->error === UPLOAD_ERR_OK;
+    }
+
     /** Retrieve the filename sent by the client.
       *
       * @return string|null
