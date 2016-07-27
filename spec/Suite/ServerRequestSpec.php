@@ -69,7 +69,8 @@ describe('ServerRequest', function() {
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatar');
-            expect($req->getFiles()['avatar'])->toBeA('array');
+            expect($req->getFiles()['avatar'])->toBeA('array')->toContainKey('tmp_name');
+            expect($req->getFiles()['avatar']['tmp_name'])->toBe('/tmp/phpUxcOty');
         });
 
         it('assigns collection files', function() {
@@ -84,8 +85,9 @@ describe('ServerRequest', function() {
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatars');
-            expect($req->getFiles()['avatars'])->toBeA('array');
-            expect($req->getFiles()['avatars'][0])->toBeA('array');
+            expect($req->getFiles()['avatars'])->toBeA('array')->toContainKey(0);
+            expect($req->getFiles()['avatars'][0])->toBeA('array')->toContainKey('tmp_name');
+            expect($req->getFiles()['avatars'][0]['tmp_name'])->toBe('/tmp/phpLTufCb');
         });
 
         it('assigns nested simple files', function() {
@@ -101,7 +103,8 @@ describe('ServerRequest', function() {
 
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');
             expect($req->getFiles()['someform'])->toBeA('array')->toContainKey('avatar');
-            expect($req->getFiles()['someform']['avatar'])->toBeA('array');
+            expect($req->getFiles()['someform']['avatar'])->toBeA('array')->toContainKey('tmp_name');
+            expect($req->getFiles()['someform']['avatar']['tmp_name'])->toBe('/tmp/phpUxcOty');
         });
 
         it('assigns nested collection files', function() {
@@ -117,8 +120,9 @@ describe('ServerRequest', function() {
 
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');
             expect($req->getFiles()['someform'])->toBeA('array')->toContainKey('avatars');
-            expect($req->getFiles()['someform']['avatars'])->toBeA('array');
-            expect($req->getFiles()['someform']['avatars'][0])->toBeA('array');
+            expect($req->getFiles()['someform']['avatars'])->toBeA('array')->toContainKey(0);
+            expect($req->getFiles()['someform']['avatars'][0])->toBeA('array')->toContainKey('tmp_name');
+            expect($req->getFiles()['someform']['avatars'][0]['tmp_name'])->toBe('/tmp/phpLTufCb');
         });
 
         it('assigns the body to be php://input when it has Content-Length', function() {

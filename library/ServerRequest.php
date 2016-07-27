@@ -100,9 +100,7 @@ class ServerRequest extends Request
                 throw new \UnexpectedValueException('Invalid uploaded file');
             }
 
-            if (!isset($file['error'])) {
-                yield $key => iterator_to_array($this->parseFiles($file));
-            } elseif (!is_array($file['error'])) {
+            if (!is_array($file['error'])) {
                 yield $key => $file;
             } else {
                 $indexed = [];
