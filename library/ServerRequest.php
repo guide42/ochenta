@@ -137,7 +137,7 @@ class ServerRequest extends Request
         return $server;
     }
 
-    private function normalizeUrl(string $url, array $server) {
+    private function normalizeUrl(string $url, array $server): array {
         $parts = parse_url($url);
         if ($parts === false) {
             throw new \UnexpectedValueException('Invalid uri');
