@@ -20,6 +20,13 @@ describe('Request', function() {
             expect((new Request('GET', $uri))->getUri())->toBeA('array')->toContainKey('host');
         });
 
+        it('throws InvalidArgumentException on invalid uri', function() {
+            expect(function() {
+                new Request('GET', 'http://@/');
+            })
+            ->toThrow(new InvalidArgumentException);
+        });
+
         it('assigns headers with keys in uppercase', function() {
             $req = new Request('GET', '/', ['Host' => ['example.com'], 'Content-Type' => ['text/plain']]);
 
@@ -36,6 +43,17 @@ describe('Request', function() {
 
         it('assigns body, defaults to null', function() {
             expect((new Request('GET', '/'))->getBody())->toBeNull();
+        });
+
+        it('assigns body as resource if given is scalar', function() {
+           expect((new Request('GET', '/', [], 'Hello World'))->getBody())->toBeA('resource');
+        });
+
+        it('throws InvalidArgumentException on invalid body', function() {
+            expect(function() {
+                new Request('GET', '/', [], []);
+            })
+            ->toThrow(new InvalidArgumentException);
         });
     });
 
