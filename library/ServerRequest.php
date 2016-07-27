@@ -73,7 +73,7 @@ class ServerRequest extends Request
 
     /** Retrieve normalized file uploads.
       *
-      * @return UploadedFile[]
+      * @return array[]
       */
     function getFiles(): array {
         return $this->files;
@@ -103,23 +103,17 @@ class ServerRequest extends Request
             if (!isset($file['error'])) {
                 yield $key => iterator_to_array($this->parseFiles($file));
             } elseif (!is_array($file['error'])) {
-                yield $key => new UploadedFile(
-                    $file['tmp_name'],
-                    $file['size'],
-                    $file['error'],
-                    $file['name'],
-                    $file['type']
-                );
+                yield $key => $file;
             } else {
                 $indexed = [];
                 foreach ($file['error'] as $index => $_) {
-                    $indexed[$index] = array(
+                    $indexed[$index] = [
                         'tmp_name' => $file['tmp_name'][$index],
                         'size'     => $file['size'][$index],
                         'error'    => $file['error'][$index],
                         'name'     => $file['name'][$index],
                         'type'     => $file['type'][$index],
-                    );
+                    ];
                 }
 
                 yield $key => iterator_to_array($this->parseFiles($indexed));

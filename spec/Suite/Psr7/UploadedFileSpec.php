@@ -42,21 +42,26 @@ describe('Psr7\\UploadedFile', function() {
             unlink('/tmp/kahlan/ochentatmp');
         });
     });
+    describe('->getSize', function() {
+        it('returns the given size', function() {
+            expect((new UploadedFile('', 0, UPLOAD_ERR_NO_FILE))->getSize())->toBe(0);
+        });
+    });
     describe('->getError', function() {
         it('returns the given error', function() {
             expect((new UploadedFile('', 0, UPLOAD_ERR_NO_FILE))->getError())->toBe(UPLOAD_ERR_NO_FILE);
         });
     });
     describe('->getClientFilename', function() {
-        it('returns the save value as ->getClientName', function() {
+        it('returns the client name', function() {
             $file = new UploadedFile('', 0, UPLOAD_ERR_NO_FILE, 'README.txt');
-            expect($file->getClientFilename())->toBe($file->getClientName());
+            expect($file->getClientFilename())->toBe('README.txt');
         });
     });
     describe('->getClientMediaType', function() {
-        it('returns the save value as ->getClientType', function() {
+        it('returns the client type', function() {
             $file = new UploadedFile('', 0, UPLOAD_ERR_NO_FILE, null, 'text/plain');
-            expect($file->getClientMediaType())->toBe($file->getClientType());
+            expect($file->getClientMediaType())->toBe('text/plain');
         });
     });
 });

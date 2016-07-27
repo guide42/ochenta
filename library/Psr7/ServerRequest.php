@@ -12,6 +12,7 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
     use MessageTrait, RequestTrait;
 
     protected $query;
+    protected $xargs;
     protected $files;
 
     protected $server;
@@ -66,15 +67,15 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
     }
 
     function getUploadedFiles(): array {
-        if (empty($this->uploadedFiles)) {
+        if (empty($this->uploadedFiles)) { // FIXME deep
             /** @var Ochenta\UploadedFile $file */
             foreach ($this->files as $key => $file) {
                 $this->uploadedFiles[$key] = new UploadedFile(
-                    $file->getFilename(),
-                    $file->getSize(),
-                    $file->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_NO_FILE,
-                    $file->getClientName(),
-                    $file->getClientType()
+                    $file['tmp_name'],
+                    $file['size'],
+                    $file['error'],
+                    $file['name'],
+                    $file['type']
                 );
             }
         }

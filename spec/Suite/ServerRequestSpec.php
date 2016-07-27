@@ -2,7 +2,6 @@
 
 use Kahlan\Plugin\Monkey;
 use Ochenta\ServerRequest;
-use Ochenta\UploadedFile;
 
 describe('ServerRequest', function() {
     describe('->__construct', function() {
@@ -70,7 +69,7 @@ describe('ServerRequest', function() {
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatar');
-            expect($req->getFiles()['avatar'])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getFiles()['avatar'])->toBeA('array');
         });
 
         it('assigns collection files', function() {
@@ -86,7 +85,7 @@ describe('ServerRequest', function() {
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatars');
             expect($req->getFiles()['avatars'])->toBeA('array');
-            expect($req->getFiles()['avatars'][0])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getFiles()['avatars'][0])->toBeA('array');
         });
 
         it('assigns nested simple files', function() {
@@ -102,7 +101,7 @@ describe('ServerRequest', function() {
 
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');
             expect($req->getFiles()['someform'])->toBeA('array')->toContainKey('avatar');
-            expect($req->getFiles()['someform']['avatar'])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getFiles()['someform']['avatar'])->toBeA('array');
         });
 
         it('assigns nested collection files', function() {
@@ -119,7 +118,7 @@ describe('ServerRequest', function() {
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');
             expect($req->getFiles()['someform'])->toBeA('array')->toContainKey('avatars');
             expect($req->getFiles()['someform']['avatars'])->toBeA('array');
-            expect($req->getFiles()['someform']['avatars'][0])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getFiles()['someform']['avatars'][0])->toBeA('array');
         });
 
         it('assigns the body to be php://input when it has Content-Length', function() {

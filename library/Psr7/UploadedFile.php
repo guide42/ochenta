@@ -4,14 +4,34 @@ namespace Ochenta\Psr7;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
-use Ochenta\UploadedFile as OchentaUploadedFile;
 
 /** PSR-7 uploaded file implementation.
   */
-class UploadedFile extends OchentaUploadedFile implements UploadedFileInterface
+class UploadedFile implements UploadedFileInterface
 {
+    protected $tmp;
+    protected $size;
     protected $error;
+
+    protected $name;
+    protected $type;
+
     protected $moved = false;
+
+    function __construct(
+        string $tmp,
+        int $size,
+        int $error,
+        string $clientName=null,
+        string $clientType=null
+    ) {
+        $this->tmp = $tmp;
+        $this->size = $size;
+        $this->error = $error;
+
+        $this->name = $clientName;
+        $this->type = $clientType;
+    }
 
     function getStream(): StreamInterface {
         if ($this->error !== UPLOAD_ERR_OK || $this->moved) {
@@ -37,15 +57,19 @@ class UploadedFile extends OchentaUploadedFile implements UploadedFileInterface
         }
     }
 
+    function getSize(): int {
+        return $this->size;
+    }
+
     function getError(): int {
         return $this->error;
     }
 
     function getClientFilename() {
-        return $this->getClientName();
+        return $this->name;
     }
 
     function getClientMediaType() {
-        return $this->getClientType();
+        return $this->type;
     }
 }
