@@ -66,11 +66,12 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
         return $new;
     }
 
-    function getUploadedFiles(): array {
-        if (empty($this->uploadedFiles)) { // FIXME deep
-            /** @var Ochenta\UploadedFile $file */
-            foreach ($this->files as $key => $file) {
-                $this->uploadedFiles[$key] = new UploadedFile(
+    private function parseUploadedFiles(array $files) {
+        foreach ($files as $key => $file) {
+            if (!isset($file['error'])) {
+                yield $key => iterator_to_array($this->parseUploadedFiles($file));
+            } else {
+                yield $key => new UploadedFile(
                     $file['tmp_name'],
                     $file['size'],
                     $file['error'],
@@ -78,6 +79,12 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
                     $file['type']
                 );
             }
+        }
+    }
+
+    function getUploadedFiles(): array {
+        if (empty($this->uploadedFiles)) {
+            $this->uploadedFiles = iterator_to_array($this->parseUploadedFiles($this->files));
         }
         return $this->uploadedFiles;
     }

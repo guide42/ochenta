@@ -50,7 +50,7 @@ describe('Psr7\\ServerRequest', function() {
         });
     });
     describe('->getUploadedFiles', function() {
-        it('returns the given files parameters', function() {
+        it('returns the given files parameters as Ochenta\\Psr7\\UploadedFile', function() {
             $req = new ServerRequest(null, null, null, [
                 'avatar' => [
                     'tmp_name' => '/tmp/phpUxcOty',
@@ -61,9 +61,28 @@ describe('Psr7\\ServerRequest', function() {
                 ],
             ]);
 
-            expect($req->getUploadedFiles())->toBeA('array')->toHaveLength(1);
-            expect(current($req->getUploadedFiles()))->toBeAnInstanceOf(UploadedFile::class);
-            expect(current($req->getUploadedFiles())->getClientFilename())->toBe('avatar.png');
+            expect($req->getUploadedFiles())->toBeA('array')->toContainKey('avatar');
+
+            expect($req->getUploadedFiles()['avatar'])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getUploadedFiles()['avatar']->getClientFilename())->toBe('avatar.png');
+        });
+        it('returns the given tree of Ochenta\\Psr7\\UploadedFile', function() {
+            $req = new ServerRequest(null, null, null, [
+                'someform' => [
+                    'tmp_name' => ['avatars' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D']],
+                    'name'     => ['avatars' => [0 => 'avatar-0.png', 1 => 'avatar-1.png']],
+                    'type'     => ['avatars' => [0 => 'image/png', 1 => 'image/png']],
+                    'size'     => ['avatars' => [0 => 73097, 1 => 73098]],
+                    'error'    => ['avatars' => [0 => 0, 1 => 0]],
+                ],
+            ]);
+
+            expect($req->getUploadedFiles())->toBeA('array')->toContainKey('someform');
+            expect($req->getUploadedFiles()['someform'])->toBeA('array')->toContainKey('avatars');
+            expect($req->getUploadedFiles()['someform']['avatars'])->toBeA('array')->toContainKey(0);
+
+            expect($req->getUploadedFiles()['someform']['avatars'][0])->toBeAnInstanceOf(UploadedFile::class);
+            expect($req->getUploadedFiles()['someform']['avatars'][0]->getClientFilename())->toBe('avatar-0.png');
         });
     });
     describe('->withUploadedFiles', function() {
