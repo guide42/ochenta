@@ -50,15 +50,15 @@ describe('Psr7\\ServerRequest', function() {
         });
     });
     describe('->getUploadedFiles', function() {
-        it('returns the given query parameters', function() {
+        it('returns the given files parameters', function() {
             $req = new ServerRequest(null, null, null, [
-                'avatar' => array(
+                'avatar' => [
                     'tmp_name' => '/tmp/phpUxcOty',
                     'name'     => 'avatar.png',
                     'type'     => 'image/png',
                     'size'     => 73096,
                     'error'    => 0,
-                ),
+                ],
             ]);
 
             expect($req->getUploadedFiles())->toBeA('array')->toHaveLength(1);
