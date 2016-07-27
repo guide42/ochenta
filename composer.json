@@ -7,6 +7,7 @@
         {"name": "Juan M", "email": "jm@guide42.com"}
     ],
     "autoload": {
+        "files": ["library/functions.php"],
         "psr-4": {"Ochenta\\": "library/"}
     },
     "require-dev": {

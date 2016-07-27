@@ -25,22 +25,8 @@ class Request
             $headers = ['HOST' => [$this->uri['host']]] + $headers;
         }
 
-        if (is_null($body)) {
-            $stream = null;
-        } elseif (is_scalar($body)) {
-            $stream = fopen('php://temp', 'r+');
-            if (!empty($body)) {
-                fwrite($stream, $body);
-                fseek($stream, 0);
-            }
-        } elseif (is_resource($body)) {
-            $stream = $body;
-        } else {
-            throw new \InvalidArgumentException('Invalid body');
-        }
-
         $this->headers = $headers;
-        $this->body = $stream;
+        $this->body = resource_for($body);
     }
 
     /** Retrieves HTTP method.

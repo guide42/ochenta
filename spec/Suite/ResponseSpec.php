@@ -37,6 +37,13 @@ describe('Response', function() {
         it('assigns content type charset, defaults to utf-8', function() {
            expect((new Response(200, ['Content-Type' => 'text/html']))->getHeaders()['CONTENT-TYPE'])->toBe(['text/html;charset=utf-8']);
         });
+
+        it('throws InvalidArgumentException on invalid body', function() {
+            expect(function() {
+                new Response(200, [], []);
+            })
+            ->toThrow(new InvalidArgumentException);
+        });
     });
 
     describe('->prepare', function() {
