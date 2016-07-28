@@ -5,6 +5,20 @@ HTTP abstraction layer in php 7 with [psr-7](http://www.php-fig.org/psr/psr-7/) 
 
 This is just a PoC. DO NOT USE IT IN PRODUCTION.
 
+Usage
+-----
+
+```php
+$req = new Ochenta\ServerRequest;
+```
+
+That's a request. There is also `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
+It could also be created with it's defaults values:
+
+```php
+$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_FORM, $_FILES, null);
+```
+
 Badges
 ------
 
