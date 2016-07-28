@@ -16,7 +16,7 @@ That's a request. There is also `Ochenta\Request` but is not recomended to be us
 It could also be created with it's defaults values:
 
 ```php
-$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_FORM, $_FILES, null);
+$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, null);
 ```
 
 Badges
