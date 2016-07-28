@@ -1,9 +1,9 @@
 <?php
 
-use function Ochenta\resource_for;
+use function Ochenta\resource_of;
 
-describe('resource_for', function() {
+describe('resource_of', function() {
     it('returns null when null given', function() {
-        expect(resource_for(null))->toBeNull();
+        expect(resource_of(null))->toBeNull();
     });
 });

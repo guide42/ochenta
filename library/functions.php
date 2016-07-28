@@ -3,7 +3,7 @@
 namespace Ochenta;
 
 /** @throws InvalidArgumentException */
-function resource_for($resource) {
+function resource_of($resource) {
     if (is_null($resource)) {
         return null;
     } elseif (is_scalar($resource)) {
