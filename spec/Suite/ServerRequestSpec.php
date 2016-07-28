@@ -158,6 +158,23 @@ describe('ServerRequest', function() {
             expect($req->getBody())->toBeA('resource');
             expect(fread($req->getBody(), 11))->toBe('Hello World');
         });
+
+        it('assigns the body to the given and is not overriden even if it has Content-Length', function() {
+            Monkey::patch('fopen', function($filename, $mode) {
+                if ($filename === 'php://input') {
+                    throw RuntimeExpection('This should never be called');
+                }
+                return fopen($filename, $mode);
+            });
+
+            $req = new ServerRequest([
+                'CONTENT_TYPE' => 'text/plain',
+                'CONTENT_LENGTH' => 11,
+            ], null, null, null, 'Hello World');
+
+            expect($req->getBody())->toBeA('resource');
+            expect(fread($req->getBody(), 11))->toBe('Hello World');
+        });
     });
 
     describe('->getParsedBody', function() {

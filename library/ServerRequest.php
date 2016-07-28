@@ -35,7 +35,9 @@ class ServerRequest extends Request
         }
 
         $headers = iterator_to_array($this->parseServerHeaders($server));
-        if (isset($headers['CONTENT-LENGTH']) || isset($headers['TRANSFER-ENCODING'])) {
+        if (empty($body) &&
+            (isset($headers['CONTENT-LENGTH']) || isset($headers['TRANSFER-ENCODING']))
+        ) {
             $body = fopen('php://input', 'rb');
         }
 
