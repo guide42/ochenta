@@ -72,7 +72,7 @@ class Request
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
                       current($this->headers['CONTENT-TYPE'])))), 1);
             foreach ($params as $param) {
-                $parts = explode('=', $param, 2);
+                $parts = explode('=', trim($param), 2);
                 if (current($parts) === 'charset') {
                     return trim(array_pop($parts), '"');
                 }
