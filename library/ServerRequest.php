@@ -15,7 +15,8 @@ class ServerRequest extends Request
         array $server=null,
         array $query=null,
         array $xargs=null,
-        array $files=null
+        array $files=null,
+        $body=null
     ) {
         if (empty($server)) {
           $server = $_SERVER;
@@ -34,8 +35,6 @@ class ServerRequest extends Request
         }
 
         $headers = iterator_to_array($this->parseServerHeaders($server));
-        $body = null;
-
         if (isset($headers['CONTENT-LENGTH']) || isset($headers['TRANSFER-ENCODING'])) {
             $body = fopen('php://input', 'rb');
         }

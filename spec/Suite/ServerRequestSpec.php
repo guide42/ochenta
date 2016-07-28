@@ -132,6 +132,13 @@ describe('ServerRequest', function() {
             expect($req->getFiles()['someform']['avatars'][0]['tmp_name'])->toBe('/tmp/phpLTufCb');
         });
 
+        it('assigns the body as a resource if string given', function() {
+            $req = new ServerRequest(null, null, null, null, 'Hello World');
+
+            expect($req->getBody())->toBeA('resource');
+            expect(stream_get_contents($req->getBody()))->toBe('Hello World');
+        });
+
         it('assigns the body to be php://input when it has Content-Length', function() {
             Monkey::patch('fopen', function($filename, $mode) {
                 if ($filename === 'php://input') {
