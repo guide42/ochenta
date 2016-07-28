@@ -19,3 +19,37 @@ function resource_of($resource) {
         throw new \InvalidArgumentException('Invalid resource');
     }
 }
+
+/** @throws RuntimeException */
+function mimetype_of($resource, $filename=null) {
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    if ($finfo === false) {
+        throw new \RuntimeException('Fileinfo database is not available');
+    }
+
+    $mimetype = false;
+    if (is_file($filename) && file_exists($filename)) {
+        $mimetype = finfo_file($finfo, $filename);
+    }
+
+    if ($mimetype === false) {
+        $contents = false;
+
+        if (is_string($resource)) {
+            $contents = $resource;
+        } elseif (is_resource($resource)) {
+            $contents = stream_get_contents($resource, -1, 0);
+        }
+
+        if ($contents !== false) {
+            $mimetype = finfo_buffer($finfo, $contents);
+        }
+    }
+    finfo_close($finfo);
+
+    if ($mimetype === false) {
+        throw new \RuntimeException('Couldn\'t detect mime type from resource');
+    }
+
+    return $mimetype;
+}
