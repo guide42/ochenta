@@ -46,7 +46,7 @@ class Stream implements StreamInterface
     function detach() {
         $resource = $this->resource;
         $this->resource = null;
-        return $this->resource;
+        return $resource;
     }
 
     function getSize()/* int|null */ {

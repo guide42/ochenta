@@ -57,7 +57,7 @@ class ServerRequest extends Request
     /** Retrieve parameters provided in the request body.
       */
     function getParsedBody(): array/* string[] */ {
-        if (empty($thix->xargs) &&
+        if (empty($this->xargs) &&
             !is_null($this->getBody()) &&
             in_array($this->getMethod(), ['POST']) &&
             in_array($this->getMediaType(), ['application/x-www-form-urlencoded'])

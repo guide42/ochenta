@@ -11,6 +11,7 @@ trait RequestTrait
     protected $uri;
     protected $method;
     protected $headers;
+    protected $headerNames;
     protected $requestTarget;
 
     function getRequestTarget(): string {
