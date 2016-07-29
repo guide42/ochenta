@@ -142,6 +142,7 @@ class ServerRequest extends Request
             $parts['scheme'] = ($server['HTTPS'] ?? 'off') === 'on' ? 'https' : 'http';
         }
         $defaultPort = $parts['scheme'] === 'https' ? 443 : 80;
+
         if (empty($parts['user']) && isset($server['PHP_AUTH_USER'])) {
             $parts['user'] = $server['PHP_AUTH_USER'];
         }
@@ -158,6 +159,7 @@ class ServerRequest extends Request
                 $parts['pass'] = substr(strchr($decoded, ':'), 1);
             }
         }
+
         if (empty($parts['host'])) {
             $parts['host'] = strtolower($server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost');
             if (strpos($parts['host'], ':') !== false) {
