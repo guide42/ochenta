@@ -148,6 +148,16 @@ class ServerRequest extends Request
         if (empty($parts['pass']) && isset($server['PHP_AUTH_PW'])) {
             $parts['pass'] = $server['PHP_AUTH_PW'];
         }
+        if (empty($parts['user']) &&
+            isset($server['HTTP_AUTHORIZATION']) &&
+            stripos($server['HTTP_AUTHORIZATION'], 'basic') === 0
+        ) {
+            $decoded = base64_decode(substr($server['HTTP_AUTHORIZATION'], 6));
+            if (strpos($decoded, ':') !== false) {
+                $parts['user'] = strchr($decoded, ':', true);
+                $parts['pass'] = substr(strchr($decoded, ':'), 1);
+            }
+        }
         if (empty($parts['host'])) {
             $parts['host'] = strtolower($server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost');
             if (strpos($parts['host'], ':') !== false) {

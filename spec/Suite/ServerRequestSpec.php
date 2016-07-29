@@ -259,6 +259,17 @@ describe('ServerRequest', function() {
             expect($req->getUri()['pass'])->toBe('toor');
         });
 
+        it('returns user and pass from basic authorization', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'http://example.com/path?queryString',
+                'HTTP_AUTHORIZATION' => 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==',
+            ]);
+
+            expect($req->getUri())->toContainKey('user')->toContainKey('pass');
+            expect($req->getUri()['user'])->toBe('Aladdin');
+            expect($req->getUri()['pass'])->toBe('open sesame');
+        });
+
         it('returns host from HOST header', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => '/path?queryString',
