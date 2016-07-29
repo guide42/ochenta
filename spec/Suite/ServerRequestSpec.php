@@ -218,6 +218,15 @@ describe('ServerRequest', function() {
 
             expect($req->getMethod())->toBe('PUT');
         });
+
+        it('returns HTTP_AUTHORIZATION if REDIRECT_HTTP_AUTHORIZATION is present', function() {
+            $req = new ServerRequest([
+                'REDIRECT_HTTP_AUTHORIZATION' => 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==',
+            ]);
+
+            expect($req->getHeaders())->toContainKey('AUTHORIZATION');
+            expect($req->getHeaders()['AUTHORIZATION'])->toBe(['Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==']);
+        });
     });
 
     describe('->normalizeUrl', function() {

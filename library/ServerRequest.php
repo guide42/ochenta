@@ -129,6 +129,9 @@ class ServerRequest extends Request
         if (isset($server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
             $server['REQUEST_METHOD'] = $server['HTTP_X_HTTP_METHOD_OVERRIDE'];
         }
+        if (isset($server['REDIRECT_HTTP_AUTHORIZATION'])) {
+            $server['HTTP_AUTHORIZATION'] = $server['REDIRECT_HTTP_AUTHORIZATION'];
+        }
         return $server;
     }
 
