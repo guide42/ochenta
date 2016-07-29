@@ -19,7 +19,15 @@ class ServerRequest extends Request
         $body=null
     ) {
         if (empty($server)) {
-          $server = $_SERVER;
+            $server = $_SERVER + [
+                'SERVER_PROTOCOL' => 'HTTP/1.1', // ignored
+                'CONTENT_TYPE'    => 'text/html; charset=utf-8',
+                'HTTP_HOST'       => 'localhost',
+                'SERVER_PORT'     => 80,
+                'SCRIPT_NAME'     => '/',
+                'REQUEST_URI'     => '/',
+                'REQUEST_METHOD'  => 'GET',
+            ];
         }
 
         $this->query = $query ?: $_GET;
