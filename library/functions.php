@@ -57,3 +57,24 @@ function mimetype_of($resource, $filename=null) {
 
     return $mimetype;
 }
+
+/** @throws InvalidArgumentException */
+function hash($resource, $algo='md5') {
+    if (is_scalar($resource)) {
+        return \hash($algo, $resource);
+    }
+
+    if (is_resource($resource)) {
+        if (!stream_get_meta_data($resource)['seekable']) {
+            throw new \InvalidArgumentException('Resource is not hashable (is not seekable)');
+        }
+        $context = hash_init($algo);
+        fseek($resource, 0, SEEK_SET);
+        while (!feof($resource)) {
+            hash_update($context, fread($resource, 4096));
+        }
+        return hash_final($context);
+    }
+
+    throw new \InvalidArgumentException('Resource is not hashable');
+}

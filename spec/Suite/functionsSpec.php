@@ -3,6 +3,7 @@
 use Kahlan\Plugin\Monkey;
 use function Ochenta\resource_of;
 use function Ochenta\mimetype_of;
+use function Ochenta\hash;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
@@ -44,5 +45,26 @@ describe('mimetype_of', function() {
         fwrite($resource, 'Hello World');
         expect(mimetype_of($resource))->toBe('text/plain');
         fclose($resource);
+    });
+});
+
+describe('hash', function() {
+    it('throws InvalidArgumentException when null given', function() {
+        expect(function() { hash(null); })->toThrow(new InvalidArgumentException);
+    });
+
+    it('throws InvalidArgumentException when the given resource is not seekable', function() {
+        expect(function() { hash(popen('php --version', 'r')); })->toThrow(new InvalidArgumentException);
+    });
+
+    it('returns hash of an scalar', function() {
+        expect(hash(42))->toBe('a1d0c6e83f027327d8461063f4ac58a6');
+        expect(hash('Hello World'))->toBe('b10a8db164e0754105b7a99be72e3fe5');
+    });
+
+    it('returns hash of a resource', function() {
+        $resource = fopen('php://memory', 'r+');
+        fwrite($resource, 'Hello World');
+        expect(hash($resource))->toBe('b10a8db164e0754105b7a99be72e3fe5');
     });
 });
