@@ -16,7 +16,7 @@ describe('mimetype_of', function() {
         expect(function() { mimetype_of(null); })->toThrow(new RuntimeException);
     });
 
-    // Disabled because Monkey::patch doesn't work on functions
+    // Disabled because Monkey::patch doesn't work on included files
     xit('throws RuntimeException when finfo db is not available', function() {
         Monkey::patch('finfo_open', function() {
             return false;
