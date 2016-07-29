@@ -32,7 +32,7 @@ function mimetype_of($resource, $filename=null) {
     }
 
     $mimetype = false;
-    if (is_file($filename) && file_exists($filename)) {
+    if (is_file($filename) && is_readable($filename)) {
         $mimetype = finfo_file($finfo, $filename);
     }
 
