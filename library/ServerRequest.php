@@ -141,7 +141,7 @@ class ServerRequest extends Request
             $parts['pass'] = $server['PHP_AUTH_PW'];
         }
         if (empty($parts['host'])) {
-            $parts['host'] = $server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost';
+            $parts['host'] = strtolower($server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost');
             if (strpos($parts['host'], ':') !== false) {
                 list($host, $port) = explode(':', $parts['host'], 2);
                 $parts['host'] = $host;
@@ -150,10 +150,7 @@ class ServerRequest extends Request
                 }
             }
         }
-        $parts['host'] = strtolower($parts['host']);
-        if (!empty($parts['host']) &&
-            preg_replace('/[a-zA-Z0-9-:\[\]]+\.?/', '', $parts['host']) !== ''
-        ) {
+        if (preg_replace('/[a-zA-Z0-9-:\[\]]+\.?/', '', $parts['host']) !== '') {
             throw new \UnexpectedValueException('Invalid host');
         }
         if (empty($parts['port']) && ($server['SERVER_PORT'] ?? $defaultPort) !== $defaultPort) {
