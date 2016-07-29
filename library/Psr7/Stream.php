@@ -108,7 +108,6 @@ class Stream implements StreamInterface
         }
         $mode = stream_get_meta_data($this->resource)['mode'];
         return strpos($mode, 'r') !== false ||
-               strpos($mode, 'a') !== false ||
                strpos($mode, '+') !== false;
 
     }
