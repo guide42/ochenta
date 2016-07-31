@@ -54,13 +54,10 @@ describe('Psr7\\MessageTrait', function() {
     describe('->getHeader', function() {
         it('returns the list of values for given normalized name', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
-            $message = $message->withHeader('Date', 'Tue, 26 Jul 2016 01:35:41 GMT');
-            $message = $message->withAddedHeader('Date', 'Tue, 26 Jul 2016 01:35:42 GMT');
+            $message = $message->withHeader('Content-Language', 'en');
+            $message = $message->withAddedHeader('Content-Language', 'es');
 
-            expect($message->getHeader('Date'))->toBe([
-                'Tue, 26 Jul 2016 01:35:42 GMT',
-                'Tue, 26 Jul 2016 01:35:41 GMT',
-            ]);
+            expect($message->getHeader('Content-Language'))->toBe(['es', 'en']);
         });
         it('returns an empty list when header is not found', function() {
             expect(Stub::create(['uses' => MessageTrait::class])->getHeader('Date'))->toBe([]);
@@ -69,10 +66,10 @@ describe('Psr7\\MessageTrait', function() {
     describe('->getHeaderLine', function() {
         it('returns comma separated values of the given normalized header', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
-            $message = $message->withAddedHeader('Content-Type', 'text/plain');
-            $message = $message->withAddedHeader('Content-Type', 'text/html');
+            $message = $message->withAddedHeader('Content-Language', 'en');
+            $message = $message->withAddedHeader('Content-Language', 'es');
 
-            expect($message->getHeaderLine('Content-Type'))->toBe('text/html,text/plain');
+            expect($message->getHeaderLine('Content-Language'))->toBe('es, en');
         });
     });
     describe('->withHeader', function() {

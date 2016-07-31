@@ -40,7 +40,7 @@ trait MessageTrait
     }
 
     function getHeaderLine(/*string */$name): string {
-        return implode(',', $this->getHeader($name));
+        return implode(', ', $this->getHeader($name));
     }
 
     function withHeader(/*string */$name, $value): self {
