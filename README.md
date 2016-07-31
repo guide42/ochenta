@@ -12,12 +12,15 @@ Usage
 $req = new Ochenta\ServerRequest;
 ```
 
-That's a request. There is also `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
 It could also be created with it's defaults values:
 
 ```php
 $req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, null);
 ```
+
+That's a request. There is `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
+
+There is `Ochenta\Response` but is no worth using it.
 
 Badges
 ------
