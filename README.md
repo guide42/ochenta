@@ -25,7 +25,7 @@ There is `Ochenta\Response` but is no worth using it. What else? Responders.
 Responders
 ----------
 
-When working in SAPI environment, you could define as response (but not a `Ochenta\Response` object) with a responder:
+When working in SAPI environment, you could define a response (but not a `Ochenta\Response` object) with a responder:
 
 ```php
 function hola(ServerRequest $req, callable $open) {
