@@ -30,8 +30,20 @@ class Gateway
                 }
             }
         });
-        foreach ($generator as $output) {
-            echo $output;
+
+        try {
+            foreach ($generator as $output) {
+                echo $output;
+            }
+        } finally {
+            try {
+                $close = $generator->getReturn();
+            } catch (\Exception $ex) {
+                $close = null;
+            }
+            if (is_callable($close)) {
+                call_user_func($close);
+            }
         }
     }
 }

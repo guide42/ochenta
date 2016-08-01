@@ -43,5 +43,25 @@ describe('Server\\Gateway', function() {
 
             expect(function() use($server) { $server(new ServerRequest); })->toEcho('Hola World');
         });
+
+        it('calls responder\'s return', function() {
+            $use = false;
+
+            Monkey::patch('headers_sent', function() {
+                return false;
+            });
+
+            $server = new Gateway(function(ServerRequest $req, callable $open) use(&$use) {
+                yield '';
+
+                return function() use(&$use) {
+                    $use = true;
+                };
+            });
+
+            $server(new ServerRequest);
+
+            expect($use)->toBe(true);
+        });
     });
 });
