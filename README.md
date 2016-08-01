@@ -20,7 +20,30 @@ $req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, null);
 
 That's a request. There is `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
 
-There is `Ochenta\Response` but is no worth using it.
+There is `Ochenta\Response` but is no worth using it. What else? Responders.
+
+Responders
+----------
+
+When working in SAPI environment, you could define as response (but not a `Ochenta\Response` object) with a responder:
+
+```php
+function hola(ServerRequest $req, callable $open) {
+    $name = $req->getQuery()['name'] ?? 'World';
+    $open(200, ['Content-Language' => ['en', 'es']]);
+    yield "Hola $name";
+}
+```
+
+Using a `Ochenta\Server\Gateway` the responder could be emitted:
+
+```php
+use Ochenta\ServerRequest;
+use Ochenta\Server\Gateway;
+
+$server = new Gateway(@hola);
+$server(new ServerRequest);
+```
 
 Badges
 ------
