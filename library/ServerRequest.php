@@ -82,6 +82,12 @@ class ServerRequest extends Request
         return $this->files;
     }
 
+    /** Returns true if the request is HTTPS, false otherwise.
+      */
+    function isSecure(): bool {
+        return $this->uri['scheme'] === 'https';
+    }
+
     private $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];
     private $invalidHeaders = ['HTTP_PROXY'];
 

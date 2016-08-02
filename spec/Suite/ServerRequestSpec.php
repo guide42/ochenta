@@ -199,6 +199,17 @@ describe('ServerRequest', function() {
         });
     });
 
+    describe('->isSecure', function() {
+        it('returns true when the HTTPS header is on', function() {
+            $req = new ServerRequest([
+              'REQUEST_URI' => '/path',
+              'HTTPS' => 'on',
+            ]);
+
+            expect($req->isSecure())->toBe(true);
+        });
+    });
+
     describe('->normalizeServer', function() {
         it('returns HTTPS when SCRIPT_URI starts with https://', function() {
             $req = new ServerRequest([
