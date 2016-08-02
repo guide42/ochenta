@@ -201,12 +201,7 @@ describe('ServerRequest', function() {
 
     describe('->isSecure', function() {
         it('returns true when the HTTPS header is on', function() {
-            $req = new ServerRequest([
-              'REQUEST_URI' => '/path',
-              'HTTPS' => 'on',
-            ]);
-
-            expect($req->isSecure())->toBe(true);
+            expect((new ServerRequest(['HTTPS' => 'on']))->isSecure())->toBe(true);
         });
     });
 
