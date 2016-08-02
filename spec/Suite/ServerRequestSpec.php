@@ -216,6 +216,16 @@ describe('ServerRequest', function() {
             expect($req->getUri()['scheme'])->toBe('https');
         });
 
+        it('returns HTTPS in lowercase, defaults to off', function() {
+            expect((new ServerRequest([]))->getUri()['scheme'])->toBe('http');
+            expect((new ServerRequest(['HTTPS' => 'ON']))->getUri()['scheme'])->toBe('https');
+        });
+
+        it('returns HTTPS on if is 1', function() {
+            expect((new ServerRequest(['HTTPS' => 0]))->getUri()['scheme'])->toBe('http');
+            expect((new ServerRequest(['HTTPS' => 1]))->getUri()['scheme'])->toBe('https');
+        });
+
         it('returns REQUEST_METHOD overriden by HTTP_X_HTTP_METHOD_OVERRIDE if present', function() {
             $req = new ServerRequest([
                 'REQUEST_METHOD' => 'POST',

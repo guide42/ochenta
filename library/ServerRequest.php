@@ -131,6 +131,10 @@ class ServerRequest extends Request
     private function normalizeServer(array $server): array {
         if (isset($server['SCRIPT_URI'])) {
             $server['HTTPS'] = strpos($server['SCRIPT_URI'], 'https://') === 0 ? 'on' : 'off';
+        } elseif (isset($server['HTTPS']) && is_int($server['HTTPS'])) {
+            $server['HTTPS'] = $server['HTTPS'] === 1 ? 'on' : 'off';
+        } else {
+            $server['HTTPS'] = strtolower($server['HTTPS'] ?? 'off');
         }
         if (isset($server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
             $server['REQUEST_METHOD'] = $server['HTTP_X_HTTP_METHOD_OVERRIDE'];
@@ -148,7 +152,7 @@ class ServerRequest extends Request
         }
 
         if (empty($parts['scheme'])) {
-            $parts['scheme'] = ($server['HTTPS'] ?? 'off') === 'on' ? 'https' : 'http';
+            $parts['scheme'] = $server['HTTPS'] === 'on' ? 'https' : 'http';
         }
         $defaultPort = $parts['scheme'] === 'https' ? 443 : 80;
 
