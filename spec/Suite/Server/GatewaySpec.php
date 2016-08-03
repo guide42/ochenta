@@ -8,7 +8,7 @@ describe('Server\\Gateway', function() {
     describe('->__invoke', function() {
         it('throws RuntimeException when headers has already been sent', function() {
             Monkey::patch('headers_sent', function() {
-                return true;
+                return TRUE;
             });
 
             $server = new Gateway(function(ServerRequest $req, callable $open) {
@@ -19,9 +19,9 @@ describe('Server\\Gateway', function() {
         });
 
         it('emit response to beyond', function() {
-            Monkey::patch('header', function(string $header, bool $replace=true) {
-                static $first = true;
-                static $reset = true;
+            Monkey::patch('header', function(string $header, bool $replace=TRUE) {
+                static $first = TRUE;
+                static $reset = TRUE;
                 if ($first) {
                     expect($header)->toBe('HTTP/1.1 202');
                     $first = false;
@@ -55,13 +55,13 @@ describe('Server\\Gateway', function() {
                 yield '';
 
                 return function() use(&$use) {
-                    $use = true;
+                    $use = TRUE;
                 };
             });
 
             $server(new ServerRequest);
 
-            expect($use)->toBe(true);
+            expect($use)->toBe(TRUE);
         });
     });
 });

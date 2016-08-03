@@ -56,12 +56,12 @@ describe('Psr7\\Request', function() {
             $req = new Request('GET', '/');
             $req = $req->withUri(new Uri('http://ochenta/'));
 
-            expect($req->hasHeader('Host'))->toBe(true);
+            expect($req->hasHeader('Host'))->toBe(TRUE);
             expect($req->getHeader('Host'))->toBe(['ochenta']);
         });
         it('return a new intance without HOST header when $preserveHost=true', function() {
             $req0 = new Request('GET', '/');
-            $req1 = $req0->withUri(new Uri('http://ochenta/'), true);
+            $req1 = $req0->withUri(new Uri('http://ochenta/'), TRUE);
 
             expect($req0->hasHeader('Host'))->toBe(false);
             expect($req1->hasHeader('Host'))->toBe(false);

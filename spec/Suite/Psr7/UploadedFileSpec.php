@@ -38,7 +38,7 @@ describe('Psr7\\UploadedFile', function() {
             touch($tmpfile);
             (new UploadedFile($tmpfile, 0, UPLOAD_ERR_OK))->moveTo('/tmp/kahlan/ochentatmp');
             expect(file_exists($tmpfile))->toBe(false);
-            expect(file_exists('/tmp/kahlan/ochentatmp'))->toBe(true);
+            expect(file_exists('/tmp/kahlan/ochentatmp'))->toBe(TRUE);
             unlink('/tmp/kahlan/ochentatmp');
         });
     });

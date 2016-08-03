@@ -33,15 +33,15 @@ describe('Psr7\\MessageTrait', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
             $message = $message->withHeader('Content-Type', 'text/plain');
 
-            expect($message->hasHeader('CONTENT-TYPE'))->toBe(true);
-            expect($message->hasHeader('CoNtEnT-tYpE'))->toBe(true);
-            expect($message->hasHeader('content-type'))->toBe(true);
+            expect($message->hasHeader('CONTENT-TYPE'))->toBe(TRUE);
+            expect($message->hasHeader('CoNtEnT-tYpE'))->toBe(TRUE);
+            expect($message->hasHeader('content-type'))->toBe(TRUE);
         });
         it('returns true if the header exists, false when not', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
             $message = $message->withHeader('Content-Type', 'text/plain');
 
-            expect($message->hasHeader('Content-Type'))->toBe(true);
+            expect($message->hasHeader('Content-Type'))->toBe(TRUE);
             expect($message->hasHeader('Content-Length'))->toBe(false);
         });
         it('returns false when is defined by empty', function() {
@@ -78,7 +78,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg1 = $msg0->withHeader('Content-Type', 'text/plain');
 
             expect($msg0->hasHeader('Content-Type'))->toBe(false);
-            expect($msg1->hasHeader('Content-Type'))->toBe(true);
+            expect($msg1->hasHeader('Content-Type'))->toBe(TRUE);
         });
         it('returns a copy that replace existing header', function() {
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
@@ -95,7 +95,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg1 = $msg0->withAddedHeader('Content-Type', 'text/plain');
 
             expect($msg0->hasHeader('Content-Type'))->toBe(false);
-            expect($msg1->hasHeader('Content-Type'))->toBe(true);
+            expect($msg1->hasHeader('Content-Type'))->toBe(TRUE);
         });
         it('returns a copy that add a value to existing header', function() {
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
@@ -112,7 +112,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg0 = $msg0->withAddedHeader('Content-Type', 'text/plain');
             $msg1 = $msg0->withoutHeader('CONTENT-TYPE', 'text/plain');
 
-            expect($msg0->hasHeader('Content-Type'))->toBe(true);
+            expect($msg0->hasHeader('Content-Type'))->toBe(TRUE);
             expect($msg1->hasHeader('Content-Type'))->toBe(false);
         });
     });

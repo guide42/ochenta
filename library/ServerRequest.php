@@ -168,7 +168,7 @@ class ServerRequest extends Request
         ) {
             $decoded = base64_decode(substr($server['HTTP_AUTHORIZATION'], 6));
             if (strpos($decoded, ':') !== false) {
-                $parts['user'] = strchr($decoded, ':', true);
+                $parts['user'] = strchr($decoded, ':', TRUE);
                 $parts['pass'] = substr(strchr($decoded, ':'), 1);
             }
         }

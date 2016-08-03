@@ -23,7 +23,7 @@ class Gateway
 
             foreach ($headers as $name => $values) {
                 $name = str_replace(' ', '-', ucwords(str_replace('-', ' ', $name)));
-                $first = true;
+                $first = TRUE;
                 foreach ($values as $value) {
                   header("$name: $value", $first);
                   $first = false;

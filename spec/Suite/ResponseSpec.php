@@ -65,7 +65,7 @@ describe('Response', function() {
 
     describe('->isRedirect', function() {
         it('returns true when status code is 302', function() {
-            expect((new Response(302))->isRedirect())->toBe(true);
+            expect((new Response(302))->isRedirect())->toBe(TRUE);
         });
     });
 });

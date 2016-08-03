@@ -91,14 +91,14 @@ describe('Psr7\\Stream', function() {
     });
     describe('->eof', function() {
         it('returns true when there is no resource', function() {
-            expect((new Stream(NULL))->eof())->toBe(true);
+            expect((new Stream(NULL))->eof())->toBe(TRUE);
         });
         it('returns true when the resource\'s pointer is at the end of the file', function() {
             $resource = fopen('php://memory', 'r');
             fwrite($resource, 'Four');
             fclose($resource);
 
-            expect((new Stream($resource))->eof())->toBe(true);
+            expect((new Stream($resource))->eof())->toBe(TRUE);
         });
         it('returns false when the resource\'s pointer is not at the end of the file', function() {
             expect((new Stream(fopen('php://memory', 'r')))->eof())->toBe(false);
@@ -109,7 +109,7 @@ describe('Psr7\\Stream', function() {
             expect((new Stream(NULL))->isSeekable())->toBe(false);
         });
         it('returns bool for resources', function() {
-            expect((new Stream(fopen('php://memory', 'a+')))->isSeekable())->toBe(true);
+            expect((new Stream(fopen('php://memory', 'a+')))->isSeekable())->toBe(TRUE);
         });
     });
     describe('->seek', function() {
@@ -153,9 +153,9 @@ describe('Psr7\\Stream', function() {
             expect((new Stream(NULL))->isWritable())->toBe(false);
         });
         it('returns true for writtable modes', function() {
-            expect((new Stream(fopen('php://memory', 'w')))->isWritable())->toBe(true);
-            expect((new Stream(fopen('php://memory', 'a')))->isWritable())->toBe(true);
-            expect((new Stream(fopen('php://memory', 'r+')))->isWritable())->toBe(true);
+            expect((new Stream(fopen('php://memory', 'w')))->isWritable())->toBe(TRUE);
+            expect((new Stream(fopen('php://memory', 'a')))->isWritable())->toBe(TRUE);
+            expect((new Stream(fopen('php://memory', 'r+')))->isWritable())->toBe(TRUE);
         });
         it('returns false for read-only mode', function() {
             expect((new Stream(fopen('php://memory', 'rb')))->isWritable())->toBe(false);
@@ -188,9 +188,9 @@ describe('Psr7\\Stream', function() {
             expect((new Stream(NULL))->isReadable())->toBe(false);
         });
         it('returns true for readable modes', function() {
-            expect((new Stream(fopen('php://memory', 'r')))->isReadable())->toBe(true);
-            expect((new Stream(fopen('php://memory', 'a')))->isReadable())->toBe(true);
-            expect((new Stream(fopen('php://memory', 'w+')))->isReadable())->toBe(true);
+            expect((new Stream(fopen('php://memory', 'r')))->isReadable())->toBe(TRUE);
+            expect((new Stream(fopen('php://memory', 'a')))->isReadable())->toBe(TRUE);
+            expect((new Stream(fopen('php://memory', 'w+')))->isReadable())->toBe(TRUE);
         });
     });
     describe('->read', function() {

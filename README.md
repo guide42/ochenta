@@ -53,9 +53,9 @@ Use them to wrap your `request -> responder` process. This is what it look like:
 ```php
 function timeit(callable $handler) {
     return function(ServerRequest $req, callable $open) use($handler) {
-        $time = -microtime(true);
+        $time = -microtime(TRUE);
         $res = yield from $handler($req, $open);
-        $time += microtime(true); 
+        $time += microtime(TRUE);
         yield sprintf("<address>%.7F secs</address>", $time);
         return $res;
     };
