@@ -70,6 +70,27 @@ $app = timeit($app);
 emit(new ServerRequest, $app);
 ```
 
+When options are needed, could be wrapped in yet another function.
+
+```php
+function add_header(string $name, string $value) {
+    return function(callable $handler) use($name, $value): callable {
+        return function(ServerRequest $req, callable $open) use($name, $value, $handler) {
+            return $handler($req, function(int $status, array $headers) use($name, $value, $open) {
+                $headers[$name] = [$value];
+                $open($status, $headers);
+            });
+        };
+    };
+}
+```
+
+Complex? This is how we use it:
+
+```php
+$app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
+```
+
 Badges
 ------
 
