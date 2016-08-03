@@ -133,31 +133,34 @@ describe('emit', function() {
 
 describe('header', function() {
     it('adds the given header with string value', function() {
-        $midware = header('X-Frame-Options', 'SAMEORIGIN')(function(ServerRequest $req, callable $open) {
+        $midware = header('X-Frame-Options', 'SAMEORIGIN');
+        $handler = $midware(function(ServerRequest $req, callable $open) {
             $open(200, []);
         });
 
-        $midware(new ServerRequest, function(int $status, array $headers) {
+        $handler(new ServerRequest, function(int $status, array $headers) {
             expect($headers)->toBe(['X-Frame-Options' => ['SAMEORIGIN']]);
         });
     });
 
     it('adds the given header with array value', function() {
-        $midware = header('Content-Language', ['en', 'es'])(function(ServerRequest $req, callable $open) {
+        $midware = header('Content-Language', ['en', 'es']);
+        $handler = $midware(function(ServerRequest $req, callable $open) {
             $open(200, []);
         });
 
-        $midware(new ServerRequest, function(int $status, array $headers) {
+        $handler(new ServerRequest, function(int $status, array $headers) {
             expect($headers)->toBe(['Content-Language' => ['en', 'es']]);
         });
     });
 
     it('replaces if header already exists', function() {
-        $midware = header('Content-Type', ['text/plain'])(function(ServerRequest $req, callable $open) {
+        $midware = header('Content-Type', ['text/plain']);
+        $handler = $midware(function(ServerRequest $req, callable $open) {
             $open(200, ['Content-Type' => ['text/html']]);
         });
 
-        $midware(new ServerRequest, function(int $status, array $headers) {
+        $handler(new ServerRequest, function(int $status, array $headers) {
             expect($headers)->toBe(['Content-Type' => ['text/plain']]);
         });
     });
