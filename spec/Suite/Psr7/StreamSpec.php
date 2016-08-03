@@ -6,7 +6,7 @@ use Ochenta\Psr7\Stream;
 describe('Psr7\\Stream', function() {
     describe('->__toString', function() {
         it('returns an empty string if there is no resource', function() {
-            expect((new Stream(null))->__toString())->toBe('');
+            expect((new Stream(NULL))->__toString())->toBe('');
         });
         it('returns content', function() {
             $resource = fopen('php://memory', 'w+');
@@ -23,7 +23,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->extract', function() {
         it('returns the resource', function() {
-            expect((new Stream(null))->extract())->toBeNull();
+            expect((new Stream(NULL))->extract())->toBeNull();
         });
     });
     describe('->extend', function() {
@@ -58,7 +58,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->getSize', function() {
         it('returns null when there is no resource', function() {
-            expect((new Stream(null))->getSize())->toBeNull();
+            expect((new Stream(NULL))->getSize())->toBeNull();
         });
         it('returns size in bytes', function() {
             $resource = fopen('php://memory', 'w');
@@ -70,7 +70,7 @@ describe('Psr7\\Stream', function() {
     describe('->tell', function() {
         it('throws RuntimeException when is there is no resource', function() {
             expect(function() {
-                (new Stream(null))->tell();
+                (new Stream(NULL))->tell();
             })
             ->toThrow(new RuntimeException);
         });
@@ -91,7 +91,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->eof', function() {
         it('returns true when there is no resource', function() {
-            expect((new Stream(null))->eof())->toBe(true);
+            expect((new Stream(NULL))->eof())->toBe(true);
         });
         it('returns true when the resource\'s pointer is at the end of the file', function() {
             $resource = fopen('php://memory', 'r');
@@ -106,7 +106,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->isSeekable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(null))->isSeekable())->toBe(false);
+            expect((new Stream(NULL))->isSeekable())->toBe(false);
         });
         it('returns bool for resources', function() {
             expect((new Stream(fopen('php://memory', 'a+')))->isSeekable())->toBe(true);
@@ -114,7 +114,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->seek', function() {
         it('throws RuntimeException when is not seekable', function() {
-            expect(function() { (new Stream(null))->seek(0); })->toThrow(new RuntimeException);
+            expect(function() { (new Stream(NULL))->seek(0); })->toThrow(new RuntimeException);
         });
         it('throws RuntimeException when offset is off boundaries', function() {
             expect(function() {
@@ -150,7 +150,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->isWritable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(null))->isWritable())->toBe(false);
+            expect((new Stream(NULL))->isWritable())->toBe(false);
         });
         it('returns true for writtable modes', function() {
             expect((new Stream(fopen('php://memory', 'w')))->isWritable())->toBe(true);
@@ -185,7 +185,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->isReadable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(null))->isReadable())->toBe(false);
+            expect((new Stream(NULL))->isReadable())->toBe(false);
         });
         it('returns true for readable modes', function() {
             expect((new Stream(fopen('php://memory', 'r')))->isReadable())->toBe(true);
@@ -196,7 +196,7 @@ describe('Psr7\\Stream', function() {
     describe('->read', function() {
         it('throws RuntimeException when resource is not readable', function() {
             expect(function() {
-                $stream = new Stream(null);
+                $stream = new Stream(NULL);
                 $stream->read(1);
             })
             ->toThrow(new RuntimeException);
@@ -222,7 +222,7 @@ describe('Psr7\\Stream', function() {
     describe('->getContents', function() {
         it('throws RuntimeException when resource is not readable', function() {
             expect(function() {
-                $stream = new Stream(null);
+                $stream = new Stream(NULL);
                 $stream->getContents();
             })
             ->toThrow(new RuntimeException);
@@ -247,8 +247,8 @@ describe('Psr7\\Stream', function() {
     });
     describe('->getMetadata', function() {
         it('returns null if when there is no resource', function() {
-            expect((new Stream(null))->getMetadata())->toBeNull();
-            expect((new Stream(null))->getMetadata('anykey'))->toBeNull();
+            expect((new Stream(NULL))->getMetadata())->toBeNull();
+            expect((new Stream(NULL))->getMetadata('anykey'))->toBeNull();
         });
         it('returns all metadata when no key given', function() {
             $stream = new Stream(fopen('php://memory', 'r'));

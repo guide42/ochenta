@@ -21,11 +21,11 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
     protected $attributes = [];
 
     function __construct(
-        array $server=null,
-        array $query=null,
-        array $xargs=null,
-        array $files=null,
-        array $cookie=null
+        array $server=NULL,
+        array $query=NULL,
+        array $xargs=NULL,
+        array $files=NULL,
+        array $cookie=NULL
     ) {
         $this->server = $server ?: $_SERVER;
         $this->cookie = $cookie ?: $_COOKIE;
@@ -112,7 +112,7 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
         return $this->attributes;
     }
 
-    function getAttribute($name, $default=null) {
+    function getAttribute($name, $default=NULL) {
         return $this->attributes[$name] ?? $default;
     }
 

@@ -5,7 +5,7 @@ namespace Ochenta;
 /** @throws InvalidArgumentException */
 function resource_of($resource) {
     if (is_null($resource)) {
-        return null;
+        return NULL;
     }
 
     if (is_scalar($resource)) {
@@ -25,7 +25,7 @@ function resource_of($resource) {
 }
 
 /** @throws RuntimeException */
-function mimetype_of($resource, $filename=null) {
+function mimetype_of($resource, $filename=NULL) {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     if ($finfo === false) {
         throw new \RuntimeException('Fileinfo database is not available');

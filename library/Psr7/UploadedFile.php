@@ -22,8 +22,8 @@ class UploadedFile implements UploadedFileInterface
         string $tmp,
         int $size,
         int $error,
-        string $clientName=null,
-        string $clientType=null
+        string $clientName=NULL,
+        string $clientType=NULL
     ) {
         $this->tmp = $tmp;
         $this->size = $size;

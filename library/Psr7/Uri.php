@@ -25,7 +25,7 @@ class Uri implements UriInterface
                (($fragment = $this->getFragment()) ? '#' : '') . $fragment;
     }
 
-    function __construct($uri=null) {
+    function __construct($uri=NULL) {
         if (is_null($uri)) {
             $this->components = [];
         } elseif (is_array($uri)) {
@@ -93,9 +93,9 @@ class Uri implements UriInterface
 
     function getPort()/* int|null */ {
         if ($this->isSchemeAllowed()) {
-            return null;
+            return NULL;
         }
-        return $this->components['port'] ?? null;
+        return $this->components['port'] ?? NULL;
     }
 
     function getPath(): string {
@@ -117,7 +117,7 @@ class Uri implements UriInterface
         return new self($uri);
     }
 
-    function withUserInfo(/*string */$user, $password=null): self {
+    function withUserInfo(/*string */$user, $password=NULL): self {
         $uri = $this->components;
         $uri['user'] = $user;
         $uri['pass'] = $password;

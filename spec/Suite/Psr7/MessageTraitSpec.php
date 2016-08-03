@@ -46,7 +46,7 @@ describe('Psr7\\MessageTrait', function() {
         });
         it('returns false when is defined by empty', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
-            $message = $message->withHeader('Content-Type', null);
+            $message = $message->withHeader('Content-Type', NULL);
 
             expect($message->hasHeader('Content-Type'))->toBe(false);
         });
@@ -124,7 +124,7 @@ describe('Psr7\\MessageTrait', function() {
             expect($message->getBody()->extract())->toBeNull();
         });
         it('returns stream given in ->withBody', function() {
-            $stream = new Stream(null);
+            $stream = new Stream(NULL);
 
             $message = Stub::create(['uses' => MessageTrait::class]);
             $message = $message->withBody($stream);
@@ -134,7 +134,7 @@ describe('Psr7\\MessageTrait', function() {
     });
     describe('->withBody', function() {
         it('returns a copy with the given stream', function() {
-            $stream = new Stream(null);
+            $stream = new Stream(NULL);
 
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
             $msg1 = $msg0->withBody($stream);
@@ -143,7 +143,7 @@ describe('Psr7\\MessageTrait', function() {
             expect($msg1->getBody())->toBe($stream);
         });
         it('returns same instance when body already assigned', function() {
-            $stream = new Stream(null);
+            $stream = new Stream(NULL);
 
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
             $msg0 = $msg0->withBody($stream);

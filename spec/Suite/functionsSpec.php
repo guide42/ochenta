@@ -7,13 +7,13 @@ use function Ochenta\hash;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
-        expect(resource_of(null))->toBeNull();
+        expect(resource_of(NULL))->toBeNull();
     });
 });
 
 describe('mimetype_of', function() {
     it('throws RuntimeException when null given', function() {
-        expect(function() { mimetype_of(null); })->toThrow(new RuntimeException);
+        expect(function() { mimetype_of(NULL); })->toThrow(new RuntimeException);
     });
 
     // Disabled because Monkey::patch doesn't work on included files
@@ -31,7 +31,7 @@ describe('mimetype_of', function() {
         $tmphandle = fopen($tmpfile, 'a');
         fwrite($tmphandle, 'Hello World');
         fclose($tmphandle);
-        expect(mimetype_of(null, $tmpfile))->toBe('text/plain');
+        expect(mimetype_of(NULL, $tmpfile))->toBe('text/plain');
         unlink($tmpfile);
     });
 
@@ -50,7 +50,7 @@ describe('mimetype_of', function() {
 
 describe('hash', function() {
     it('throws InvalidArgumentException when null given', function() {
-        expect(function() { hash(null); })->toThrow(new InvalidArgumentException);
+        expect(function() { hash(NULL); })->toThrow(new InvalidArgumentException);
     });
 
     it('throws InvalidArgumentException when the given resource is not seekable', function() {

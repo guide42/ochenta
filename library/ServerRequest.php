@@ -12,11 +12,11 @@ class ServerRequest extends Request
 
     /** @throws UnexpectedValueException */
     function __construct(
-        array $server=null,
-        array $query=null,
-        array $xargs=null,
-        array $files=null,
-        $body=null
+        array $server=NULL,
+        array $query=NULL,
+        array $xargs=NULL,
+        array $files=NULL,
+        $body=NULL
     ) {
         if (empty($server)) {
             $server = $_SERVER + [

@@ -43,9 +43,9 @@ class Stream implements StreamInterface
         $this->detach();
     }
 
-    function detach() {
+    function detach()/* resource */ {
         $resource = $this->resource;
-        $this->resource = null;
+        $this->resource = NULL;
         return $resource;
     }
 
@@ -126,13 +126,13 @@ class Stream implements StreamInterface
         return $contents;
     }
 
-    function getMetadata(/*string */$key=null) {
+    function getMetadata(/*string */$key=NULL) {
         if (is_resource($this->resource)) {
             $meta = stream_get_meta_data($this->resource);
             if (is_null($key)) {
                 return $meta;
             }
-            return $meta[$key] ?? null;
+            return $meta[$key] ?? NULL;
         }
     }
 }

@@ -11,7 +11,7 @@ class Request
     protected $headers;
     protected $body;
 
-    function __construct(string $method, $uri, array $headers=[], $body=null) {
+    function __construct(string $method, $uri, array $headers=[], $body=NULL) {
         $this->method = strtoupper($method);
         $this->uri = is_array($uri) ? $uri : parse_url($uri);
 

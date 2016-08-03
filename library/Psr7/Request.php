@@ -11,7 +11,7 @@ class Request extends OchentaRequest implements RequestInterface
 {
     use MessageTrait, RequestTrait;
 
-    function __construct(string $method, $uri, array $headers=[], $body=null) {
+    function __construct(string $method, $uri, array $headers=[], $body=NULL) {
         foreach ($headers as $name => $header) {
             $this->headerNames[strtoupper($name)] = $name;
         }

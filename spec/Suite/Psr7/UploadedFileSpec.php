@@ -60,7 +60,7 @@ describe('Psr7\\UploadedFile', function() {
     });
     describe('->getClientMediaType', function() {
         it('returns the client type', function() {
-            $file = new UploadedFile('', 0, UPLOAD_ERR_NO_FILE, null, 'text/plain');
+            $file = new UploadedFile('', 0, UPLOAD_ERR_NO_FILE, NULL, 'text/plain');
             expect($file->getClientMediaType())->toBe('text/plain');
         });
     });

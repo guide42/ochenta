@@ -10,7 +10,7 @@ class Response
     protected $headers;
     protected $body;
 
-    function __construct(int $statusCode=200, array $headers=[], $body=null) {
+    function __construct(int $statusCode=200, array $headers=[], $body=NULL) {
         if ($statusCode < 100 || $statusCode >= 600) {
             throw new \InvalidArgumentException('Status code must be between 100 and 600');
         }
@@ -28,7 +28,7 @@ class Response
         if (($statusCode >= 100 && $statusCode < 200) || in_array($statusCode, [204, 304])) {
             unset($headers['CONTENT-TYPE']);
             unset($headers['CONTENT-LENGTH']);
-            $body = null;
+            $body = NULL;
         } elseif (!isset($headers['CONTENT-TYPE'])) {
             $headers['CONTENT-TYPE'] = ['text/html; charset=utf-8'];
         } elseif (

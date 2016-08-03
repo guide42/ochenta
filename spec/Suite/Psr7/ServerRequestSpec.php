@@ -32,12 +32,12 @@ describe('Psr7\\ServerRequest', function() {
     });
     describe('->getCookieParams', function() {
         it('returns the given cookie parameters', function() {
-            expect((new ServerRequest(null, null, null, null, ['foo' => 'bar']))->getCookieParams())->toBe(['foo' => 'bar']);
+            expect((new ServerRequest(NULL, NULL, NULL, NULL, ['foo' => 'bar']))->getCookieParams())->toBe(['foo' => 'bar']);
         });
     });
     describe('->withCookieParams', function() {
         it('returns a copy with the given cookie parameters', function() {
-            $req0 = new ServerRequest(null, null, null, null, ['foo' => 'bar']);
+            $req0 = new ServerRequest(NULL, NULL, NULL, NULL, ['foo' => 'bar']);
             $req1 = $req0->withCookieParams(['bar' => 'foo']);
 
             expect($req0->getCookieParams())->toBe(['foo' => 'bar']);
@@ -46,12 +46,12 @@ describe('Psr7\\ServerRequest', function() {
     });
     describe('->getQueryParams', function() {
         it('returns the given query parameters', function() {
-            expect((new ServerRequest(null, ['foo' => 'bar']))->getQueryParams())->toBe(['foo' => 'bar']);
+            expect((new ServerRequest(NULL, ['foo' => 'bar']))->getQueryParams())->toBe(['foo' => 'bar']);
         });
     });
     describe('->withQueryParams', function() {
         it('returns a copy with the given query parameters', function() {
-            $req0 = new ServerRequest(null, ['foo' => 'bar']);
+            $req0 = new ServerRequest(NULL, ['foo' => 'bar']);
             $req1 = $req0->withQueryParams(['bar' => 'foo']);
 
             expect($req0->getQueryParams())->toBe(['foo' => 'bar']);
@@ -60,7 +60,7 @@ describe('Psr7\\ServerRequest', function() {
     });
     describe('->getUploadedFiles', function() {
         it('returns the given files parameters as Ochenta\\Psr7\\UploadedFile', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
                 'avatar' => [
                     'tmp_name' => '/tmp/phpUxcOty',
                     'name'     => 'avatar.png',
@@ -76,7 +76,7 @@ describe('Psr7\\ServerRequest', function() {
             expect($req->getUploadedFiles()['avatar']->getClientFilename())->toBe('avatar.png');
         });
         it('returns the given tree of Ochenta\\Psr7\\UploadedFile', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
                 'someform' => [
                     'tmp_name' => ['avatars' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D']],
                     'name'     => ['avatars' => [0 => 'avatar-0.png', 1 => 'avatar-1.png']],
@@ -96,7 +96,7 @@ describe('Psr7\\ServerRequest', function() {
     });
     describe('->withUploadedFiles', function() {
         it('returns a copy with the given uploaded files', function() {
-            $req0 = new ServerRequest(null, null, null, []);
+            $req0 = new ServerRequest(NULL, NULL, NULL, []);
             $req1 = $req0->withUploadedFiles([
                 'avatar' => new UploadedFile('/tmp/phpUxcOty', 73096, 0, 'avatar.png', 'image/png'),
             ]);
@@ -107,7 +107,7 @@ describe('Psr7\\ServerRequest', function() {
     });
     describe('->withParsedBody', function() {
         it('returns a copy with the given query parameters', function() {
-            $req0 = new ServerRequest(null, null, ['foo' => 'bar']);
+            $req0 = new ServerRequest(NULL, NULL, ['foo' => 'bar']);
             $req1 = $req0->withParsedBody(['bar' => 'foo']);
 
             expect($req0->getParsedBody())->toBe(['foo' => 'bar']);

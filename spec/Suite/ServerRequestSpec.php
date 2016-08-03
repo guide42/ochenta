@@ -19,7 +19,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns query as query parameters', function() {
-            $req = new ServerRequest(null, ['foo' => 'bar']);
+            $req = new ServerRequest(NULL, ['foo' => 'bar']);
 
             expect($req->getQuery())->toBeA('array')->toContainKey('foo');
             expect($req->getQuery()['foo'])->toBe('bar');
@@ -33,7 +33,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns xargs as form parameters', function() {
-            $req = new ServerRequest(null, null, ['foo' => 'bar']);
+            $req = new ServerRequest(NULL, NULL, ['foo' => 'bar']);
 
             expect($req->getParsedBody())->toBeA('array')->toContainKey('foo');
             expect($req->getParsedBody()['foo'])->toBe('bar');
@@ -52,20 +52,20 @@ describe('ServerRequest', function() {
 
         it('throws UnexpectedValueException with invalid uploaded file', function() {
             expect(function() {
-              new ServerRequest(null, null, null, ['/tmp/phpXXXXXX']);
+              new ServerRequest(NULL, NULL, NULL, ['/tmp/phpXXXXXX']);
             })
             ->toThrow(new UnexpectedValueException);
         });
 
         it('throws UnexpectedValueException with an uploaded file without error', function() {
             expect(function() {
-              new ServerRequest(null, null, null, [['tmp_name' => '/tmp/phpXXXXXX']]);
+              new ServerRequest(NULL, NULL, NULL, [['tmp_name' => '/tmp/phpXXXXXX']]);
             })
             ->toThrow(new UnexpectedValueException);
         });
 
         it('assigns simple files', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
               'avatar' => [
                 'tmp_name' => '/tmp/phpUxcOty',
                 'name'     => 'avatar.png',
@@ -81,7 +81,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns collection files', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
               'avatars' => [
                 'tmp_name' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D'],
                 'name'     => [0 => 'avatar-0.png', 1 => 'avatar-1.png'],
@@ -98,7 +98,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns nested simple files', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
               'someform' => [
                 'tmp_name' => ['avatar' => '/tmp/phpUxcOty'],
                 'name'     => ['avatar' => 'avatar.png'],
@@ -115,7 +115,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns nested collection files', function() {
-            $req = new ServerRequest(null, null, null, [
+            $req = new ServerRequest(NULL, NULL, NULL, [
               'someform' => [
                 'tmp_name' => ['avatars' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D']],
                 'name'     => ['avatars' => [0 => 'avatar-0.png', 1 => 'avatar-1.png']],
@@ -133,7 +133,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns the body as a resource if string given', function() {
-            $req = new ServerRequest(null, null, null, null, 'Hello World');
+            $req = new ServerRequest(NULL, NULL, NULL, NULL, 'Hello World');
 
             expect($req->getBody())->toBeA('resource');
             expect(stream_get_contents($req->getBody()))->toBe('Hello World');
@@ -170,7 +170,7 @@ describe('ServerRequest', function() {
             $req = new ServerRequest([
                 'CONTENT_TYPE' => 'text/plain',
                 'CONTENT_LENGTH' => 11,
-            ], null, null, null, 'Hello World');
+            ], NULL, NULL, NULL, 'Hello World');
 
             expect($req->getBody())->toBeA('resource');
             expect(fread($req->getBody(), 11))->toBe('Hello World');

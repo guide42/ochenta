@@ -15,7 +15,7 @@ $req = new Ochenta\ServerRequest;
 It could also be created with it's defaults values:
 
 ```php
-$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, null);
+$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
 ```
 
 That's a request. There is `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.

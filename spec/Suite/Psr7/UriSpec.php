@@ -144,7 +144,7 @@ describe('Psr7\\Uri', function() {
             $uri0 = new Uri('http://ochenta/');
             $uri1 = $uri0->withPort('8080');
 
-            expect($uri0->getPort())->toBe(null);
+            expect($uri0->getPort())->toBe(NULL);
             expect($uri1->getPort())->toBe(8080);
         });
     });

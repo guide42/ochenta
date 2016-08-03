@@ -39,7 +39,7 @@ class Gateway
             try {
                 $close = $generator->getReturn();
             } catch (\Exception $ex) {
-                $close = null;
+                $close = NULL;
             }
             if (is_callable($close)) {
                 call_user_func($close);
