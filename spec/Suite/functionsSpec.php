@@ -6,6 +6,7 @@ use function Ochenta\resource_of;
 use function Ochenta\mimetype_of;
 use function Ochenta\hash;
 use function Ochenta\emit;
+use function Ochenta\stack;
 use function Ochenta\header;
 
 describe('resource_of', function() {
@@ -128,6 +129,91 @@ describe('emit', function() {
         });
 
         expect($closed)->toBe(TRUE);
+    });
+});
+
+describe('stack', function() {
+    it('throws InvalidArgumentException if resolver is not callable', function() {
+        expect(function() {
+            stack(function() {}, TRUE);
+        })
+        ->toThrow(new InvalidArgumentException);
+    });
+
+    it('throws InvalidArgumentException when no middleware was given', function() {
+        expect(function() {
+            stack(function() {}, function() {});
+        })
+        ->toThrow(new InvalidArgumentException);
+    });
+
+    given('res', function() {
+        return function(ServerRequest $req, callable $open) {
+            $open(202, ['Content-Language' => ['en', 'es']]);
+            yield 'Hola Mundo';
+        };
+    });
+
+    it('calls resolver with responder and middleware', function() {
+        $responder = function() {};
+        $middleware = function() {};
+
+        $resolver = function($prev, $handler) use($responder, $middleware) {
+            expect($prev)->toBe($responder);
+            expect($handler)->toBe($middleware);
+        };
+
+        stack($responder, $resolver, $middleware);
+    });
+
+    it('calls resolver with inverted middleware list', function() {
+        $middle0 = function() {};
+        $middle1 = function() {};
+
+        $resolver = function($prev, $handler) use($middle0, $middle1) {
+            static $middlewares = 1;
+            expect($handler)->toBe(${'middle' . $middlewares--});
+        };
+
+        stack(function() {}, $resolver, $middle0, $middle1);
+    });
+
+    it('calls resolver with flatten middleware list', function() {
+        $middle0 = function() {};
+        $middle1 = function() {};
+        $middle2 = function() {};
+
+        $resolver = function($prev, $handler) use($middle0, $middle1, $middle2) {
+            static $middlewares = 2;
+            expect($handler)->toBe(${'middle' . $middlewares--});
+        };
+
+        stack(function() {}, $resolver, $middle0, [$middle1, $middle2]);
+    });
+
+    it('uses default resolver when a stack of middlewares is given instead', function() {
+        $responder = function() {};
+
+        $handler1 = function() {};
+        $middle1 = function($handler) use($responder, $handler1) {
+            expect($handler)->toBe($responder);
+            return $handler1;
+        };
+
+        $handler2 = function() {};
+        $middle0 = function($handler) use($handler1, $handler2) {
+            expect($handler)->toBe($handler1);
+            return $handler2;
+        };
+
+        expect(stack($responder, [$middle0, $middle1]))->toBe($handler2);
+    });
+
+    it('throws InvalidArgumentException by default resolver when middleware is not a callable', function() {
+        expect(function() {
+            stack(function() {}, [FALSE]);
+        })
+        ->toThrow(new InvalidArgumentException);
     });
 });
 

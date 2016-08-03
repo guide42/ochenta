@@ -116,6 +116,34 @@ function emit(ServerRequest $req, callable $handler) {
     }
 }
 
+/** @throws InvalidArgumentException */
+function stack(callable $responder, $resolver, ...$stack) {
+    if (is_array($resolver)) {
+        $stack += $resolver;
+        $resolver = function(callable $prev, $handler) {
+            if (is_callable($handler)) {
+                return $handler($prev);
+            }
+            throw new \InvalidArgumentException('Invalid middleware');
+        };
+    } elseif (!is_callable($resolver)) {
+        throw new \InvalidArgumentException('Resolver must be a callable');
+    }
+    if (empty($stack)) {
+        throw new \InvalidArgumentException('At least one middleware is required');
+    }
+    $flatten = function(array $list) use(&$flatten) {
+        foreach ($list as $item) {
+            if (is_array($item)) {
+                yield from $flatten($item);
+            } else {
+                yield $item;
+            }
+        }
+    };
+    return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $responder);
+}
+
 function header(string $name, /*array|scalar */$value) {
     return function(callable $handler) use($name, $value): callable {
         return function(ServerRequest $req, callable $open) use($name, $value, $handler) {
