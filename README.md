@@ -45,6 +45,33 @@ $server = new Gateway(@hola);
 $server(new ServerRequest);
 ```
 
+Middlewares
+-----------
+
+Use them to wrap your `request -> responder` process. This is what it look like:
+
+```php
+function timeit(callable $handler) {
+    return function(ServerRequest $req, callable $open) use($handler) {
+        $time = -microtime(true);
+        $res = yield from $handler($req, $open);
+        $time += microtime(true); 
+        yield sprintf("<address>%.7F secs</address>", $time);
+        return $res;
+    };
+}
+```
+
+Decorating your app responder:
+
+```php
+$app = @hola;
+$app = timeit($app);
+
+$server = new Gateway($app);
+$server(new ServerRequest);
+```
+
 Badges
 ------
 
