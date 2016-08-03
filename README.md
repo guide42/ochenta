@@ -47,7 +47,7 @@ Middlewares
 Use them to wrap your `request -> responder` process. This is what it look like:
 
 ```php
-function timeit(callable $handler) {
+function timeit(callable $handler): callable {
     return function(ServerRequest $req, callable $open) use($handler) {
         $time = -microtime(TRUE);
         $res = yield from $handler($req, $open);
@@ -73,7 +73,7 @@ emit(new ServerRequest, $app);
 When options are needed, could be wrapped in yet another function.
 
 ```php
-function add_header(string $name, string $value) {
+function add_header(string $name, string $value): callable {
     return function(callable $handler) use($name, $value): callable {
         return function(ServerRequest $req, callable $open) use($name, $value, $handler) {
             return $handler($req, function(int $status, array $headers) use($name, $value, $open) {
