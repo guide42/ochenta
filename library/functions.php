@@ -144,11 +144,11 @@ function stack(callable $responder, $resolver, ...$stack) {
     return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $responder);
 }
 
-function header(string $name, /*array|scalar */$value) {
-    return function(callable $handler) use($name, $value): callable {
-        return function(ServerRequest $req, callable $open) use($name, $value, $handler) {
-            return $handler($req, function(int $status, array $headers) use($name, $value, $open) {
-                $headers[$name] = (array) $value;
+function header(string $name, ...$values) {
+    return function(callable $handler) use($name, $values): callable {
+        return function(ServerRequest $req, callable $open) use($name, $values, $handler) {
+            return $handler($req, function(int $status, array $headers) use($name, $values, $open) {
+                $headers[$name] = $values;
                 $open($status, $headers);
             });
         };

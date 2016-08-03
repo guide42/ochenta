@@ -229,8 +229,8 @@ describe('header', function() {
         });
     });
 
-    it('adds the given header with array value', function() {
-        $midware = header('Content-Language', ['en', 'es']);
+    it('adds the given header with variadics values', function() {
+        $midware = header('Content-Language', 'en', 'es');
         $handler = $midware(function(ServerRequest $req, callable $open) {
             $open(200, []);
         });
@@ -241,7 +241,7 @@ describe('header', function() {
     });
 
     it('replaces if header already exists', function() {
-        $midware = header('Content-Type', ['text/plain']);
+        $midware = header('Content-Type', 'text/plain');
         $handler = $midware(function(ServerRequest $req, callable $open) {
             $open(200, ['Content-Type' => ['text/html']]);
         });
