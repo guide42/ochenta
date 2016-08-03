@@ -35,14 +35,10 @@ function hola(ServerRequest $req, callable $open) {
 }
 ```
 
-Using a `Ochenta\Server\Gateway` the responder could be emitted:
+Using a `Ochenta\emit` function, the responder could be emitted:
 
 ```php
-use Ochenta\ServerRequest;
-use Ochenta\Server\Gateway;
-
-$server = new Gateway(@hola);
-$server(new ServerRequest);
+Ochenta\emit(new Ochenta\ServerRequest, @hola);
 ```
 
 Middlewares
@@ -65,11 +61,13 @@ function timeit(callable $handler) {
 Decorating your app responder:
 
 ```php
+use Ochenta\ServerRequest;
+use function Ochenta\emit;
+
 $app = @hola;
 $app = timeit($app);
 
-$server = new Gateway($app);
-$server(new ServerRequest);
+emit(new ServerRequest, $app);
 ```
 
 Badges
