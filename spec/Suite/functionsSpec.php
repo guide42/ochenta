@@ -1,9 +1,11 @@
 <?php
 
 use Kahlan\Plugin\Monkey;
+use Ochenta\ServerRequest;
 use function Ochenta\resource_of;
 use function Ochenta\mimetype_of;
 use function Ochenta\hash;
+use function Ochenta\emit;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
@@ -66,5 +68,64 @@ describe('hash', function() {
         $resource = fopen('php://memory', 'r+');
         fwrite($resource, 'Hello World');
         expect(hash($resource))->toBe('b10a8db164e0754105b7a99be72e3fe5');
+    });
+});
+
+describe('emit', function() {
+    it('throws RuntimeException when headers has already been sent', function() {
+        // This patch is not being executed, but because kahlan already print
+        // tests to console, headers_sent returns true.
+        Monkey::patch('headers_sent', function() {
+            return TRUE;
+        });
+
+        expect(function() {
+            emit(new ServerRequest, function(ServerRequest $req, callable $open) {
+                $open(200, []);
+            });
+        })
+        ->toThrow(new RuntimeException);
+    });
+
+    // Disabled because Monkey::patch doesn't work on included files
+    xit('emit response to beyond', function() {
+        Monkey::patch('header', function(string $header, bool $replace=TRUE) {
+            static $first = TRUE;
+            static $reset = TRUE;
+            if ($first) {
+                expect($header)->toBe('HTTP/1.1 202');
+                $first = FALSE;
+            } else {
+                expect($replace)->toBe($reset);
+                $reset = FALSE;
+            }
+        });
+
+        Monkey::patch('headers_sent', function() {
+            return FALSE;
+        });
+
+        expect(function() {
+            emit(new ServerRequest, function(ServerRequest $req, callable $open) {
+                $name = $req->getQuery()['name'] ?? 'World';
+                $open(202, ['Content-Language' => ['en', 'es']]);
+                yield "Hola $name";
+            });
+        })
+        ->toEcho('Hola World');
+    });
+
+    it('calls responder\'s return', function() {
+        $closed = FALSE;
+
+        emit(new ServerRequest, function(ServerRequest $req, callable $open) use(&$closed) {
+            yield '';
+
+            return function() use(&$closed) {
+                $closed = TRUE;
+            };
+        });
+
+        expect($closed)->toBe(TRUE);
     });
 });
