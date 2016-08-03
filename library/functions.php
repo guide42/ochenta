@@ -85,13 +85,15 @@ function emit(ServerRequest $req, callable $handler) {
             throw new \RuntimeException('Headers already sent');
         }
 
-        header(sprintf('HTTP/1.1 %d', $status));
+        // Root namespace must be explicity declared because the presence
+        // of Ochenta\header middleware.
+        \header(sprintf('HTTP/1.1 %d', $status));
 
         foreach ($headers as $name => $values) {
             $name = str_replace(' ', '-', ucwords(str_replace('-', ' ', $name)));
             $first = TRUE;
             foreach ($values as $value) {
-                header("$name: $value", $first);
+                \header("$name: $value", $first);
                 $first = FALSE;
             }
         }
@@ -111,4 +113,15 @@ function emit(ServerRequest $req, callable $handler) {
             call_user_func($close);
         }
     }
+}
+
+function header(string $name, /*array|scalar */$value) {
+    return function(callable $handler) use($name, $value): callable {
+        return function(ServerRequest $req, callable $open) use($name, $value, $handler) {
+            return $handler($req, function(int $status, array $headers) use($name, $value, $open) {
+                $headers[$name] = (array) $value;
+                $open($status, $headers);
+            });
+        };
+    };
 }

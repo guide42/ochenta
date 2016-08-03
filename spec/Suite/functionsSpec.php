@@ -6,6 +6,7 @@ use function Ochenta\resource_of;
 use function Ochenta\mimetype_of;
 use function Ochenta\hash;
 use function Ochenta\emit;
+use function Ochenta\header;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
@@ -127,5 +128,37 @@ describe('emit', function() {
         });
 
         expect($closed)->toBe(TRUE);
+    });
+});
+
+describe('header', function() {
+    it('adds the given header with string value', function() {
+        $midware = header('X-Frame-Options', 'SAMEORIGIN')(function(ServerRequest $req, callable $open) {
+            $open(200, []);
+        });
+
+        $midware(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe(['X-Frame-Options' => ['SAMEORIGIN']]);
+        });
+    });
+
+    it('adds the given header with array value', function() {
+        $midware = header('Content-Language', ['en', 'es'])(function(ServerRequest $req, callable $open) {
+            $open(200, []);
+        });
+
+        $midware(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe(['Content-Language' => ['en', 'es']]);
+        });
+    });
+
+    it('replaces if header already exists', function() {
+        $midware = header('Content-Type', ['text/plain'])(function(ServerRequest $req, callable $open) {
+            $open(200, ['Content-Type' => ['text/html']]);
+        });
+
+        $midware(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe(['Content-Type' => ['text/plain']]);
+        });
     });
 });
