@@ -91,8 +91,8 @@ function emit(ServerRequest $req, callable $handler) {
             $name = str_replace(' ', '-', ucwords(str_replace('-', ' ', $name)));
             $first = TRUE;
             foreach ($values as $value) {
-              header("$name: $value", $first);
-              $first = FALSE;
+                header("$name: $value", $first);
+                $first = FALSE;
             }
         }
     });
