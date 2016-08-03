@@ -79,6 +79,7 @@ function hash($resource, $algo='md5') {
     throw new \InvalidArgumentException('Resource is not hashable');
 }
 
+/** @throws RuntimeException */
 function emit(ServerRequest $req, callable $handler) {
     $generator = $handler($req, function(int $status, array $headers) {
         if (headers_sent()) {
