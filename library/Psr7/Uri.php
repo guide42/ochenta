@@ -9,7 +9,7 @@ use Psr\Http\Message\UriInterface;
 class Uri implements UriInterface
 {
     /** @var array */
-    protected $components = false;
+    protected $components = FALSE;
 
     /** @var array */
     protected $allowedSchemes = [
@@ -56,7 +56,7 @@ class Uri implements UriInterface
             $this->components['port'] = (int) $this->components['port'];
         }
 
-        if ($this->components === false) {
+        if ($this->components === FALSE) {
             throw new \InvalidArgumentException('Malformed uri');
         }
     }

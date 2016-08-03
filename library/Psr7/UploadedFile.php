@@ -16,7 +16,7 @@ class UploadedFile implements UploadedFileInterface
     protected $name;
     protected $type;
 
-    protected $moved = false;
+    protected $moved = FALSE;
 
     function __construct(
         string $tmp,
@@ -52,7 +52,7 @@ class UploadedFile implements UploadedFileInterface
         } elseif (is_uploaded_file($this->tmp)) {
             $this->moved = move_uploaded_file($this->tmp, $targetPath);
         }
-        if ($this->moved === false) {
+        if ($this->moved === FALSE) {
             throw new \RuntimeException('Couldn\'t move file');
         }
     }

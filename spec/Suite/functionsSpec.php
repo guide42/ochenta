@@ -19,7 +19,7 @@ describe('mimetype_of', function() {
     // Disabled because Monkey::patch doesn't work on included files
     xit('throws RuntimeException when finfo db is not available', function() {
         Monkey::patch('finfo_open', function() {
-            return false;
+            return FALSE;
         });
 
         expect(function() { mimetype_of('Hello World'); })->toThrow(new RuntimeException);
@@ -27,7 +27,7 @@ describe('mimetype_of', function() {
 
     it('returns mimetype from fileinfo db if the file is found', function() {
         $tmpfile = tempnam(sys_get_temp_dir(), 'kahlan/');
-        skipIf($tmpfile === false);
+        skipIf($tmpfile === FALSE);
         $tmphandle = fopen($tmpfile, 'a');
         fwrite($tmphandle, 'Hello World');
         fclose($tmphandle);

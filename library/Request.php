@@ -15,7 +15,7 @@ class Request
         $this->method = strtoupper($method);
         $this->uri = is_array($uri) ? $uri : parse_url($uri);
 
-        if ($this->uri === false) {
+        if ($this->uri === FALSE) {
             throw new \InvalidArgumentException('Invalid uri');
         }
 

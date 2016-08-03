@@ -147,7 +147,7 @@ class ServerRequest extends Request
 
     private function normalizeUrl(string $url, array $server): array {
         $parts = parse_url($url);
-        if ($parts === false) {
+        if ($parts === FALSE) {
             throw new \UnexpectedValueException('Invalid uri');
         }
 
@@ -167,7 +167,7 @@ class ServerRequest extends Request
             stripos($server['HTTP_AUTHORIZATION'], 'basic') === 0
         ) {
             $decoded = base64_decode(substr($server['HTTP_AUTHORIZATION'], 6));
-            if (strpos($decoded, ':') !== false) {
+            if (strpos($decoded, ':') !== FALSE) {
                 $parts['user'] = strchr($decoded, ':', TRUE);
                 $parts['pass'] = substr(strchr($decoded, ':'), 1);
             }
@@ -175,7 +175,7 @@ class ServerRequest extends Request
 
         if (empty($parts['host'])) {
             $parts['host'] = strtolower($server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost');
-            if (strpos($parts['host'], ':') !== false) {
+            if (strpos($parts['host'], ':') !== FALSE) {
                 list($host, $port) = explode(':', $parts['host'], 2);
                 $parts['host'] = $host;
                 if (empty($parts['port']) && $port != $defaultPort) {

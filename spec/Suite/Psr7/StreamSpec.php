@@ -101,12 +101,12 @@ describe('Psr7\\Stream', function() {
             expect((new Stream($resource))->eof())->toBe(TRUE);
         });
         it('returns false when the resource\'s pointer is not at the end of the file', function() {
-            expect((new Stream(fopen('php://memory', 'r')))->eof())->toBe(false);
+            expect((new Stream(fopen('php://memory', 'r')))->eof())->toBe(FALSE);
         });
     });
     describe('->isSeekable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(NULL))->isSeekable())->toBe(false);
+            expect((new Stream(NULL))->isSeekable())->toBe(FALSE);
         });
         it('returns bool for resources', function() {
             expect((new Stream(fopen('php://memory', 'a+')))->isSeekable())->toBe(TRUE);
@@ -150,7 +150,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->isWritable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(NULL))->isWritable())->toBe(false);
+            expect((new Stream(NULL))->isWritable())->toBe(FALSE);
         });
         it('returns true for writtable modes', function() {
             expect((new Stream(fopen('php://memory', 'w')))->isWritable())->toBe(TRUE);
@@ -158,7 +158,7 @@ describe('Psr7\\Stream', function() {
             expect((new Stream(fopen('php://memory', 'r+')))->isWritable())->toBe(TRUE);
         });
         it('returns false for read-only mode', function() {
-            expect((new Stream(fopen('php://memory', 'rb')))->isWritable())->toBe(false);
+            expect((new Stream(fopen('php://memory', 'rb')))->isWritable())->toBe(FALSE);
         });
     });
     describe('->write', function() {
@@ -185,7 +185,7 @@ describe('Psr7\\Stream', function() {
     });
     describe('->isReadable', function() {
         it('returns false when there is no resource', function() {
-            expect((new Stream(NULL))->isReadable())->toBe(false);
+            expect((new Stream(NULL))->isReadable())->toBe(FALSE);
         });
         it('returns true for readable modes', function() {
             expect((new Stream(fopen('php://memory', 'r')))->isReadable())->toBe(TRUE);

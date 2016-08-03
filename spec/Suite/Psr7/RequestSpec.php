@@ -63,8 +63,8 @@ describe('Psr7\\Request', function() {
             $req0 = new Request('GET', '/');
             $req1 = $req0->withUri(new Uri('http://ochenta/'), TRUE);
 
-            expect($req0->hasHeader('Host'))->toBe(false);
-            expect($req1->hasHeader('Host'))->toBe(false);
+            expect($req0->hasHeader('Host'))->toBe(FALSE);
+            expect($req1->hasHeader('Host'))->toBe(FALSE);
             expect($req1->getHeader('Host'))->toBe([]);
         });
     });

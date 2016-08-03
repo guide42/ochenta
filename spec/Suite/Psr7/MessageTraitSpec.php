@@ -42,13 +42,13 @@ describe('Psr7\\MessageTrait', function() {
             $message = $message->withHeader('Content-Type', 'text/plain');
 
             expect($message->hasHeader('Content-Type'))->toBe(TRUE);
-            expect($message->hasHeader('Content-Length'))->toBe(false);
+            expect($message->hasHeader('Content-Length'))->toBe(FALSE);
         });
         it('returns false when is defined by empty', function() {
             $message = Stub::create(['uses' => MessageTrait::class]);
             $message = $message->withHeader('Content-Type', NULL);
 
-            expect($message->hasHeader('Content-Type'))->toBe(false);
+            expect($message->hasHeader('Content-Type'))->toBe(FALSE);
         });
     });
     describe('->getHeader', function() {
@@ -77,7 +77,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
             $msg1 = $msg0->withHeader('Content-Type', 'text/plain');
 
-            expect($msg0->hasHeader('Content-Type'))->toBe(false);
+            expect($msg0->hasHeader('Content-Type'))->toBe(FALSE);
             expect($msg1->hasHeader('Content-Type'))->toBe(TRUE);
         });
         it('returns a copy that replace existing header', function() {
@@ -94,7 +94,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg0 = Stub::create(['uses' => MessageTrait::class]);
             $msg1 = $msg0->withAddedHeader('Content-Type', 'text/plain');
 
-            expect($msg0->hasHeader('Content-Type'))->toBe(false);
+            expect($msg0->hasHeader('Content-Type'))->toBe(FALSE);
             expect($msg1->hasHeader('Content-Type'))->toBe(TRUE);
         });
         it('returns a copy that add a value to existing header', function() {
@@ -113,7 +113,7 @@ describe('Psr7\\MessageTrait', function() {
             $msg1 = $msg0->withoutHeader('CONTENT-TYPE', 'text/plain');
 
             expect($msg0->hasHeader('Content-Type'))->toBe(TRUE);
-            expect($msg1->hasHeader('Content-Type'))->toBe(false);
+            expect($msg1->hasHeader('Content-Type'))->toBe(FALSE);
         });
     });
     describe('->getBody', function() {

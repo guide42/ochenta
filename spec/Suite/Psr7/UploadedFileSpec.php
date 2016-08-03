@@ -13,7 +13,7 @@ describe('Psr7\\UploadedFile', function() {
         });
         it('returns an instance of StreamInterface', function() {
             $tmpfile = tempnam(sys_get_temp_dir(), 'kahlan/');
-            skipIf($tmpfile === false);
+            skipIf($tmpfile === FALSE);
             touch($tmpfile);
             expect((new UploadedFile($tmpfile, 0, UPLOAD_ERR_OK))->getStream())->toBeAnInstanceOf(StreamInterface::class);
             unlink($tmpfile);
@@ -34,10 +34,10 @@ describe('Psr7\\UploadedFile', function() {
         });
         it('renames the given file', function() {
             $tmpfile = tempnam(sys_get_temp_dir(), 'kahlan/');
-            skipIf($tmpfile === false);
+            skipIf($tmpfile === FALSE);
             touch($tmpfile);
             (new UploadedFile($tmpfile, 0, UPLOAD_ERR_OK))->moveTo('/tmp/kahlan/ochentatmp');
-            expect(file_exists($tmpfile))->toBe(false);
+            expect(file_exists($tmpfile))->toBe(FALSE);
             expect(file_exists('/tmp/kahlan/ochentatmp'))->toBe(TRUE);
             unlink('/tmp/kahlan/ochentatmp');
         });

@@ -24,15 +24,15 @@ describe('Server\\Gateway', function() {
                 static $reset = TRUE;
                 if ($first) {
                     expect($header)->toBe('HTTP/1.1 202');
-                    $first = false;
+                    $first = FALSE;
                 } else {
                     expect($replace)->toBe($reset);
-                    $reset = false;
+                    $reset = FALSE;
                 }
             });
 
             Monkey::patch('headers_sent', function() {
-                return false;
+                return FALSE;
             });
 
             $server = new Gateway(function(ServerRequest $req, callable $open) {
@@ -45,10 +45,10 @@ describe('Server\\Gateway', function() {
         });
 
         it('calls responder\'s return', function() {
-            $use = false;
+            $use = FALSE;
 
             Monkey::patch('headers_sent', function() {
-                return false;
+                return FALSE;
             });
 
             $server = new Gateway(function(ServerRequest $req, callable $open) use(&$use) {

@@ -36,7 +36,7 @@ trait RequestTrait
         return new Uri($this->uri);
     }
 
-    function withUri(UriInterface $uri, /*bool */$preserveHost=false): self {
+    function withUri(UriInterface $uri, /*bool */$preserveHost=FALSE): self {
         $headers = $this->headers;
         $headers['HOST'] = $headers['HOST'] ?? [];
         if (!$preserveHost && $uri->getHost()) {

@@ -27,17 +27,17 @@ function resource_of($resource) {
 /** @throws RuntimeException */
 function mimetype_of($resource, $filename=NULL) {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    if ($finfo === false) {
+    if ($finfo === FALSE) {
         throw new \RuntimeException('Fileinfo database is not available');
     }
 
-    $mimetype = false;
+    $mimetype = FALSE;
     if (is_file($filename) && is_readable($filename)) {
         $mimetype = finfo_file($finfo, $filename);
     }
 
-    if ($mimetype === false) {
-        $contents = false;
+    if ($mimetype === FALSE) {
+        $contents = FALSE;
 
         if (is_string($resource)) {
             $contents = $resource;
@@ -45,13 +45,13 @@ function mimetype_of($resource, $filename=NULL) {
             $contents = stream_get_contents($resource, -1, 0);
         }
 
-        if ($contents !== false) {
+        if ($contents !== FALSE) {
             $mimetype = finfo_buffer($finfo, $contents);
         }
     }
     finfo_close($finfo);
 
-    if ($mimetype === false) {
+    if ($mimetype === FALSE) {
         throw new \RuntimeException('Couldn\'t detect mime type from resource');
     }
 

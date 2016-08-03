@@ -26,7 +26,7 @@ class Gateway
                 $first = TRUE;
                 foreach ($values as $value) {
                   header("$name: $value", $first);
-                  $first = false;
+                  $first = FALSE;
                 }
             }
         });

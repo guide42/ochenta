@@ -33,7 +33,7 @@ class Response
             $headers['CONTENT-TYPE'] = ['text/html; charset=utf-8'];
         } elseif (
             stripos($headers['CONTENT-TYPE'][0], 'text/') === 0 &&
-            stripos($headers['CONTENT-TYPE'][0], 'charset') === false
+            stripos($headers['CONTENT-TYPE'][0], 'charset') === FALSE
         ) {
             $headers['CONTENT-TYPE'][0] .= '; charset=utf-8';
         }

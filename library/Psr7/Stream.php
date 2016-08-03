@@ -56,7 +56,7 @@ class Stream implements StreamInterface
     }
 
     function tell(): int {
-        if (!is_resource($this->resource) || ($pos = ftell($this->resource)) === false) {
+        if (!is_resource($this->resource) || ($pos = ftell($this->resource)) === FALSE) {
             throw new \RuntimeException('Could not tell the position');
         }
         return $pos;
@@ -68,7 +68,7 @@ class Stream implements StreamInterface
 
     function isSeekable(): bool {
         if (!is_resource($this->resource)) {
-            return false;
+            return FALSE;
         }
         return stream_get_meta_data($this->resource)['seekable'];
     }
@@ -85,18 +85,18 @@ class Stream implements StreamInterface
 
     function isWritable(): bool {
         if (!is_resource($this->resource)) {
-            return false;
+            return FALSE;
         }
         $mode = stream_get_meta_data($this->resource)['mode'];
-        return strpos($mode, 'x') !== false ||
-               strpos($mode, 'w') !== false ||
-               strpos($mode, 'c') !== false ||
-               strpos($mode, 'a') !== false ||
-               strpos($mode, '+') !== false;
+        return strpos($mode, 'x') !== FALSE ||
+               strpos($mode, 'w') !== FALSE ||
+               strpos($mode, 'c') !== FALSE ||
+               strpos($mode, 'a') !== FALSE ||
+               strpos($mode, '+') !== FALSE;
     }
 
     function write(/*string */$string): int {
-        if (!$this->isWritable() || ($written = fwrite($this->resource, $string)) === false) {
+        if (!$this->isWritable() || ($written = fwrite($this->resource, $string)) === FALSE) {
             throw new \RuntimeException('Could not write');
         }
         return $written;
@@ -104,23 +104,23 @@ class Stream implements StreamInterface
 
     function isReadable(): bool {
         if (!is_resource($this->resource)) {
-            return false;
+            return FALSE;
         }
         $mode = stream_get_meta_data($this->resource)['mode'];
-        return strpos($mode, 'r') !== false ||
-               strpos($mode, '+') !== false;
+        return strpos($mode, 'r') !== FALSE ||
+               strpos($mode, '+') !== FALSE;
 
     }
 
     function read(/*int */$length): string {
-        if (!$this->isReadable() || ($data = fread($this->resource, $length)) === false) {
+        if (!$this->isReadable() || ($data = fread($this->resource, $length)) === FALSE) {
             throw new \RuntimeException('Could not read');
         }
         return $data;
     }
 
     function getContents(): string {
-        if (!$this->isReadable() || ($contents = stream_get_contents($this->resource)) === false) {
+        if (!$this->isReadable() || ($contents = stream_get_contents($this->resource)) === FALSE) {
             throw new \RuntimeException('Could not get contents');
         }
         return $contents;
