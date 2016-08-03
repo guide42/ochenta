@@ -91,6 +91,13 @@ Complex? This middleware exists at `Ochenta\header`. This is how we use it:
 $app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
 ```
 
+What a hassle! Better to do stacks of middlewares. Both ways produces the same result:
+
+```php
+$app = Ochenta\stack(@hola, [add_header('X-Frame-Options', 'SAMEORIGIN'), @timeit]);
+$app = add_header('X-Frame-Options', 'SAMEORIGIN')(timeit(@hola));
+```
+
 Badges
 ------
 
