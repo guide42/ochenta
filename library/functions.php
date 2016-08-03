@@ -110,7 +110,7 @@ function emit(ServerRequest $req, callable $handler) {
             $close = NULL;
         }
         if (is_callable($close)) {
-            call_user_func($close);
+            $close();
         }
     }
 }
