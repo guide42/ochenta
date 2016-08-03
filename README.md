@@ -85,7 +85,7 @@ function add_header(string $name, string $value) {
 }
 ```
 
-Complex? This is how we use it:
+Complex? This middleware exists at `Ochenta\header`. This is how we use it:
 
 ```php
 $app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
