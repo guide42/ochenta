@@ -57,7 +57,7 @@ class Response
 
     /** Retrieves status code.
       */
-    function getStatusCode()/*: int*//* is not type-hinted because overlaps with Psr7 */ {
+    function getStatusCode()/* int*//* is not type-hinted because overlaps with Psr7 */ {
         return $this->statusCode;
     }
 
