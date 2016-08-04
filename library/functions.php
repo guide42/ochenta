@@ -117,6 +117,49 @@ function emit(ServerRequest $req, callable $handler) {
 }
 
 /** @throws InvalidArgumentException */
+function responder_of($resource) {
+    if ($resource instanceof Response) {
+        return function(ServerRequest $req, callable $open) use($resource) {
+            $res = $resource->prepare($req);
+            $open($res->getStatusCode(), $res->getHeaders());
+            return responder_of($res->getBody())($req, $open);
+        };
+    }
+
+    if (is_resource($resource)) {
+        return function(ServerRequest $req, callable $open) use($resource) {
+            try {
+                while (!feof($resource)) {
+                    yield fread($resource, 4096);
+                }
+            } finally {
+                fclose($resource);
+            }
+        };
+    }
+
+    if (is_scalar($resource)) {
+        return function(ServerRequest $req, callable $open) use($resource) {
+            yield $resource;
+        };
+    }
+
+    if (is_null($resource)) {
+        return function(ServerRequest $req, callable $open) {
+            yield '';
+        };
+    }
+
+    if ($resource instanceof \Generator) {
+        return function(ServerRequest $req, callable $open) use($resource) {
+            return $resource;
+        };
+    }
+
+    throw new \InvalidArgumentException('Resource cannot be converted to responder');
+}
+
+/** @throws InvalidArgumentException */
 function stack(callable $responder, $resolver, ...$stack) {
     if (is_array($resolver)) {
         $stack += $resolver;
