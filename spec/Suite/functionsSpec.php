@@ -147,13 +147,6 @@ describe('stack', function() {
         ->toThrow(new InvalidArgumentException);
     });
 
-    given('res', function() {
-        return function(ServerRequest $req, callable $open) {
-            $open(202, ['Content-Language' => ['en', 'es']]);
-            yield 'Hola Mundo';
-        };
-    });
-
     it('calls resolver with responder and middleware', function() {
         $responder = function() {};
         $middleware = function() {};
