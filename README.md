@@ -21,13 +21,13 @@ Usage
 -----
 
 ```php
-$req = new Ochenta\ServerRequest;
+$req = new ServerRequest;
 ```
 
 It could also be created with it's defaults values:
 
 ```php
-$req = new Ochenta\ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
+$req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
 ```
 
 That's a request. There is `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
@@ -50,7 +50,7 @@ function hola(ServerRequest $req, callable $open) {
 Using a `Ochenta\emit` function, the responder could be emitted:
 
 ```php
-Ochenta\emit(new Ochenta\ServerRequest, @hola);
+emit(new ServerRequest, @hola);
 ```
 
 Middlewares
@@ -103,10 +103,10 @@ Complex? This middleware exists at `Ochenta\header`. This is how we use it:
 $app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
 ```
 
-What a hassle! Better to do stacks of middlewares:
+What a hassle! Better use `Ochenta\stack` to do stacks of middlewares:
 
 ```php
-$app = Ochenta\stack(@hola, [
+$app = stack(@hola, [
     add_header('X-Xss-Protection', '1; mode=block'),
     add_header('X-Frame-Options', 'SAMEORIGIN'),
     @timeit,
