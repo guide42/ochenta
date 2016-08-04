@@ -5,6 +5,18 @@ HTTP abstraction layer in php 7 with [psr-7](http://www.php-fig.org/psr/psr-7/) 
 
 This is just a PoC. DO NOT USE IT IN PRODUCTION.
 
+Hello World
+-----------
+
+```php
+use Ochenta\ServerRequest;
+use function Ochenta\{emit, responder_of};
+
+emit(new ServerRequest, responder_of('Hello World'));
+```
+
+Interested? Keep reading.
+
 Usage
 -----
 
