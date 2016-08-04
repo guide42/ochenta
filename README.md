@@ -73,9 +73,6 @@ function timeit(callable $handler): callable {
 Decorating your app responder:
 
 ```php
-use Ochenta\ServerRequest;
-use function Ochenta\emit;
-
 $app = @hola;
 $app = timeit($app);
 
