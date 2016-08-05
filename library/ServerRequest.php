@@ -176,8 +176,7 @@ class ServerRequest extends Request
         if (empty($parts['host'])) {
             $parts['host'] = strtolower($server['HTTP_HOST'] ?? $server['SERVER_NAME'] ?? 'localhost');
             if (strpos($parts['host'], ':') !== FALSE) {
-                list($host, $port) = explode(':', $parts['host'], 2);
-                $parts['host'] = $host;
+                list($parts['host'], $port) = explode(':', $parts['host'], 2);
                 if (empty($parts['port']) && $port != $defaultPort) {
                     $parts['port'] = (int) $port;
                 }
