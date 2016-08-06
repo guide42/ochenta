@@ -10,6 +10,7 @@ use function Ochenta\emit;
 use function Ochenta\responder_of;
 use function Ochenta\stack;
 use function Ochenta\header;
+use function Ochenta\append;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
@@ -297,5 +298,28 @@ describe('header', function() {
         $handler(new ServerRequest, function(int $status, array $headers) {
             expect($headers)->toBe(['Content-Type' => ['text/plain']]);
         });
+    });
+});
+
+describe('append', function() {
+    it('adds given content to response before body', function() {
+        $handler = function(ServerRequest $req, callable $open) { yield '<body>BODY:</body>'; };
+        $midware = append('HERE')($handler);
+
+        expect(iterator_to_array($midware(new ServerRequest, function() {}), false))->toBe(['<body>BODY:', 'HERE', '</body>']);
+    });
+
+    it('adds given content before given tag', function() {
+        $handler = function(ServerRequest $req, callable $open) { yield '<head><meta></head>'; };
+        $midware = append('<style></style>', 'head')($handler);
+
+        expect(iterator_to_array($midware(new ServerRequest, function() {}), false))->toBe(['<head><meta>', '<style></style>', '</head>']);
+    });
+
+    it('adds nothing if close tag not found', function() {
+        $handler = function(ServerRequest $req, callable $open) { yield '<p>'; };
+        $midware = append(':)', 'p')($handler);
+
+        expect(iterator_to_array($midware(new ServerRequest, function() {}), false))->toBe(['<p>']);
     });
 });

@@ -197,3 +197,23 @@ function header(string $name, ...$values) {
         };
     };
 }
+
+function append(string $content, string $tag='body') {
+    return function(callable $handler) use($content, $tag): callable {
+        return function(ServerRequest $req, callable $open) use($content, $tag, $handler) {
+            $res = $handler($req, $open);
+
+            foreach ($res as $output) {
+                if (($pos = stripos($output, "</$tag>")) !== false) {
+                    yield substr($output, 0, $pos);
+                    yield $content;
+                    yield substr($output, $pos);
+                } else {
+                    yield $output;
+                }
+            }
+
+            return $res->getReturn();
+        };
+    };
+}
