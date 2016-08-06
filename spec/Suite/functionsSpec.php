@@ -76,6 +76,59 @@ describe('hash', function() {
     });
 });
 
+describe('responder_of', function() {
+    it('throws InvalidArgumentException when an invalid resource is given', function() {
+        expect(function() {
+            responder_of([]);
+        })
+        ->toThrow(new InvalidArgumentException);
+    });
+
+    it('returns a responder that generates the same one if the resource is a generator', function() {
+        $responder0 = function(ServerRequest $req, callable $open) { yield 'Hello World'; };
+        $responder1 = responder_of($responder0(new ServerRequest, function() {}));
+        $generator = $responder1(new ServerRequest, function() {});
+
+        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
+    });
+
+    it('returns a responder that generates an empty string if the resource is null', function() {
+        $responder = responder_of(NULL);
+        $generator = $responder(new ServerRequest, function() {});
+
+        expect(iterator_to_array($generator, false))->toBe(['']);
+    });
+
+    it('returns a responder that generates the given string', function() {
+        $responder = responder_of('Hello World');
+        $generator = $responder(new ServerRequest, function() {});
+
+        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
+    });
+
+    it('returns a responder that generates the given resource by reading from the current pointer', function() {
+        $resource = fopen('php://memory', 'r+');
+        fwrite($resource, 'Hello World');
+        fseek($resource, 0, SEEK_SET);
+
+        $responder = responder_of($resource);
+        $generator = $responder(new ServerRequest, function() {});
+
+        expect(iterator_to_array($generator, false))->toBe(['Hello World', '']);
+    });
+
+    it('returns a responder that generates the given response', function() {
+        $response = new Response(202, ['Content-Type' => ['text/html']], 'Hello World');
+        $responder = responder_of($response);
+        $generator = $responder(new ServerRequest, function(int $status, array $headers) {
+            expect($status)->toBe(202);
+            expect($headers)->toBe(['CONTENT-TYPE' => ['text/html; charset=utf-8']]);
+        });
+
+        expect(iterator_to_array($generator, false))->toBe(['Hello World','']);
+    });
+});
+
 describe('emit', function() {
     it('throws RuntimeException when headers has already been sent', function() {
         // This patch is not being executed, but because kahlan already print
@@ -132,59 +185,6 @@ describe('emit', function() {
         });
 
         expect($closed)->toBe(TRUE);
-    });
-});
-
-describe('responder_of', function() {
-    it('throws InvalidArgumentException when an invalid resource is given', function() {
-        expect(function() {
-            responder_of([]);
-        })
-        ->toThrow(new InvalidArgumentException);
-    });
-
-    it('returns a responder that generates the same one if the resource is a generator', function() {
-        $responder0 = function(ServerRequest $req, callable $open) { yield 'Hello World'; };
-        $responder1 = responder_of($responder0(new ServerRequest, function() {}));
-        $generator = $responder1(new ServerRequest, function() {});
-
-        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
-    });
-
-    it('returns a responder that generates an empty string if the resource is null', function() {
-        $responder = responder_of(NULL);
-        $generator = $responder(new ServerRequest, function() {});
-
-        expect(iterator_to_array($generator, false))->toBe(['']);
-    });
-
-    it('returns a responder that generates the given string', function() {
-        $responder = responder_of('Hello World');
-        $generator = $responder(new ServerRequest, function() {});
-
-        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
-    });
-
-    it('returns a responder that generates the given resource by reading from the current pointer', function() {
-        $resource = fopen('php://memory', 'r+');
-        fwrite($resource, 'Hello World');
-        fseek($resource, 0, SEEK_SET);
-
-        $responder = responder_of($resource);
-        $generator = $responder(new ServerRequest, function() {});
-
-        expect(iterator_to_array($generator, false))->toBe(['Hello World', '']);
-    });
-
-    it('returns a responder that generates the given response', function() {
-        $response = new Response(202, ['Content-Type' => ['text/html']], 'Hello World');
-        $responder = responder_of($response);
-        $generator = $responder(new ServerRequest, function(int $status, array $headers) {
-            expect($status)->toBe(202);
-            expect($headers)->toBe(['CONTENT-TYPE' => ['text/html; charset=utf-8']]);
-        });
-
-        expect(iterator_to_array($generator, false))->toBe(['Hello World','']);
     });
 });
 
