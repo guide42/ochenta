@@ -11,6 +11,7 @@ use function Ochenta\responder_of;
 use function Ochenta\stack;
 use function Ochenta\header;
 use function Ochenta\append;
+use function Ochenta\escape;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {
@@ -321,5 +322,120 @@ describe('append', function() {
         $midware = append(':)', 'p')($handler);
 
         expect(iterator_to_array($midware(new ServerRequest, function() {}), false))->toBe(['<p>']);
+    });
+});
+
+describe('escape', function() {
+    it('returns empty string when is input is null', function() {
+        expect(escape(NULL, 'any', 'any'))->toBe('');
+    });
+
+    it('returns same input when is a digit', function() {
+        expect(escape('123', 'any', 'any'))->toBe('123');
+    });
+
+    it('returns string version of an int', function() {
+        expect(escape(123, 'any', 'any'))->toBe('123');
+    });
+
+    it('returns escaped html', function() {
+        $chars = ['\'' => '&#039;', '"' => '&quot;', '<' => '&lt;', '>' => '&gt;', '&' => '&amp;'];
+        foreach ($chars as $char => $encoded) {
+            expect(escape($char, 'html', 'UTF-8'))->toBe($encoded);
+        }
+    });
+
+    it('returns escaped css', function() {
+        $chars = ['\'' => '\\27 ', '"' => '\\22 ', '<' => '\\3C ', '>' => '\\3E ', '&' => '\\26 '];
+        foreach ($chars as $char => $encoded) {
+            expect(escape($char, 'css', 'UTF-8'))->toBe($encoded);
+        }
+    });
+
+    it('returns escaped css on chars beyond ascii value 255', function() {
+        expect(escape('☃', 'css', 'UTF-8'))->toBe('\\E2 ');
+    });
+
+    it('returns unescaped css on alphanum chars', function() {
+        foreach (['aA', 'zZ', 'E2'] as $char) {
+            expect(escape($char, 'css', 'UTF-8'))->toBe($char);
+        }
+    });
+
+    it('returns escaped js', function() {
+        $chars = ['\'' => '\\x27', '"' => '\\x22', '<' => '\\x3C', '>' => '\\x3E', '&' => '\\x26'];
+        foreach ($chars as $char => $encoded) {
+            expect(escape($char, 'js', 'UTF-8'))->toBe($encoded);
+        }
+    });
+
+    it('returns escaped js on chars beyond ascii value 255', function() {
+        expect(escape('☃', 'js', 'UTF-8'))->toBe('\\xE2');
+    });
+
+    it('returns unescaped js on alphanum chars', function() {
+        foreach (['aA', 'zZ', 'E2'] as $char) {
+            expect(escape($char, 'js', 'UTF-8'))->toBe($char);
+        }
+    });
+
+    it('uses raw input when is utf-8 and encoding not given', function() {
+        expect(escape('☃'))->toBe('☃');
+    });
+
+    xit('uses iconv when available to transform input to utf-8', function() {
+        Monkey::patch('function_exists', function($fn) {
+            return $fn === 'iconv';
+        });
+
+        Monkey::patch('iconv', function($from, $to, $str) {
+            expect($from)->toBe('UTF-16');
+            expect($to)->toBe('UTF-8');
+        });
+
+        // U+10437 in UTF-16
+        $char = chr(1101) . chr(1000)
+              . chr(0000) . chr(0001)
+              . chr(1101) . chr(1100)
+              . chr(0011) . chr(0111);
+
+        expect(escape($char, 'js', 'UTF-16'))->toBe('\\xEE\\xC4\\xE4\\xE4');
+    });
+
+    xit('uses mb_convert_encoding when available to transform input to utf-8', function() {
+        Monkey::patch('function_exists', function($fn) {
+            return $fn === 'mb_convert_encoding';
+        });
+
+        Monkey::patch('mb_convert_encoding', function($str, $to, $from) {
+            expect($from)->toBe('UTF-16');
+            expect($to)->toBe('UTF-8');
+        });
+
+        // U+10437 in UTF-16
+        $char = chr(1101) . chr(1000)
+              . chr(0000) . chr(0001)
+              . chr(1101) . chr(1100)
+              . chr(0011) . chr(0111);
+
+        expect(escape($char, 'js', 'UTF-16'))->toBe('\\xEE\\xC4\\xE4\\xE4');
+    });
+
+    xit('throws InvalidArgumentException when unknown encoding couldn\'t be transformed into utf-8', function() {
+        Monkey::patch('function_exists', function() {
+            return FALSE;
+        });
+
+        // U+10437 in UTF-16
+        $char = chr(1101) . chr(1000)
+              . chr(0000) . chr(0001)
+              . chr(1101) . chr(1100)
+              . chr(0011) . chr(0111);
+
+        expect(function() use($char) { escape($char, 'js', 'UTF-16'); })->toThrow(new InvalidArgumentException);
+    });
+
+    it('throws InvalidArgumentException on unknown type', function() {
+        expect(function() { escape('Hello World', 'foo', 'UTF-8'); })->toThrow(new InvalidArgumentException);
     });
 });

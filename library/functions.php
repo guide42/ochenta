@@ -217,3 +217,37 @@ function append(string $content, string $tag='body') {
         };
     };
 }
+
+/** @throws InvalidArgumentException */
+function escape($raw, $type='html', $encoding=null): string {
+    if (empty($raw) || ctype_digit($raw) || is_int($raw)) {
+        return (string) $raw;
+    }
+
+    if ($type === 'html') {
+        return htmlspecialchars($raw, ENT_QUOTES | ENT_SUBSTITUTE, $encoding);
+    }
+
+    $replace = function(string $pattern): callable {
+        return function(array $matches) use($pattern): string {
+            return sprintf($pattern, ord($matches[0]));
+        };
+    };
+
+    if (strtoupper($encoding) === 'UTF-8' && preg_match('/^./su', $raw)) {
+        $str = $raw;
+    } elseif (function_exists('iconv')) {
+        $str = (string) iconv($encoding, 'UTF-8', $raw);
+    } elseif (function_exists('mb_convert_encoding')) {
+        $str = (string) mb_convert_encoding($raw, 'UTF-8', $encoding);
+    } else {
+        throw new \InvalidArgumentException('Invalid encoding');
+    }
+
+    switch ($type) {
+        case 'css': return preg_replace_callback('/[^a-z0-9_]/iSu', $replace('\\%X '), $str);
+        case 'js': return preg_replace_callback('/[^a-z0-9_,\.]/iSu', $replace('\\x%02X'), $str);
+    }
+
+    throw new \InvalidArgumentException('Invalid type');
+}
