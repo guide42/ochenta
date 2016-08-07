@@ -172,9 +172,11 @@ function stack(callable $responder, $resolver, ...$stack) {
     } elseif (!is_callable($resolver)) {
         throw new \InvalidArgumentException('Resolver must be a callable');
     }
+
     if (empty($stack)) {
         throw new \InvalidArgumentException('At least one middleware is required');
     }
+
     $flatten = function(array $list) use(&$flatten) {
         foreach ($list as $item) {
             if (is_array($item)) {
