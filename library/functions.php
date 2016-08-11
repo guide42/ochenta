@@ -124,7 +124,7 @@ function responder_of($resource) {
 
 /** @throws RuntimeException */
 function emit(ServerRequest $req, callable $handler) {
-    $generator = $handler($req, function(int $status, array $headers) {
+    $res = $handler($req, function(int $status, array $headers) {
         if (headers_sent()) {
             throw new \RuntimeException('Headers already sent');
         }
@@ -144,12 +144,12 @@ function emit(ServerRequest $req, callable $handler) {
     });
 
     try {
-        foreach ($generator as $output) {
+        foreach ($res as $output) {
             echo $output;
         }
     } finally {
         try {
-            $close = $generator->getReturn();
+            $close = $res->getReturn();
         } catch (\Exception $ex) {
             $close = NULL;
         }
