@@ -230,12 +230,6 @@ function escape($raw, $type='html', $encoding=null): string {
         return htmlspecialchars($raw, ENT_QUOTES | ENT_SUBSTITUTE, $encoding);
     }
 
-    $replace = function(string $pattern): callable {
-        return function(array $matches) use($pattern): string {
-            return sprintf($pattern, ord($matches[0]));
-        };
-    };
-
     if (strtoupper($encoding) === 'UTF-8' && preg_match('/^./su', $raw)) {
         $str = $raw;
     } elseif (function_exists('iconv')) {
@@ -245,6 +239,12 @@ function escape($raw, $type='html', $encoding=null): string {
     } else {
         throw new \InvalidArgumentException('Invalid encoding');
     }
+
+    $replace = function(string $pattern): callable {
+        return function(array $matches) use($pattern): string {
+            return sprintf($pattern, ord($matches[0]));
+        };
+    };
 
     switch ($type) {
         case 'css': return preg_replace_callback('/[^a-z0-9_]/iSu', $replace('\\%X '), $str);
