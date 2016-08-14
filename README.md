@@ -110,6 +110,38 @@ $app = stack(@hola, [
 ]);
 ```
 
+API
+---
+
+```php
+resource_of(scalar $resource)                                // creates tmp file with $resouce content
+
+mimetype_of(resource $resource)                              // tries to find out the mimetype
+mimetype_of(resource $resource, string $filename)            // ... optionally with filename
+mimetype_of(string $resource)                                // ... of content of $resource
+mimetype_of(string $resource, string $filename)              // ... with it's filename
+
+hash(resource $resource)                                     // calculates md5 of resource
+hash(resource $resource, string $algo)                       // ... optionally hash with another algorithm
+hash(scalar $resource)                                       // ... of $resource content
+hash(scalar $resource, string $algo)                         // ... with other algorithm
+
+responder_of(Response $resource)                             // creates a responder from a Response
+responder_of(resource $resource)                             // ... from a resource
+responder_of(scalar $resource)                               // ... from content
+
+emit(ServerRequest $req, callable $handler)                  // emits a responder
+
+stack(callable $responder, array $stack)                     // expects items to be a function(callable $next)
+stack(callable $responder, callable $resolver, array $stack) // ... use resolver as function(callable $prev, $handler)
+
+// MIDDLEWARES
+
+header(string $name, array $values)                          // adds a header to responder
+append(string $content)                                      // adds content before body
+append(string $content, string $tag)                         // ... before every given tag
+```
+
 Badges
 ------
 
