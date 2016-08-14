@@ -40,7 +40,7 @@ class Response
 
         $this->statusCode = $statusCode;
         $this->headers = $headers;
-        $this->body = resource_of($body);
+        $this->body = stream_of($body);
     }
 
     /** Sets the response in corcondance with the given request.

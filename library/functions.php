@@ -144,7 +144,7 @@ function append(string $content, string $tag='body') {
 }
 
 /** @throws InvalidArgumentException */
-function resource_of($resource) {
+function stream_of($resource) {
     if ($resource instanceof Request || $resource instanceof Response) {
         $resource = $resource->getBody();
     }

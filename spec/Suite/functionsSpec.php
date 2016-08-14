@@ -8,7 +8,7 @@ use function ochenta\responder_of;
 use function ochenta\stack;
 use function ochenta\header;
 use function ochenta\append;
-use function ochenta\resource_of;
+use function ochenta\stream_of;
 use function ochenta\mimetype_of;
 use function ochenta\hash;
 use function ochenta\escape;
@@ -261,9 +261,9 @@ describe('append', function() {
     });
 });
 
-describe('resource_of', function() {
+describe('stream_of', function() {
     it('returns null when null given', function() {
-        expect(resource_of(NULL))->toBeNull();
+        expect(stream_of(NULL))->toBeNull();
     });
 });
 

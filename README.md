@@ -133,7 +133,7 @@ append(string $content, string $tag)                         // ... before every
 
 // HELPERS
 
-resource_of(scalar $resource)                                // creates tmp file with $resouce content
+stream_of(scalar $resource)                                  // creates tmp file with $resouce content
 
 mimetype_of(resource $resource)                              // tries to find out the mimetype
 mimetype_of(resource $resource, string $filename)            // ... optionally with filename

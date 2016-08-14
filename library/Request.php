@@ -26,7 +26,7 @@ class Request
         }
 
         $this->headers = $headers;
-        $this->body = resource_of($body);
+        $this->body = stream_of($body);
     }
 
     /** Retrieves HTTP method.
