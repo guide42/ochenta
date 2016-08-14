@@ -3,8 +3,6 @@ Ochenta: HTTP request/response implementation
 
 HTTP abstraction layer in php 7 with [psr-7](http://www.php-fig.org/psr/psr-7/) basic implementation.
 
-This is just a PoC. DO NOT USE IT IN PRODUCTION.
-
 Hello World
 -----------
 
