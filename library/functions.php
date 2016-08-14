@@ -25,7 +25,7 @@ function resource_of($resource) {
 }
 
 /** @throws RuntimeException */
-function mimetype_of($resource, $filename=NULL) {
+function mimetype_of($resource, string $filename=NULL) {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     if ($finfo === FALSE) {
         throw new \RuntimeException('Fileinfo database is not available');
@@ -59,7 +59,7 @@ function mimetype_of($resource, $filename=NULL) {
 }
 
 /** @throws InvalidArgumentException */
-function hash($resource, $algo='md5') {
+function hash($resource, string $algo='md5') {
     if (is_scalar($resource)) {
         return \hash($algo, $resource);
     }
