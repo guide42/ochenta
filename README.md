@@ -126,6 +126,8 @@ stack(callable $responder, callable $resolver, array $stack) // ... use resolver
 // MIDDLEWARES
 
 header(string $name, array $values)                          // adds a header to responder
+header(string $name, string $value)                          // ... with single value
+
 append(string $content)                                      // adds content before body
 append(string $content, string $tag)                         // ... before every given tag
 
