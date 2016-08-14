@@ -7,7 +7,7 @@ before_script:
   - composer install --dev --no-interaction
 
 script:
-  - ./vendor/bin/kahlan --coverage=3 --clover=clover.xml
+  - ./vendor/bin/kahlan --cc=true --coverage=3 --clover=clover.xml
 
 after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
