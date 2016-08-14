@@ -9,8 +9,8 @@ Hello World
 -----------
 
 ```php
-use Ochenta\ServerRequest;
-use function Ochenta\{emit, responder_of};
+use ochenta\ServerRequest;
+use function ochenta\{emit, responder_of};
 
 emit(new ServerRequest, responder_of('Hello World'));
 ```
@@ -30,14 +30,14 @@ It could also be created with it's defaults values:
 $req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
 ```
 
-That's a request. There is `Ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
+That's a request. There is `ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
 
-There is `Ochenta\Response` but is no worth using it. What else? Responders.
+There is `ochenta\Response` but is no worth using it. What else? Responders.
 
 Responders
 ----------
 
-When working in SAPI environment, you could define a response (but not a `Ochenta\Response` object) with a responder:
+When working in SAPI environment, you could define a response (but not a `ochenta\Response` object) with a responder:
 
 ```php
 function hola(ServerRequest $req, callable $open) {
@@ -47,7 +47,7 @@ function hola(ServerRequest $req, callable $open) {
 }
 ```
 
-Using a `Ochenta\emit` function, the responder could be emitted:
+Using a `ochenta\emit` function, the responder could be emitted:
 
 ```php
 emit(new ServerRequest, @hola);
@@ -94,13 +94,13 @@ function add_header(string $name, string $value): callable {
 }
 ```
 
-Complex? This middleware exists at `Ochenta\header`. This is how we use it:
+Complex? This middleware exists at `ochenta\header`. This is how we use it:
 
 ```php
 $app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
 ```
 
-What a hassle! Better use `Ochenta\stack` to do stacks of middlewares:
+What a hassle! Better use `ochenta\stack` to do stacks of middlewares:
 
 ```php
 $app = stack(@hola, [
