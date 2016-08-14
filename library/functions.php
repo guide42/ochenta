@@ -39,8 +39,8 @@ function mimetype_of($resource, string $filename=NULL) {
     if ($mimetype === FALSE) {
         $contents = FALSE;
 
-        if (is_string($resource)) {
-            $contents = $resource;
+        if (is_scalar($resource)) {
+            $contents = (string) $resource;
         } elseif (is_resource($resource)) {
             $contents = stream_get_contents($resource, -1, 0);
         }

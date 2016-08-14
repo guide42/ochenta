@@ -118,8 +118,8 @@ resource_of(scalar $resource)                                // creates tmp file
 
 mimetype_of(resource $resource)                              // tries to find out the mimetype
 mimetype_of(resource $resource, string $filename)            // ... optionally with filename
-mimetype_of(string $resource)                                // ... of content of $resource
-mimetype_of(string $resource, string $filename)              // ... with it's filename
+mimetype_of(scalar $resource)                                // ... of content of $resource
+mimetype_of(scalar $resource, string $filename)              // ... with it's filename
 
 hash(resource $resource)                                     // calculates md5 of resource
 hash(resource $resource, string $algo)                       // ... optionally hash with another algorithm
