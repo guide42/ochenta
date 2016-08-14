@@ -145,6 +145,10 @@ function append(string $content, string $tag='body') {
 
 /** @throws InvalidArgumentException */
 function resource_of($resource) {
+    if ($resource instanceof Request || $resource instanceof Response) {
+        $resource = $resource->getBody();
+    }
+
     if (is_null($resource)) {
         return NULL;
     }
@@ -167,6 +171,10 @@ function resource_of($resource) {
 
 /** @throws RuntimeException */
 function mimetype_of($resource, string $filename=NULL) {
+    if ($resource instanceof Request || $resource instanceof Response) {
+        $resource = $resource->getBody();
+    }
+
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     if ($finfo === FALSE) {
         throw new \RuntimeException('Fileinfo database is not available');
@@ -201,6 +209,10 @@ function mimetype_of($resource, string $filename=NULL) {
 
 /** @throws InvalidArgumentException */
 function hash($resource, string $algo='md5') {
+    if ($resource instanceof Request || $resource instanceof Response) {
+        $resource = $resource->getBody();
+    }
+
     if (is_scalar($resource)) {
         return \hash($algo, $resource);
     }
