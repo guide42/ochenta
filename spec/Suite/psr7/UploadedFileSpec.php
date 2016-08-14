@@ -1,9 +1,9 @@
 <?php
 
 use Psr\Http\Message\StreamInterface;
-use Ochenta\Psr7\UploadedFile;
+use ochenta\psr7\UploadedFile;
 
-describe('Psr7\\UploadedFile', function() {
+describe('psr7\\UploadedFile', function() {
     describe('->getStream', function() {
         it('throws RuntimeException when error is not UPLOAD_ERR_OK', function() {
             expect(function() {

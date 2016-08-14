@@ -1,10 +1,10 @@
 <?php
 
-namespace Ochenta\Psr7;
+namespace ochenta\psr7;
 
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
-use Ochenta\Response as OchentaResponse;
+use ochenta\Response as OchentaResponse;
 
 /** HTTP response implementation.
   */

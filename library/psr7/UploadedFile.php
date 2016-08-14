@@ -1,6 +1,6 @@
 <?php
 
-namespace Ochenta\Psr7;
+namespace ochenta\psr7;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;

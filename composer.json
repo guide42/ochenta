@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "files": ["library/functions.php"],
-        "psr-4": {"Ochenta\\": "library/"}
+        "psr-4": {"ochenta\\": "library/"}
     },
     "require-dev": {
         "crysalead/kahlan": "*"

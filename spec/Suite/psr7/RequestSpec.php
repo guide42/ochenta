@@ -1,10 +1,10 @@
 <?php
 
-use Ochenta\Psr7\Request;
-use Ochenta\Psr7\Stream;
-use Ochenta\Psr7\Uri;
+use ochenta\psr7\Request;
+use ochenta\psr7\Stream;
+use ochenta\psr7\Uri;
 
-describe('Psr7\\Request', function() {
+describe('psr7\\Request', function() {
     describe('->getHeaders', function() {
         it('returns headers with keys in the original name', function() {
             $message = new Request('GET', '/', ['Content-Type' => ['text/plain']]);

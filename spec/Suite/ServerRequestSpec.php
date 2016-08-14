@@ -1,7 +1,7 @@
 <?php
 
 use Kahlan\Plugin\Monkey;
-use Ochenta\ServerRequest;
+use ochenta\ServerRequest;
 
 describe('ServerRequest', function() {
     describe('->__construct', function() {

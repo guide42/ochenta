@@ -1,8 +1,8 @@
 <?php
 
-use Ochenta\Psr7\Response;
+use ochenta\psr7\Response;
 
-describe('Psr7\\Response', function() {
+describe('psr7\\Response', function() {
     describe('->getStatusCode', function() {
         it('returns given status code', function() {
             expect((new Response(200))->getStatusCode())->toBe(200);

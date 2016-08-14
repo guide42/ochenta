@@ -1,6 +1,6 @@
 <?php
 
-namespace Ochenta;
+namespace ochenta;
 
 /** HTTP/1.1 response implementation.
   */

@@ -1,7 +1,7 @@
 <?php
 
-use Ochenta\Response;
-use Ochenta\Request;
+use ochenta\Response;
+use ochenta\Request;
 
 describe('Response', function() {
     describe('->__construct', function() {

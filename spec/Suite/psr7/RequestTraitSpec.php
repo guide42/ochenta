@@ -1,9 +1,9 @@
 <?php
 
 use Kahlan\Plugin\Stub;
-use Ochenta\Psr7\RequestTrait;
+use ochenta\psr7\RequestTrait;
 
-describe('Psr7\\RequestTrait', function() {
+describe('psr7\\RequestTrait', function() {
     describe('->getRequestTarget', function() {
         it('returns request target, default empty string', function() {
             expect((Stub::create(['uses' => RequestTrait::class]))->getRequestTarget())->toBe('');

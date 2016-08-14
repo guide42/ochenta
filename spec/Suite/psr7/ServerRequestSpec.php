@@ -1,9 +1,9 @@
 <?php
 
-use Ochenta\Psr7\ServerRequest;
-use Ochenta\Psr7\UploadedFile;
+use ochenta\psr7\ServerRequest;
+use ochenta\psr7\UploadedFile;
 
-describe('Psr7\\ServerRequest', function() {
+describe('psr7\\ServerRequest', function() {
     describe('->getHeaders', function() {
         it('returns headers with keys in the original name', function() {
             $message = new ServerRequest([

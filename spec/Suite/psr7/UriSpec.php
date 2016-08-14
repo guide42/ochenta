@@ -2,9 +2,9 @@
 
 use Kahlan\Plugin\Stub;
 use Psr\Http\Message\UriInterface;
-use Ochenta\Psr7\Uri;
+use ochenta\psr7\Uri;
 
-describe('Psr7\\Uri', function() {
+describe('psr7\\Uri', function() {
     describe('->__toString', function() {
         it('returns full uri', function() {
             $uri = 'http://user:pass@ochenta:8080/path?queryString#fragment';

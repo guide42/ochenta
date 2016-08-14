@@ -1,6 +1,6 @@
 <?php
 
-namespace Ochenta;
+namespace ochenta;
 
 /** @throws InvalidArgumentException */
 function resource_of($resource) {

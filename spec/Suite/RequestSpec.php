@@ -1,6 +1,6 @@
 <?php
 
-use Ochenta\Request;
+use ochenta\Request;
 
 describe('Request', function() {
     describe('->__construct', function() {

@@ -1,17 +1,17 @@
 <?php
 
 use Kahlan\Plugin\Monkey;
-use Ochenta\ServerRequest;
-use Ochenta\Response;
-use function Ochenta\resource_of;
-use function Ochenta\mimetype_of;
-use function Ochenta\hash;
-use function Ochenta\emit;
-use function Ochenta\responder_of;
-use function Ochenta\stack;
-use function Ochenta\header;
-use function Ochenta\append;
-use function Ochenta\escape;
+use ochenta\ServerRequest;
+use ochenta\Response;
+use function ochenta\resource_of;
+use function ochenta\mimetype_of;
+use function ochenta\hash;
+use function ochenta\emit;
+use function ochenta\responder_of;
+use function ochenta\stack;
+use function ochenta\header;
+use function ochenta\append;
+use function ochenta\escape;
 
 describe('resource_of', function() {
     it('returns null when null given', function() {

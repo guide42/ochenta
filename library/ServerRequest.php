@@ -1,6 +1,6 @@
 <?php
 
-namespace Ochenta;
+namespace ochenta;
 
 /** An HTTP request for PHP's SAPI.
   */

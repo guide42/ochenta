@@ -1,9 +1,9 @@
 <?php
 
 use Psr\Http\Message\StreamInterface;
-use Ochenta\Psr7\Stream;
+use ochenta\psr7\Stream;
 
-describe('Psr7\\Stream', function() {
+describe('psr7\\Stream', function() {
     describe('->__toString', function() {
         it('returns an empty string if there is no resource', function() {
             expect((new Stream(NULL))->__toString())->toBe('');

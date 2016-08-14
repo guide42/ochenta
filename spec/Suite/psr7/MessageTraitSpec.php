@@ -2,10 +2,10 @@
 
 use Kahlan\Plugin\Stub;
 use Psr\Http\Message\StreamInterface;
-use Ochenta\Psr7\MessageTrait;
-use Ochenta\Psr7\Stream;
+use ochenta\psr7\MessageTrait;
+use ochenta\psr7\Stream;
 
-describe('Psr7\\MessageTrait', function() {
+describe('psr7\\MessageTrait', function() {
     describe('->getProtocolVersion', function() {
         it('returns 1.1', function() {
             expect((Stub::create(['uses' => MessageTrait::class]))->getProtocolVersion())->toBe('1.1');

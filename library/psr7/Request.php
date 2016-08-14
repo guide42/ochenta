@@ -1,9 +1,9 @@
 <?php
 
-namespace Ochenta\Psr7;
+namespace ochenta\psr7;
 
 use Psr\Http\Message\RequestInterface;
-use Ochenta\Request as OchentaRequest;
+use ochenta\Request as OchentaRequest;
 
 /** HTTP request implementation.
   */

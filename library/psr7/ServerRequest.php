@@ -3,7 +3,7 @@
 namespace Ochenta\Psr7;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Ochenta\ServerRequest as OchentaServerRequest;
+use ochenta\ServerRequest as OchentaServerRequest;
 
 /** HTTP request implementation.
   */
