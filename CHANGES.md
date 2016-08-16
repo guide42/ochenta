@@ -5,6 +5,10 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 # [Unreleased]
 
+# [1.1] - 2016-08-16
+
+Remove unused functions.
+
 # [1.0] - 2016-08-14
 
 Initial version.
