@@ -5,6 +5,8 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 # [Unreleased]
 
+- Adds `ochenta\redirect` responder.
+
 # [1.1] - 2016-08-16
 
 Remove unused functions.

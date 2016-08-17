@@ -129,6 +129,11 @@ header(string $name, string $value)                          // ... with single 
 append(string $content)                                      // adds content before body
 append(string $content, string $tag)                         // ... before every given tag
 
+// RESPONDERS
+
+redirect(string $uri)                                        // redirect to the given url
+redirect(string $uri, int $statusCode)                       // ... with given status code
+
 // HELPERS
 
 stream_of(scalar $resource)                                  // creates tmp file with $resouce content

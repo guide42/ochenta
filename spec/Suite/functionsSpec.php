@@ -9,6 +9,7 @@ use function ochenta\stack;
 use function ochenta\header;
 use function ochenta\append;
 use function ochenta\stream_of;
+use function ochenta\redirect;
 
 describe('responder_of', function() {
     it('throws InvalidArgumentException when an invalid resource is given', function() {
@@ -255,6 +256,45 @@ describe('append', function() {
         $midware = append(':)', 'p')($handler);
 
         expect(iterator_to_array($midware(new ServerRequest, function() {}), false))->toBe(['<p>']);
+    });
+});
+
+describe('redirect', function() {
+    it('throws InvalidArgumentException on invalid uri given', function() {
+        expect(function() { redirect('http:///ochenta'); })->toThrow(new InvalidArgumentException);
+    });
+
+    it('throws InvalidArgumentException on invalid status code given', function() {
+        expect(function() { redirect('/', 100); })->toThrow(new InvalidArgumentException);
+    });
+
+    it('opens with status code', function() {
+        $responder = redirect('http://ochenta/', 301);
+        $responder(new ServerRequest, function(int $status, array $headers) {
+            expect($status)->toBe(301);
+        });
+    });
+
+    it('opens with status code 302 if none given', function() {
+        $responder = redirect('http://ochenta/');
+        $responder(new ServerRequest, function(int $status, array $headers) {
+            expect($status)->toBe(302);
+        });
+    });
+
+    it('opens with location header with given uri', function() {
+        $responder = redirect('http://ochenta/');
+        $responder(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe(['Location' => ['http://ochenta/']]);
+        });
+    });
+
+    it('opens with location header with uri and inherit scheme/host information from request', function() {
+        $req = new ServerRequest(['HTTP' => 'off', 'HTTP_HOST' => 'ochenta:8080']);
+        $responder = redirect('/');
+        $responder($req, function(int $status, array $headers) {
+            expect($headers)->toBe(['Location' => ['http://ochenta:8080/']]);
+        });
     });
 });
 

@@ -144,6 +144,35 @@ function append(string $content, string $tag='body') {
 }
 
 /** @throws InvalidArgumentException */
+function redirect($uri, int $statusCode=302) {
+    if (!is_array($uri) && ($uri = parse_url($uri)) === FALSE) {
+        throw new \InvalidArgumentException('Invalid uri');
+    }
+    if (!in_array($statusCode, [301, 302])) {
+        throw new \InvalidArgumentException('Invalid status code');
+    }
+
+    return function(ServerRequest $req, callable $open) use($uri, $statusCode) {
+        if (empty($uri['scheme'])) {
+            $old = $req->getUri();
+            $uri['scheme'] = $old['scheme'];
+            $uri['host'] = $old['host'];
+            if (isset($old['port'])) {
+                $uri['port'] = $old['port'];
+            }
+        }
+
+        $url = $uri['scheme'] . '://' . $uri['host']
+             . (isset($uri['port']) ? ':' . $uri['port'] : '') . ($uri['path'] ?? '/')
+             . (isset($uri['query']) ? '?' . $uri['query'] : '');
+
+        $open($statusCode, [
+            'Location' => [$url],
+        ]);
+    };
+}
+
+/** @throws InvalidArgumentException */
 function stream_of($resource) {
     if ($resource instanceof Request || $resource instanceof Response) {
         $resource = $resource->getBody();
