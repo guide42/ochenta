@@ -7,6 +7,7 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 - Adds `ochenta\redirect` responder.
 - Now `ServerRequest::getUri` doesn't return port if is standard.
+- Strict types.
 
 ## [1.1] - 2016-08-16
 

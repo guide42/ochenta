@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Psr\Http\Message\StreamInterface;
 use ochenta\psr7\UploadedFile;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Kahlan\Plugin\Stub;
 use ochenta\psr7\RequestTrait;
