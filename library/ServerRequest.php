@@ -188,6 +188,9 @@ class ServerRequest extends Request
         if (empty($parts['port']) && ($server['SERVER_PORT'] ?? $defaultPort) !== $defaultPort) {
             $parts['port'] = (int) $server['SERVER_PORT'];
         }
+        if (isset($parts['port']) && $parts['port'] === $defaultPort) {
+            unset($parts['port']);
+        }
 
         return $parts;
     }

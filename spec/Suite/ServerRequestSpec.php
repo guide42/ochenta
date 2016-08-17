@@ -405,5 +405,13 @@ describe('ServerRequest', function() {
 
             expect($req->getUri())->not->toContainKey('port');
         });
+
+        it('doesn\'t returns port when is 443 in HTTPS', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'https://example.com:443/path?queryString',
+            ]);
+
+            expect($req->getUri())->not->toContainKey('port');
+        });
     });
 });
