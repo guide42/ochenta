@@ -112,7 +112,7 @@ function stack(callable $responder, $resolver, ...$stack) {
     return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $responder);
 }
 
-function header(string $name, ...$values) {
+function header(string $name, ...$values): callable {
     return function(callable $handler) use($name, $values): callable {
         return function(ServerRequest $req, callable $open) use($name, $values, $handler) {
             return $handler($req, function(int $status, array $headers) use($name, $values, $open) {
@@ -123,7 +123,7 @@ function header(string $name, ...$values) {
     };
 }
 
-function append(string $content, string $tag='body') {
+function append(string $content, string $tag='body'): callable {
     return function(callable $handler) use($content, $tag): callable {
         return function(ServerRequest $req, callable $open) use($content, $tag, $handler) {
             $res = $handler($req, $open);
@@ -144,7 +144,7 @@ function append(string $content, string $tag='body') {
 }
 
 /** @throws InvalidArgumentException */
-function redirect($uri, int $statusCode=302) {
+function redirect($uri, int $statusCode=302): callable {
     if (!is_array($uri) && ($uri = parse_url($uri)) === FALSE) {
         throw new \InvalidArgumentException('Invalid uri');
     }
