@@ -53,7 +53,7 @@ function emit(ServerRequest $req, callable $handler) {
         }
 
         // Root namespace must be explicity declared because the presence
-        // of `Ochenta\header` middleware.
+        // of `ochenta\header` middleware.
         \header(sprintf('HTTP/1.1 %d', $status));
 
         foreach ($headers as $name => $values) {
