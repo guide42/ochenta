@@ -80,6 +80,19 @@ class Response extends OchentaResponse implements ResponseInterface
 
     protected $reasonPhrase;
 
+    function __construct(int $statusCode=200, array $headers=[], $body=NULL) {
+        foreach ($headers as $name => $header) {
+            $this->headerNames[strtoupper($name)] = $name;
+        }
+
+        parent::__construct($statusCode, $headers, $body);
+
+        $this->headerNames += [ // default headers
+            'CACHE-CONTROL' => 'Cache-Control',
+            'CONTENT-TYPE' => 'Content-Type',
+        ];
+    }
+
     function withStatus(/*int */$code, /*string */$reasonPhrase=''): self {
         $new = new self($code, $this->headers, $this->body);
         $new->reasonPhrase = $reasonPhrase;

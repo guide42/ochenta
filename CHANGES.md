@@ -5,6 +5,8 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 ## [Unreleased]
 
+- Bug with default headers on PSR-7 implementation.
+
 ## [1.2] - 2016-08-22
 
 - Adds `ochenta\redirect` responder.

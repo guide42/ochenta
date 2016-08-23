@@ -3,6 +3,15 @@
 use ochenta\psr7\Response;
 
 describe('psr7\\Response', function() {
+    describe('->getHeaders', function() {
+        it('returns headers with keys in the original name', function() {
+            $message = new Response;
+            $message = $message->withAddedHeader('Content-Type', 'text/plain');
+
+            expect($message->getHeaders())->toContainKey('Content-Type');
+            expect($message->getHeaders()['Content-Type'])->toBe(['text/plain', 'text/html; charset=utf-8']);
+        });
+    });
     describe('->getStatusCode', function() {
         it('returns given status code', function() {
             expect((new Response(200))->getStatusCode())->toBe(200);
