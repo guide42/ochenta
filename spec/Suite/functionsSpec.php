@@ -57,7 +57,8 @@ describe('responder_of', function() {
         $responder = responder_of($response);
         $generator = $responder(new ServerRequest, function(int $status, array $headers) {
             expect($status)->toBe(202);
-            expect($headers)->toBe(['CONTENT-TYPE' => ['text/html; charset=utf-8']]);
+            expect($headers)->toContainKey('CONTENT-TYPE');
+            expect($headers['CONTENT-TYPE'])->toBe(['text/html; charset=utf-8']);
         });
 
         expect(iterator_to_array($generator, false))->toBe(['Hello World','']);
