@@ -8,6 +8,8 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 - Adds `ochenta\redirect` responder.
 - Now `ServerRequest::getUri` doesn't return port if is standard.
 - Strict types.
+- Now `ochenta\Response` have `Cache-Control` header by default.
+  You could override it but it can't be removed.
 
 ## [1.1] - 2016-08-16
 
