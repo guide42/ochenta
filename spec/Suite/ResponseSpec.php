@@ -19,6 +19,15 @@ describe('Response', function() {
             ->toThrow(new InvalidArgumentException);
         });
 
+        it('assigns headers defaults', function() {
+            expect((new Response(200, []))->getHeaders())->toBe([
+                'PRAGMA'        => ['no-cache'],
+                'CACHE-CONTROL' => ['no-store', 'no-cache', 'must-revalidate',
+                                    'post-check=0', 'pre-check=0'],
+                'CONTENT-TYPE'  => ['text/html; charset=utf-8'],
+            ]);
+        });
+
         it('assigns headers as array if scalar value given', function() {
             expect((new Response(200, ['Host' => 'example.com']))->getHeaders()['HOST'])->toBe(['example.com']);
         });

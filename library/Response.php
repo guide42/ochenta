@@ -24,6 +24,11 @@ class Response
         }
 
         $headers = array_change_key_case($headers, CASE_UPPER);
+        $headers += [ // defaults headers
+            'PRAGMA'        => ['no-cache'],
+            'CACHE-CONTROL' => ['no-store', 'no-cache', 'must-revalidate',
+                                'post-check=0', 'pre-check=0'],
+        ];
 
         if (($statusCode >= 100 && $statusCode < 200) || in_array($statusCode, [204, 304])) {
             unset($headers['CONTENT-TYPE']);
