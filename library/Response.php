@@ -25,7 +25,6 @@ class Response
 
         $headers = array_change_key_case($headers, CASE_UPPER);
         $headers += [ // defaults headers
-            'PRAGMA'        => ['no-cache'],
             'CACHE-CONTROL' => ['no-store', 'no-cache', 'must-revalidate',
                                 'post-check=0', 'pre-check=0'],
         ];

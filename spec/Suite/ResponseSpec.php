@@ -21,9 +21,15 @@ describe('Response', function() {
 
         it('assigns headers defaults', function() {
             expect((new Response(200, []))->getHeaders())->toBe([
-                'PRAGMA'        => ['no-cache'],
                 'CACHE-CONTROL' => ['no-store', 'no-cache', 'must-revalidate',
                                     'post-check=0', 'pre-check=0'],
+                'CONTENT-TYPE'  => ['text/html; charset=utf-8'],
+            ]);
+        });
+
+        it('assigns headers, defaults can be overriden', function() {
+            expect((new Response(200, ['Cache-Control' => 'no-cache']))->getHeaders())->toBe([
+                'CACHE-CONTROL' => ['no-cache'],
                 'CONTENT-TYPE'  => ['text/html; charset=utf-8'],
             ]);
         });
