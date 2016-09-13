@@ -93,9 +93,7 @@ class ServerRequest extends Request
 
     private function parseServerHeaders(array $server) {
         foreach ($server as $key => $value) {
-            if (strncmp($key, 'HTTP_', 5) === 0 &&
-                !in_array($key, $this->invalidHeaders)
-            ) {
+            if (strncmp($key, 'HTTP_', 5) === 0 && !in_array($key, $this->invalidHeaders)) {
                 yield str_replace('_', '-', substr($key, 5)) => (array) $value;
             } elseif (in_array($key, $this->specialHeaders)) {
                 yield str_replace('_', '-', $key) => (array) $value;
