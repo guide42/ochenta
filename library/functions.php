@@ -83,7 +83,7 @@ function emit(ServerRequest $req, callable $handler) {
 }
 
 /** @throws InvalidArgumentException */
-function stack(callable $responder, $resolver, ...$stack) {
+function stack(callable $initial, $resolver, ...$stack) {
     if (is_array($resolver)) {
         $stack += $resolver;
         $resolver = function(callable $prev, $handler) {
@@ -109,7 +109,7 @@ function stack(callable $responder, $resolver, ...$stack) {
             }
         }
     };
-    return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $responder);
+    return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $initial);
 }
 
 function header(string $name, ...$values): callable {
