@@ -73,7 +73,7 @@ function emit(ServerRequest $req, callable $handler) {
     } finally {
         try {
             $close = $res->getReturn();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $close = NULL;
         }
         if (is_callable($close)) {
