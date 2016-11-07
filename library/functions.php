@@ -148,7 +148,7 @@ function redirect($uri, int $statusCode=302): callable {
     if (!is_array($uri) && ($uri = parse_url($uri)) === FALSE) {
         throw new \InvalidArgumentException('Invalid uri');
     }
-    if (!in_array($statusCode, [301, 302])) {
+    if (!in_array($statusCode, [301, 302, 307])) {
         throw new \InvalidArgumentException('Invalid status code');
     }
 
