@@ -94,4 +94,18 @@ describe('Request', function() {
             expect((new Request('GET', '/', ['Content-Type' => ['text/plain;CHARSET="UTF-8"']]))->getCharset())->toBe('utf-8');
         });
     });
+
+    describe('->isForm', function() {
+        it('returns true when Content-Type is application/x-www-form-urlencoded', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['application/x-www-form-urlencoded']]))->isForm())->toBe(TRUE);
+        });
+
+        it('returns true when Content-Type is multipart/form-data', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['multipart/form-data']]))->isForm())->toBe(TRUE);
+        });
+
+        it('returns false when Content-Type is text/plain', function() {
+            expect((new Request('GET', '/', ['Content-Type' => ['text/plain']]))->isForm())->toBe(FALSE);
+        });
+    });
 });

@@ -6,6 +6,7 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 ## [Unreleased]
 
 - Bug with default headers on PSR-7 implementation.
+- Adds `Request::isForm`.
 
 ## [1.2] - 2016-08-22
 

@@ -85,4 +85,13 @@ class Request
     function getBody()/* resource|null */ {
         return $this->body;
     }
+
+    /** True if the request is submiting a form.
+      */
+    function isForm(): bool {
+        return in_array($this->getMediaType(), [
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ]);
+    }
 }
