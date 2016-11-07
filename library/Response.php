@@ -68,7 +68,7 @@ class Response
     /** Returns true if response is a redirection, false otherwise.
       */
     function isRedirect(): bool {
-        return in_array($this->statusCode, [301, 302]);
+        return in_array($this->statusCode, [301, 302, 307]);
     }
 
     /** Retrieves headers. @see Ochenta\Request::getHeaders()

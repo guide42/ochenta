@@ -7,7 +7,7 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 - Bug with default headers on PSR-7 implementation.
 - Adds `Request::isForm`.
-- Now `ochenta\request` accepts 307 Temporary Redirect.
+- Now `ochenta\request` and `Response::isRedirect` accepts 307 Temporary Redirect.
 
 ## [1.2] - 2016-08-22
 
