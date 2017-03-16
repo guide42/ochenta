@@ -2,8 +2,7 @@
 
 namespace ochenta;
 
-/** HTTP/1.1 request implementation.
-  */
+/** HTTP/1.1 request implementation. */
 class Request
 {
     protected $method;
@@ -29,35 +28,30 @@ class Request
         $this->body = stream_of($body);
     }
 
-    /** Retrieves HTTP method.
-      */
+    /** Retrieves HTTP method. */
     function getMethod(): string {
         return $this->method;
     }
 
-    /** Retrieves original URI parts.
-      */
+    /** Retrieves original URI parts. */
     function getUri()/* string[] result of php.net/parse_url function *//* is not type-hinted
                       *          because overlaps with Psr7 */ {
         return $this->uri;
     }
 
-    /** Retrieves the request target.
-      */
+    /** Retrieves the request target. */
     function getTarget(): string {
         return rtrim(($this->uri['path'] ?? '/') . '?' . ($this->uri['query'] ?? ''), '?');
     }
 
-    /** Retrieves all headers.
-      */
+    /** Retrieves all headers. */
     function getHeaders(): array/* string[][] associative array with each key is the normalizer
                                  *            header name, and each value an array of strings for
                                  *            that header. */ {
         return $this->headers;
     }
 
-    /** Returns normalized content type without parameters.
-      */
+    /** Returns normalized content type without parameters. */
     function getMediaType()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
@@ -65,8 +59,7 @@ class Request
         }
     }
 
-    /** Returns normalized content type charset.
-      */
+    /** Returns normalized content type charset. */
     function getCharset()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
@@ -80,14 +73,12 @@ class Request
         }
     }
 
-    /** Retrieves body.
-      */
+    /** Retrieves body. */
     function getBody()/* resource|null */ {
         return $this->body;
     }
 
-    /** True if the request is submiting a form.
-      */
+    /** True if the request is submiting a form. */
     function isForm(): bool {
         return in_array($this->getMediaType(), [
             'application/x-www-form-urlencoded',

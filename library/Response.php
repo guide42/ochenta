@@ -2,8 +2,7 @@
 
 namespace ochenta;
 
-/** HTTP/1.1 response implementation.
-  */
+/** HTTP/1.1 response implementation. */
 class Response
 {
     protected $statusCode;
@@ -47,8 +46,7 @@ class Response
         $this->body = stream_of($body);
     }
 
-    /** Sets the response in corcondance with the given request.
-      */
+    /** Sets the response in corcondance with the given request. */
     function prepare(Request $req): self {
         $res = clone $this;
 
@@ -59,26 +57,22 @@ class Response
         return $res;
     }
 
-    /** Retrieves status code.
-      */
+    /** Retrieves status code. */
     function getStatusCode()/* int*//* is not type-hinted because overlaps with Psr7 */ {
         return $this->statusCode;
     }
 
-    /** Returns true if response is a redirection, false otherwise.
-      */
+    /** Returns true if response is a redirection, false otherwise. */
     function isRedirect(): bool {
         return in_array($this->statusCode, [301, 302, 307]);
     }
 
-    /** Retrieves headers. @see Ochenta\Request::getHeaders()
-      */
+    /** Retrieves headers. @see Ochenta\Request::getHeaders() */
     function getHeaders(): array/* string[][] */ {
         return $this->headers;
     }
 
-    /** Retrieves body.
-      */
+    /** Retrieves body. */
     function getBody()/* resource|null */ {
         return $this->body;
     }

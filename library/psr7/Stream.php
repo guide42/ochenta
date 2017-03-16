@@ -4,8 +4,7 @@ namespace ochenta\psr7;
 
 use Psr\Http\Message\StreamInterface;
 
-/** PSR-7 stream implementation.
-  */
+/** PSR-7 stream implementation. */
 class Stream implements StreamInterface
 {
     /** @var resource */

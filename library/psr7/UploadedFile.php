@@ -5,8 +5,7 @@ namespace ochenta\psr7;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-/** PSR-7 uploaded file implementation.
-  */
+/** PSR-7 uploaded file implementation. */
 class UploadedFile implements UploadedFileInterface
 {
     protected $tmp;

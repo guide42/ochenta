@@ -5,8 +5,7 @@ namespace ochenta\psr7;
 use Psr\Http\Message\ServerRequestInterface;
 use ochenta\ServerRequest as OchentaServerRequest;
 
-/** HTTP request implementation.
-  */
+/** HTTP request implementation. */
 class ServerRequest extends OchentaServerRequest implements ServerRequestInterface
 {
     use MessageTrait, RequestTrait;

@@ -2,8 +2,7 @@
 
 namespace ochenta;
 
-/** An HTTP request for PHP's SAPI.
-  */
+/** An HTTP request for PHP's SAPI. */
 class ServerRequest extends Request
 {
     protected $query;
@@ -57,14 +56,12 @@ class ServerRequest extends Request
         );
     }
 
-    /** Retrieve query string parameters.
-      */
+    /** Retrieve query string parameters. */
     function getQuery(): array/* string[] */ {
         return $this->query;
     }
 
-    /** Retrieve parameters provided in the request body.
-      */
+    /** Retrieve parameters provided in the request body. */
     function getParsedBody(): array/* string[] */ {
         if (empty($this->xargs) &&
             !is_null($this->getBody()) &&
@@ -76,14 +73,12 @@ class ServerRequest extends Request
         return $this->xargs;
     }
 
-    /** Retrieve normalized file uploads.
-      */
+    /** Retrieve normalized file uploads. */
     function getFiles(): array/* array[] */ {
         return $this->files;
     }
 
-    /** Returns true if the request is HTTPS, false otherwise.
-      */
+    /** Returns true if the request is HTTPS, false otherwise. */
     function isSecure(): bool {
         return $this->uri['scheme'] === 'https';
     }

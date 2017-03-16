@@ -4,8 +4,7 @@ namespace ochenta\psr7;
 
 use Psr\Http\Message\UriInterface;
 
-/** PSR-7 URI implementation.
-  */
+/** PSR-7 URI implementation. */
 class Uri implements UriInterface
 {
     /** @var array */

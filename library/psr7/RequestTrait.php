@@ -4,8 +4,7 @@ namespace ochenta\psr7;
 
 use Psr\Http\Message\UriInterface;
 
-/** HTTP request implementation trait.
-  */
+/** HTTP request implementation trait. */
 trait RequestTrait
 {
     protected $uri;

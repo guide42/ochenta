@@ -4,8 +4,7 @@ namespace ochenta\psr7;
 
 use Psr\Http\Message\StreamInterface;
 
-/** HTTP message implementation trait.
-  */
+/** HTTP message implementation trait. */
 trait MessageTrait
 {
     protected $headerNames = [];

@@ -6,8 +6,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
 use ochenta\Response as OchentaResponse;
 
-/** HTTP response implementation.
-  */
+/** HTTP response implementation. */
 class Response extends OchentaResponse implements ResponseInterface
 {
     use MessageTrait;
