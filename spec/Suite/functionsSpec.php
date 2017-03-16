@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-use Kahlan\Plugin\Monkey;
 use ochenta\ServerRequest;
 use ochenta\Response;
 use function ochenta\emit;
@@ -69,9 +68,7 @@ describe('emit', function() {
     it('throws RuntimeException when headers has already been sent', function() {
         // This patch is not being executed, but because kahlan already print
         // tests to console, headers_sent returns true.
-        Monkey::patch('headers_sent', function() {
-            return TRUE;
-        });
+        allow('headers_sent')->toBeCalled()->andReturn(TRUE);
 
         expect(function() {
             emit(new ServerRequest, function(ServerRequest $req, callable $open) {
@@ -81,9 +78,10 @@ describe('emit', function() {
         ->toThrow(new RuntimeException);
     });
 
-    // Disabled because Monkey::patch doesn't work on included files
-    it('emit response to beyond', function() {
-        allow('header', function(string $header, bool $replace=TRUE) {
+    // Disabled because Monkey Patching doesn't work on included files
+    xit('emit response to beyond', function() {
+        allow('headers_sent')->toBeCalled()->andReturn(FALSE);
+        allow('header')->toBeCalled()->andRun(function(string $header, bool $replace=TRUE) {
             static $first = TRUE;
             static $reset = TRUE;
             if ($first) {
@@ -93,10 +91,6 @@ describe('emit', function() {
                 expect($replace)->toBe($reset);
                 $reset = FALSE;
             }
-        });
-
-        allow('headers_sent', function() {
-            return FALSE;
         });
 
         expect(function() {

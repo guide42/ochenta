@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-use Kahlan\Plugin\Monkey;
 use ochenta\ServerRequest;
 
 describe('ServerRequest', function() {
@@ -140,7 +139,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns the body to be php://input when it has Content-Length', function() {
-            Monkey::patch('fopen', function($filename, $mode) {
+            allow('fopen')->toBeCalled()->andRun(function($filename, $mode) {
                 if ($filename === 'php://input') {
                     $input = fopen('php://temp', 'r+');
                     fwrite($input, 'Hello World');
@@ -160,7 +159,7 @@ describe('ServerRequest', function() {
         });
 
         it('assigns the body to the given and is not overriden even if it has Content-Length', function() {
-            Monkey::patch('fopen', function($filename, $mode) {
+            allow('fopen')->toBeCalled()->andRun(function($filename, $mode) {
                 if ($filename === 'php://input') {
                     throw RuntimeExpection('This should never be called');
                 }
@@ -179,7 +178,7 @@ describe('ServerRequest', function() {
 
     describe('->getParsedBody', function() {
         it('returns parsed body when is application/x-www-form-urlencoded', function() {
-            Monkey::patch('fopen', function($filename, $mode) {
+            allow('fopen')->toBeCalled()->andRun(function($filename, $mode) {
                 if ($filename === 'php://input') {
                     $input = fopen('php://temp', 'r+');
                     fwrite($input, 'hello=world&foo=bar');
