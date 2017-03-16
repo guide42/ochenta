@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Kahlan\Plugin\Stub;
+use Kahlan\Plugin\Double;
 use Psr\Http\Message\UriInterface;
 use ochenta\psr7\Uri;
 
@@ -33,8 +33,8 @@ describe('psr7\\Uri', function() {
             expect($uri1->getPath())->toBe('/');
         });
         it('accepts an instance of UriInterface and re-generate the components', function() {
-            $uri0 = Stub::create(['implements' => [UriInterface::class]]);
-            Stub::on($uri0)->method('getPath')->andReturn('/');
+            $uri0 = Double::instance(['implements' => [UriInterface::class]]);
+            allow($uri0)->toReceive('getPath')->andReturn('/');
             $uri1 = new Uri($uri0);
 
             expect($uri1->getPath())->toBe('/');

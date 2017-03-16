@@ -11,7 +11,7 @@
         "psr-4": {"ochenta\\": "library/"}
     },
     "require-dev": {
-        "crysalead/kahlan": "*"
+        "kahlan/kahlan": "*"
     },
     "require": {
         "php": ">=7.0",

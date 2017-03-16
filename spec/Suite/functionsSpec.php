@@ -82,8 +82,8 @@ describe('emit', function() {
     });
 
     // Disabled because Monkey::patch doesn't work on included files
-    xit('emit response to beyond', function() {
-        Monkey::patch('header', function(string $header, bool $replace=TRUE) {
+    it('emit response to beyond', function() {
+        allow('header', function(string $header, bool $replace=TRUE) {
             static $first = TRUE;
             static $reset = TRUE;
             if ($first) {
@@ -95,7 +95,7 @@ describe('emit', function() {
             }
         });
 
-        Monkey::patch('headers_sent', function() {
+        allow('headers_sent', function() {
             return FALSE;
         });
 

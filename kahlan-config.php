@@ -1,4 +1,4 @@
 <?php
 
-$args = $this->args();
-$args->argument('src', 'default', 'library/');
+$args = $this->commandLine();
+$args->option('src', 'default', 'library/');
