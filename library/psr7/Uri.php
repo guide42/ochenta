@@ -19,9 +19,9 @@ class Uri implements UriInterface
     function __toString() {
         return (($authority = $this->getAuthority()) ?
                 ($this->getScheme() ?: 'http') . '://' : '') . $authority .
-               (($path = $this->getPath())[0] === '/' ? '' : ':') . $path .
-               (($query = $this->getQuery()) ? '?' : '') . $query .
-               (($fragment = $this->getFragment()) ? '#' : '') . $fragment;
+                (($path = $this->getPath())[0] === '/' ? '' : ':') . $path .
+                (($query = $this->getQuery()) ? '?' : '') . $query .
+                (($fragment = $this->getFragment()) ? '#' : '') . $fragment;
     }
 
     function __construct($uri=NULL) {
@@ -70,7 +70,7 @@ class Uri implements UriInterface
 
     private function isSchemeAllowed() {
         return ($this->allowedSchemes[$this->components['scheme'] ?? ''] ?? 80) ===
-               ($this->components['port'] ?? 80);
+                ($this->components['port'] ?? 80);
     }
 
     function getScheme(): string {

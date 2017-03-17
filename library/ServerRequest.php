@@ -49,10 +49,10 @@ class ServerRequest extends Request
         }
 
         parent::__construct(
-          $method,
-          $uri,
-          $headers,
-          $body
+            $method,
+            $uri,
+            $headers,
+            $body
         );
     }
 

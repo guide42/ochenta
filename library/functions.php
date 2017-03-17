@@ -109,7 +109,7 @@ function stack(callable $initial, $resolver, ...$stack) {
             }
         }
     };
-    return array_reduce(array_reverse(iterator_to_array($flatten($stack), false)), $resolver, $initial);
+    return array_reduce(array_reverse(iterator_to_array($flatten($stack), FALSE)), $resolver, $initial);
 }
 
 function header(string $name, ...$values): callable {
@@ -129,7 +129,7 @@ function append(string $content, string $tag='body'): callable {
             $res = $handler($req, $open);
 
             foreach ($res as $output) {
-                if (($pos = stripos($output, "</$tag>")) !== false) {
+                if (($pos = stripos($output, "</$tag>")) !== FALSE) {
                     yield substr($output, 0, $pos);
                     yield $content;
                     yield substr($output, $pos);

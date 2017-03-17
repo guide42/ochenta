@@ -51,7 +51,7 @@ class Response
         $res = clone $this;
 
         if ($req->getMethod() === 'HEAD') {
-            $res->body = null;
+            $res->body = NULL;
         }
 
         return $res;

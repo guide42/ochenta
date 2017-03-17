@@ -55,7 +55,7 @@ class Request
     function getMediaType()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
-                   current($this->headers['CONTENT-TYPE'])))));
+                    current($this->headers['CONTENT-TYPE'])))));
         }
     }
 
@@ -63,7 +63,7 @@ class Request
     function getCharset()/* string|null */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
-                      current($this->headers['CONTENT-TYPE'])))), 1);
+                        current($this->headers['CONTENT-TYPE'])))), 1);
             foreach ($params as $param) {
                 $parts = explode('=', trim($param), 2);
                 if (current($parts) === 'charset') {
