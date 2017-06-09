@@ -52,7 +52,7 @@ class Request
     }
 
     /** Returns normalized content type without parameters. */
-    function getMediaType()/* string|null */ {
+    function getMediaType()/* string? */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
                     current($this->headers['CONTENT-TYPE'])))));
@@ -60,7 +60,7 @@ class Request
     }
 
     /** Returns normalized content type charset. */
-    function getCharset()/* string|null */ {
+    function getCharset()/* string? */ {
         if (isset($this->headers['CONTENT-TYPE'])) {
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
                         current($this->headers['CONTENT-TYPE'])))), 1);
@@ -74,7 +74,7 @@ class Request
     }
 
     /** Retrieves body. */
-    function getBody()/* resource|null */ {
+    function getBody()/* resource? */ {
         return $this->body;
     }
 

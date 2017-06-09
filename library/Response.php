@@ -73,7 +73,7 @@ class Response
     }
 
     /** Retrieves body. */
-    function getBody()/* resource|null */ {
+    function getBody()/* resource? */ {
         return $this->body;
     }
 }

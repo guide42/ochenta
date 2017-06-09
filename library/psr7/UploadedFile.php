@@ -64,11 +64,11 @@ class UploadedFile implements UploadedFileInterface
         return $this->error;
     }
 
-    function getClientFilename()/* string|null */ {
+    function getClientFilename()/* string? */ {
         return $this->name;
     }
 
-    function getClientMediaType()/* string|null */ {
+    function getClientMediaType()/* string? */ {
         return $this->type;
     }
 }

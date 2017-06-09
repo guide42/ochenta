@@ -90,7 +90,7 @@ class Uri implements UriInterface
         return $this->components['host'] ?? '';
     }
 
-    function getPort()/* int|null */ {
+    function getPort()/* int? */ {
         if ($this->isSchemeAllowed()) {
             return NULL;
         }
@@ -116,7 +116,7 @@ class Uri implements UriInterface
         return new self($uri);
     }
 
-    function withUserInfo(/*string */$user, $password=NULL): self {
+    function withUserInfo(/*string */$user, /*string? */$password=NULL): self {
         $uri = $this->components;
         $uri['user'] = $user;
         $uri['pass'] = $password;

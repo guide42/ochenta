@@ -111,20 +111,21 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
         return $this->attributes;
     }
 
-    function getAttribute($name, $default=NULL) {
+    function getAttribute(/*string */$name, $default=NULL) {
         return $this->attributes[$name] ?? $default;
     }
 
-    function withAttribute($name, $value): self {
+    function withAttribute(/*string */$name, $value): self {
         $new = clone $this;
         $new->attributes[$name] = $value;
 
         return $new;
     }
 
-    function withoutAttribute($name): self {
+    function withoutAttribute(/*string */$name): self {
         $new = clone $this;
         unset($new->attributes[$name]);
+
         return $new;
     }
 }

@@ -48,7 +48,7 @@ class Stream implements StreamInterface
         return $resource;
     }
 
-    function getSize()/* int|null */ {
+    function getSize()/* int? */ {
         if (is_resource($this->resource)) {
             return fstat($this->resource)['size'];
         }
