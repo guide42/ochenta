@@ -45,6 +45,10 @@ class Uri implements UriInterface
                 'fragment' => $uri->getFragment(),
             ];
         }
+        if ($this->components === FALSE) {
+            throw new \InvalidArgumentException('Malformed uri');
+        }
+
         if (!isset($this->allowedSchemes[$this->components['scheme'] ?? 'http'])) {
             throw new \InvalidArgumentException('Invalid scheme');
         }
@@ -53,10 +57,6 @@ class Uri implements UriInterface
         }
         if (isset($this->components['port'])) {
             $this->components['port'] = (int) $this->components['port'];
-        }
-
-        if ($this->components === FALSE) {
-            throw new \InvalidArgumentException('Malformed uri');
         }
     }
 
