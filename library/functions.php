@@ -186,7 +186,7 @@ function stream_of($resource) {
         /** @var resource $stream */
         $stream = fopen('php://temp', 'r+');
         if (!empty($resource)) {
-            fwrite($stream, $resource);
+            fwrite($stream, strval($resource));
             fseek($stream, 0);
         }
         return $stream;
