@@ -183,6 +183,7 @@ function stream_of($resource) {
     }
 
     if (is_scalar($resource)) {
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'r+');
         if (!empty($resource)) {
             fwrite($stream, $resource);

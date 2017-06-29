@@ -7,10 +7,10 @@ use Psr\Http\Message\UriInterface;
 /** PSR-7 URI implementation. */
 class Uri implements UriInterface
 {
-    /** @var array */
+    /** @var array<string, string|int> */
     protected $components = FALSE;
 
-    /** @var array */
+    /** @var array<string, int> */
     protected $allowedSchemes = [
         'http'  => 80,
         'https' => 443,
@@ -28,6 +28,7 @@ class Uri implements UriInterface
         if (is_null($uri)) {
             $this->components = [];
         } elseif (is_array($uri)) {
+            /** @var array<string, string|int> $uri */
             $this->components = $uri;
         } elseif (is_string($uri)) {
             $this->components = parse_url($uri);
@@ -60,6 +61,7 @@ class Uri implements UriInterface
         }
     }
 
+    /** @return array<string, string|int> */
     function extract(): array {
         return $this->components;
     }

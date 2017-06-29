@@ -7,7 +7,7 @@ use Psr\Http\Message\StreamInterface;
 /** PSR-7 stream implementation. */
 class Stream implements StreamInterface
 {
-    /** @var resource */
+    /** @var resource|null */
     protected $resource;
 
     function __toString(): string {
