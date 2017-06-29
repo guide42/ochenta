@@ -35,6 +35,7 @@ describe('psr7\\Uri', function() {
         it('accepts an instance of UriInterface and re-generate the components', function() {
             $uri0 = Double::instance(['implements' => [UriInterface::class]]);
             allow($uri0)->toReceive('getPath')->andReturn('/');
+            allow($uri0)->toReceive('getUserInfo')->andReturn('');
             $uri1 = new Uri($uri0);
 
             expect($uri1->getPath())->toBe('/');
