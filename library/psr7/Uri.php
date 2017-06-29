@@ -37,8 +37,8 @@ class Uri implements UriInterface
         } elseif ($uri instanceof UriInterface) {
             $this->components = [
                 'scheme' => $uri->getScheme(),
-                'user' => strstr($this->getUserInfo(), ':'),
-                'pass' => strrchr($this->getUserInfo(), ':'),
+                'user' => strstr($uri->getUserInfo(), ':'),
+                'pass' => strrchr($uri->getUserInfo(), ':'),
                 'host' => $uri->getHost(),
                 'port' => $uri->getPort(),
                 'path' => $uri->getPath(),
