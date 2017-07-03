@@ -45,7 +45,7 @@ trait MessageTrait
     function withHeader(/*string */$name, $value): self {
         $norm = strtoupper($name);
         $new = clone $this;
-        $new->headerNames[$norm] = $name;
+        $new->headerNames[$norm] = strval($name);
         $new->headers[$norm] = (array) $value;
 
         return $new;
@@ -54,7 +54,7 @@ trait MessageTrait
     function withAddedHeader(/*string */$name, $value): self {
         $norm = strtoupper($name);
         $new = clone $this;
-        $new->headerNames[$norm] = $name;
+        $new->headerNames[$norm] = strval($name);
         $new->headers[$norm] = array_merge_recursive((array) $value, $this->headers[$norm] ?? []);
 
         return $new;
