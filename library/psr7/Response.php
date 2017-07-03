@@ -82,7 +82,7 @@ class Response extends OchentaResponse implements ResponseInterface
 
     function __construct(int $statusCode=200, array $headers=[], $body=NULL) {
         foreach ($headers as $name => $header) {
-            $this->headerNames[strtoupper($name)] = $name;
+            $this->headerNames[strtoupper($name)] = strval($name);
         }
 
         parent::__construct($statusCode, $headers, $body);

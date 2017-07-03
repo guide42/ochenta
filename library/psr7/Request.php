@@ -12,7 +12,7 @@ class Request extends OchentaRequest implements RequestInterface
 
     function __construct(string $method, $uri, array $headers=[], $body=NULL) {
         foreach ($headers as $name => $header) {
-            $this->headerNames[strtoupper($name)] = $name;
+            $this->headerNames[strtoupper($name)] = strval($name);
         }
 
         parent::__construct($method, $uri, $headers, $body);
