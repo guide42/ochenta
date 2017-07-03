@@ -10,13 +10,25 @@ class ServerRequest extends OchentaServerRequest implements ServerRequestInterfa
 {
     use MessageTrait, RequestTrait;
 
+    /** @var array<string, mixed> */
     protected $query;
+
+    /** @var array<string, mixed> */
     protected $xargs;
+
+    /** @var array<string, mixed> */
     protected $files;
 
+    /** @var array<string, mixed> */
     protected $server;
+
+    /** @var array<string, mixed> */
     protected $cookie;
+
+    /** @var array<string, mixed> */
     protected $uploadedFiles = [];
+
+    /** @var array<string, mixed> */
     protected $attributes = [];
 
     function __construct(

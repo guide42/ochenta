@@ -7,9 +7,16 @@ use Psr\Http\Message\StreamInterface;
 /** HTTP message implementation trait. */
 trait MessageTrait
 {
+    /** @var array<string, string> */
     protected $headerNames = [];
+
+    /** @var array<string, array> */
     protected $headers = [];
+
+    /** @var StreamInterface|null */
     protected $stream;
+
+    /** @var resource|null */
     protected $body;
 
     function getProtocolVersion(): string {
