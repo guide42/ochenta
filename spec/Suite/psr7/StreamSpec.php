@@ -18,12 +18,7 @@ describe('psr7\\Stream', function() {
     });
     describe('->__construct', function() {
         it('accepts an Stream and extracts it\'s resource', function() {
-            expect((new Stream(new Stream('Hello')))->extract())->toBe('Hello');
-        });
-    });
-    describe('->extract', function() {
-        it('returns the resource', function() {
-            expect((new Stream(NULL))->extract())->toBeNull();
+            expect((new Stream(new Stream('Hello')))->detach())->toBe('Hello');
         });
     });
     describe('->extend', function() {
@@ -31,14 +26,11 @@ describe('psr7\\Stream', function() {
             $stream0 = new Stream('Hello');
             $stream1 = $stream0->extend(function(StreamInterface $stream2) use($stream0) {
                 expect($stream2)->toBe($stream0);
-
-                if ($stream2->extract() === 'Hello') {
-                    return 'World';
-                }
+                return 'World';
             });
 
-            expect($stream0->extract())->toBe('Hello');
-            expect($stream1->extract())->toBe('World');
+            expect($stream0->detach())->toBe('Hello');
+            expect($stream1->detach())->toBe('World');
         });
     });
     describe('->close', function() {
@@ -46,7 +38,7 @@ describe('psr7\\Stream', function() {
             $stream = new Stream('Hello');
             $stream->close();
 
-            expect($stream->extract())->toBeNull();
+            expect($stream->detach())->toBeNull();
         });
         it('closes the pointer if there is resource', function() {
             $resource = fopen('php://memory', 'r');

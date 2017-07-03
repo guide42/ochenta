@@ -121,7 +121,7 @@ describe('psr7\\MessageTrait', function() {
             $message = Double::instance(['uses' => MessageTrait::class]);
 
             expect($message->getBody())->toBeAnInstanceOf(StreamInterface::class);
-            expect($message->getBody()->extract())->toBeNull();
+            expect($message->getBody()->detach())->toBeNull();
         });
         it('returns stream given in ->withBody', function() {
             $stream = new Stream(NULL);

@@ -85,7 +85,7 @@ trait MessageTrait
 
         $new = clone $this;
         $new->stream = $body;
-        $new->body = $body->extract();
+        $new->body = $body->detach();
 
         return $new;
     }

@@ -21,14 +21,10 @@ class Stream implements StreamInterface
 
     function __construct($resource) {
         if ($resource instanceof Stream) {
-            $this->resource = $resource->extract();
+            $this->resource = $resource->detach();
         } else {
             $this->resource = $resource;
         }
-    }
-
-    function extract() {
-        return $this->resource;
     }
 
     function extend(callable $fn): self {
