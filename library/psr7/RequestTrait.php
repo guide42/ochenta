@@ -7,10 +7,19 @@ use Psr\Http\Message\UriInterface;
 /** HTTP request implementation trait. */
 trait RequestTrait
 {
+    /** @var array<string, string|int> */
     protected $uri;
+
+    /** @var string */
     protected $method;
+
+    /** @var array<string, array> */
     protected $headers;
+
+    /** @var array<string, string> */
     protected $headerNames;
+
+    /** @var string|null */
     protected $requestTarget;
 
     function getRequestTarget(): string {

@@ -11,7 +11,7 @@ class Response extends OchentaResponse implements ResponseInterface
 {
     use MessageTrait;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $phrases = [
         // INFORMATIONAL CODES
         100 => 'Continue',
@@ -77,6 +77,7 @@ class Response extends OchentaResponse implements ResponseInterface
         511 => 'Network Authentication Required',
     ];
 
+    /** @var string|null */
     protected $reasonPhrase;
 
     function __construct(int $statusCode=200, array $headers=[], $body=NULL) {

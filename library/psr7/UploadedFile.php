@@ -8,13 +8,22 @@ use Psr\Http\Message\UploadedFileInterface;
 /** PSR-7 uploaded file implementation. */
 class UploadedFile implements UploadedFileInterface
 {
+    /** @var string */
     protected $tmp;
+
+    /** @var int */
     protected $size;
+
+    /** @var int */
     protected $error;
 
+    /** @var string|null */
     protected $name;
+
+    /** @var string|null */
     protected $type;
 
+    /** @var boolean */
     protected $moved = FALSE;
 
     function __construct(
