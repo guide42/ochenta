@@ -58,7 +58,7 @@ class Response
     }
 
     /** Retrieves status code. */
-    function getStatusCode()/* int *//* is not type-hinted because overlaps with Psr7 */ {
+    function getStatusCode(): int {
         return $this->statusCode;
     }
 
@@ -73,7 +73,7 @@ class Response
     }
 
     /** Retrieves body. */
-    function getBody()/* resource? */ {
+    function getBody()/* ?resource */ {
         return $this->body;
     }
 }

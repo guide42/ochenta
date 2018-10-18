@@ -132,6 +132,7 @@ describe('stack', function() {
         $resolver = function($prev, $handler) use($responder, $middleware) {
             expect($prev)->toBe($responder);
             expect($handler)->toBe($middleware);
+            return function() {};
         };
 
         stack($responder, $resolver, $middleware);
@@ -144,6 +145,7 @@ describe('stack', function() {
         $resolver = function($prev, $handler) use($middle0, $middle1) {
             static $middlewares = 1;
             expect($handler)->toBe(${'middle' . $middlewares--});
+            return function() {};
         };
 
         stack(function() {}, $resolver, $middle0, $middle1);
@@ -157,6 +159,7 @@ describe('stack', function() {
         $resolver = function($prev, $handler) use($middle0, $middle1, $middle2) {
             static $middlewares = 2;
             expect($handler)->toBe(${'middle' . $middlewares--});
+            return function() {};
         };
 
         stack(function() {}, $resolver, $middle0, [$middle1, $middle2]);

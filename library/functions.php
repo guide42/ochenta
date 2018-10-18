@@ -3,7 +3,7 @@
 namespace ochenta;
 
 /** @throws InvalidArgumentException */
-function responder_of($resource) {
+function responder_of($resource): callable {
     if ($resource instanceof Response) {
         return function(ServerRequest $req, callable $open) use($resource) {
             $res = $resource->prepare($req);
@@ -46,7 +46,7 @@ function responder_of($resource) {
 }
 
 /** @throws RuntimeException */
-function emit(ServerRequest $req, callable $handler) {
+function emit(ServerRequest $req, callable $handler): void {
     $res = $handler($req, function(int $status, array $headers) {
         if (headers_sent()) {
             throw new \RuntimeException('Headers already sent');
@@ -83,7 +83,7 @@ function emit(ServerRequest $req, callable $handler) {
 }
 
 /** @throws InvalidArgumentException */
-function stack(callable $initial, $resolver, ...$stack) {
+function stack(callable $initial, $resolver, ...$stack): callable {
     if (is_array($resolver)) {
         $stack += $resolver;
         $resolver = function(callable $prev, $handler) {
@@ -173,7 +173,7 @@ function redirect($uri, int $statusCode=302): callable {
 }
 
 /** @throws InvalidArgumentException */
-function stream_of($resource) {
+function stream_of($resource)/* ?resource */ {
     if ($resource instanceof Request || $resource instanceof Response) {
         $resource = $resource->getBody();
     }

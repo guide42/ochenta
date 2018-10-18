@@ -34,8 +34,7 @@ class Request
     }
 
     /** Retrieves original URI parts. */
-    function getUri()/* string[] result of php.net/parse_url function *//* is not type-hinted
-                      *          because overlaps with Psr7 */ {
+    function getUri(): array/* string[] result of php.net/parse_url function */ {
         return $this->uri;
     }
 
@@ -52,15 +51,16 @@ class Request
     }
 
     /** Returns normalized content type without parameters. */
-    function getMediaType()/* string? */ {
+    function getMediaType(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
             return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
                     current($this->headers['CONTENT-TYPE'])))));
         }
+        return null;
     }
 
     /** Returns normalized content type charset. */
-    function getCharset()/* string? */ {
+    function getCharset(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
             $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
                         current($this->headers['CONTENT-TYPE'])))), 1);
@@ -71,10 +71,11 @@ class Request
                 }
             }
         }
+        return null;
     }
 
     /** Retrieves body. */
-    function getBody()/* resource? */ {
+    function getBody()/* ?resource */ {
         return $this->body;
     }
 
