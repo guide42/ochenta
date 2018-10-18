@@ -1,15 +1,7 @@
 <?php declare(strict_types=1);
 
-use ochenta\ServerRequest;
-use ochenta\Request;
-use ochenta\Response;
-use function ochenta\emit;
-use function ochenta\responder_of;
-use function ochenta\stack;
-use function ochenta\header;
-use function ochenta\append;
-use function ochenta\stream_of;
-use function ochenta\redirect;
+use ochenta\{Request, Response, ServerRequest};
+use function ochenta\{responder_of, emit, stack, header, append, redirect, stream_of};
 
 describe('responder_of', function() {
     it('throws InvalidArgumentException when an invalid resource is given', function() {
