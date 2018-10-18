@@ -7,7 +7,7 @@ class Request
 {
     protected $method;
     protected $uri;
-    protected $headers;
+    protected $headers = [];
     protected $body;
 
     function __construct(string $method, $uri, array $headers=[], $body=NULL) {

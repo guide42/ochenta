@@ -6,7 +6,7 @@ namespace ochenta;
 class Response
 {
     protected $statusCode;
-    protected $headers;
+    protected $headers = [];
     protected $body;
 
     function __construct(int $statusCode=200, array $headers=[], $body=NULL) {

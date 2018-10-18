@@ -14,10 +14,10 @@ trait RequestTrait
     protected $method;
 
     /** @var array<string, array> */
-    protected $headers;
+    protected $headers = [];
 
     /** @var array<string, string> */
-    protected $headerNames;
+    protected $headerNames = [];
 
     /** @var string|null */
     protected $requestTarget;
