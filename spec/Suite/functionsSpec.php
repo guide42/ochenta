@@ -48,7 +48,7 @@ describe('responder_of', function() {
         $responder = responder_of($resource);
         $generator = $responder(new ServerRequest, function() {});
 
-        expect(iterator_to_array($generator, false))->toBe(['Hello World', '']);
+        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
     });
 
     it('returns a responder that generates the given response', function() {
@@ -60,7 +60,7 @@ describe('responder_of', function() {
             expect($headers['CONTENT-TYPE'])->toBe(['text/html; charset=utf-8']);
         });
 
-        expect(iterator_to_array($generator, false))->toBe(['Hello World','']);
+        expect(iterator_to_array($generator, false))->toBe(['Hello World']);
     });
 });
 
