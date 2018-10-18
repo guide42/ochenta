@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use ochenta\ServerRequest;
+use ochenta\Request;
 use ochenta\Response;
 use function ochenta\emit;
 use function ochenta\responder_of;
@@ -294,7 +295,45 @@ describe('redirect', function() {
 });
 
 describe('stream_of', function() {
+    it('returns body from Request objects', function() {
+        $body = fopen('php://memory', 'r+');
+        fwrite($body, 'Hello World');
+        fseek($body, 0, SEEK_SET);
+
+        $req = new Request('GET', '/', [], $body);
+        $stream = stream_of($req);
+
+        expect($stream)->toBeA('resource');
+        expect(stream_get_contents($stream))->toBe('Hello World');
+    });
+
+    it('returns body from Response objects', function() {
+        $body = fopen('php://memory', 'r+');
+        fwrite($body, 'Hello World');
+        fseek($body, 0, SEEK_SET);
+
+        $res = new Response(200, [], $body);
+        $stream = stream_of($res);
+
+        expect($stream)->toBeA('resource');
+        expect(stream_get_contents($stream))->toBe('Hello World');
+    });
+
+    it('returns a resource made from content when scalar is given', function() {
+        $stream = stream_of('Hello World');
+
+        expect($stream)->toBeA('resource');
+        expect(stream_get_contents($stream))->toBe('Hello World');
+    });
+
     it('returns null when null given', function() {
         expect(stream_of(NULL))->toBeNull();
+    });
+
+    it('throws InvalidArgumentException when non-scalar is given', function() {
+        $invalids = [array(), new stdClass, function() {}];
+        foreach ($invalids as $invalid) {
+            expect(function() use($invalid) { stream_of($invalid); })->toThrow(new InvalidArgumentException);
+        }
     });
 });
