@@ -11,6 +11,17 @@ describe('psr7\\UploadedFile', function() {
             })
             ->toThrow(new RuntimeException);
         });
+        it('throws RuntimeException when is already moved', function() {
+            $tmpfile = tempnam(sys_get_temp_dir(), 'kahlan/');
+            skipIf($tmpfile === FALSE);
+            touch($tmpfile);
+            $file = (new UploadedFile($tmpfile, 0, UPLOAD_ERR_OK));
+            $file->moveTo('/tmp/kahlan/ochentatmp');
+            expect(function() use($file) {
+                $file->getStream();
+            })
+            ->toThrow(new RuntimeException);
+        });
         it('returns an instance of StreamInterface', function() {
             $tmpfile = tempnam(sys_get_temp_dir(), 'kahlan/');
             skipIf($tmpfile === FALSE);
