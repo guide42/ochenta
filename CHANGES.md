@@ -5,6 +5,8 @@ This project adheres to [Fear-Driven Versioning](https://github.com/jonathanong/
 
 ## [Unreleased]
 
+- Drop PSR-7 support.
+
 ## [1.3] - 2016-10-08
 
 - Bug with default headers on PSR-7 implementation.
