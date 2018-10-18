@@ -1,7 +1,9 @@
-Ochenta: HTTP request/response implementation
-=============================================
+Ochenta: HTTP library
+=====================
 
-HTTP abstraction layer in php 7 with [psr-7](http://www.php-fig.org/psr/psr-7/) basic implementation.
+- HTTP abstractions: use request/response objects instead of superglobals.
+- HTTP middlewares: intersect the process of creating a response from a request.
+- HTTP responders: actionable views that build responses.
 
 Hello World
 -----------
