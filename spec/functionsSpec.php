@@ -79,8 +79,7 @@ describe('emit', function() {
         ->toThrow(new RuntimeException);
     });
 
-    // Disabled because Monkey Patching doesn't work on included files
-    xit('emit response to beyond', function() {
+    it('emit response to beyond', function() {
         allow('headers_sent')->toBeCalled()->andReturn(FALSE);
         allow('header')->toBeCalled()->andRun(function(string $header, bool $replace=TRUE) {
             static $first = TRUE;
