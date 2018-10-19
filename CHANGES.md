@@ -15,14 +15,14 @@ All notable changes to this project will be documented in this file.
 
 - Bug with default headers on PSR-7 implementation.
 - Adds `Request::isForm`.
-- [BC-BREAK] Now `ochenta\redirect` and `Response::isRedirect` accepts 307 Temporary Redirect.
+- [BC-BREAK] Now `redirect` and `Response::isRedirect` accepts 307 Temporary Redirect.
 
 ## [0.1.2] - 2016-08-22
 
-- Adds `ochenta\redirect` responder.
+- Adds `redirect` responder.
 - [BC-BREAK] Strict types.
 - [BC-BREAK] Now `ServerRequest::getUri` doesn't return port if is standard.
-- [BC-BREAK] Now `ochenta\Response` have `Cache-Control` header by default.
+- [BC-BREAK] Now `Response` have `Cache-Control` header by default.
   You could override it but it can't be removed.
 
 ## [0.1.1] - 2016-08-16
