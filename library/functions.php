@@ -66,6 +66,10 @@ function emit(ServerRequest $req, callable $handler): void {
         }
     });
 
+    if (ob_get_level() > 0 && ob_get_length() > 0) {
+        throw new \RuntimeException('Output already sent');
+    }
+
     try {
         foreach ($res as $output) {
             echo $output;

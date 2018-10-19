@@ -71,6 +71,18 @@ describe('emit', function() {
         ->toThrow(new RuntimeException);
     });
 
+    it('throws RuntimeException when output has already been sent', function() {
+        allow('ob_get_level')->toBeCalled()->andReturn(1);
+        allow('ob_get_length')->toBeCalled()->andReturn(1);
+
+        expect(function() {
+            emit(new ServerRequest, function(ServerRequest $req, callable $open) {
+                yield 'Hola';
+            });
+        })
+        ->toThrow(new RuntimeException);
+    });
+
     it('emit response to beyond', function() {
         allow('headers_sent')->toBeCalled()->andReturn(FALSE);
         allow('header')->toBeCalled()->andRun(function(string $header, bool $replace=TRUE) {

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 - [BC-BREAK] Now `Request` requires host header.
+- [BC-BREAK] Now `emit` throws `RuntimeException` if output has already been sent.
 
 ## [0.2.0] - 2018-10-19
 
