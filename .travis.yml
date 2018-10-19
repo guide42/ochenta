@@ -1,14 +1,17 @@
+---
+
 language: php
 
 php:
   - 7.2
 
 before_script:
+  - mkdir -p build/logs/
   - composer install --dev --no-interaction --prefer-dist
+  - composer require --dev --no-interaction --prefer-dist php-coveralls/php-coveralls
 
 script:
-  - ./vendor/bin/kahlan --cc=true --coverage=4 --clover=clover.xml
+  - php vendor/bin/kahlan --cc=true --coverage=4 --clover=build/logs/clover.xml
 
 after_success:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover 'clover.xml'
+  - php vendor/bin/coveralls -v
