@@ -14,4 +14,4 @@ script:
   - php vendor/bin/kahlan --cc=true --coverage=4 --clover=build/logs/clover.xml
 
 after_success:
-  - php vendor/bin/coveralls -v
+  - php vendor/bin/php-coveralls -v
