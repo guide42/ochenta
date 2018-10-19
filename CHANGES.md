@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [BC-BREAK] Now `Request` requires host header.
+
 ## [0.2.0] - 2018-10-19
 
 - [BC-BREAK] Drop PSR-7 support.

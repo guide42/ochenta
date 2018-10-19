@@ -294,7 +294,7 @@ describe('stream_of', function() {
         fwrite($body, 'Hello World');
         fseek($body, 0, SEEK_SET);
 
-        $req = new Request('GET', '/', [], $body);
+        $req = new Request('GET', '/', ['Host' => 'example.com'], $body);
         $stream = stream_of($req);
 
         expect($stream)->toBeA('resource');

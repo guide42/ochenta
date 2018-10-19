@@ -24,6 +24,10 @@ class Request
             $headers = ['HOST' => [$this->uri['host']]] + $headers;
         }
 
+        if (!isset($headers['HOST'])) {
+            throw new \InvalidArgumentException('Missing host header');
+        }
+
         $this->headers = $headers;
         $this->body = stream_of($body);
     }

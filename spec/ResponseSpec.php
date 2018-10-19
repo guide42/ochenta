@@ -63,7 +63,7 @@ describe('Response', function() {
     describe('->prepare', function() {
         it('returns a clone of the response', function() {
             $old = new Response(200);
-            $new = $old->prepare(new Request('GET', '/'));
+            $new = $old->prepare(new Request('GET', '/', ['Host' => 'example.com']));
 
             expect($old)->not->toBe($new);
             expect($new)->toBeAnInstanceOf(Response::class);
@@ -71,7 +71,7 @@ describe('Response', function() {
 
         it('removes body if request is HEAD', function() {
             $res = new Response(200, [], 'Hello World');
-            $req = new Request('HEAD', '/');
+            $req = new Request('HEAD', '/', ['Host' => 'example.com']);
 
             expect($res->prepare($req)->getBody())->toBeNull();
         });
