@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.0] - 2018-10-19
+
 - Drop PSR-7 support.
 - Change versioning scheme to SemVer.
 
