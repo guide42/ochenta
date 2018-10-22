@@ -5,11 +5,16 @@ namespace ochenta;
 /** HTTP/1.1 response implementation. */
 class Response
 {
-    protected $statusCode;
-    protected $headers = [];
-    protected $body;
+    /** Status HTTP code. */
+    protected/* int */ $statusCode;
 
-    function __construct(int $statusCode=200, array $headers=[], $body=NULL) {
+    /** Uppercase headers names (as keys) with its list of values. */
+    protected/* array */ $headers;
+
+    /** Output body stream or `null` if empty. */
+    protected/* ?resource */ $body;
+
+    function __construct(int $statusCode=200, array $headers=[], /* ?resource */ $body=NULL) {
         if ($statusCode < 100 || $statusCode >= 600) {
             throw new \InvalidArgumentException('Status code must be between 100 and 600');
         }
@@ -68,7 +73,7 @@ class Response
     }
 
     /** Retrieves headers. @see Ochenta\Request::getHeaders() */
-    function getHeaders(): array/* string[][] */ {
+    function getHeaders(): array {
         return $this->headers;
     }
 

@@ -5,12 +5,19 @@ namespace ochenta;
 /** HTTP/1.1 request implementation. */
 class Request
 {
-    protected $method;
-    protected $uri;
-    protected $headers = [];
-    protected $body;
+    /** Uppercase HTTP method. */
+    protected/* string */ $method;
 
-    function __construct(string $method, $uri, array $headers=[], $body=NULL) {
+    /** Parts of the original URI. */
+    protected/* array */ $uri;
+
+    /** Uppercase headers names (as keys) with its list of values. */
+    protected/* array */ $headers;
+
+    /** Input body stream or `null` if empty. */
+    protected/* ?resource */ $body;
+
+    function __construct(string $method, $uri, array $headers=[], /* ?resource */ $body=NULL) {
         $this->method = strtoupper($method);
         $this->uri = is_array($uri) ? $uri : parse_url($uri);
 
@@ -38,7 +45,7 @@ class Request
     }
 
     /** Retrieves original URI parts. */
-    function getUri(): array/* string[] result of php.net/parse_url function */ {
+    function getUri(): array/* result of php.net/parse_url function */ {
         return $this->uri;
     }
 
@@ -48,9 +55,9 @@ class Request
     }
 
     /** Retrieves all headers. */
-    function getHeaders(): array/* string[][] associative array with each key is the normalizer
-                                 *            header name, and each value an array of strings for
-                                 *            that header. */ {
+    function getHeaders(): array/* associative array with each key as the normalized
+                                 * header name, and an array of strings values for
+                                 * that header */ {
         return $this->headers;
     }
 

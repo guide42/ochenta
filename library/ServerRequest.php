@@ -5,9 +5,14 @@ namespace ochenta;
 /** An HTTP request for PHP's SAPI. */
 class ServerRequest extends Request
 {
-    protected $query;
-    protected $xargs;
-    protected $files;
+    /** Parsed query string. */
+    protected/* array */ $query;
+
+    /** Form parameters. */
+    protected/* array */ $xargs;
+
+    /** Normalized input files. */
+    protected/* array */ $files;
 
     /** @throws UnexpectedValueException */
     function __construct(
@@ -15,7 +20,7 @@ class ServerRequest extends Request
         array $query=NULL,
         array $xargs=NULL,
         array $files=NULL,
-        $body=NULL
+        /* ?resource */ $body=NULL
     ) {
         if (empty($server)) {
             $server = $_SERVER + [
@@ -57,12 +62,12 @@ class ServerRequest extends Request
     }
 
     /** Retrieve query string parameters. */
-    function getQuery(): array/* string[] */ {
+    function getQuery(): array {
         return $this->query;
     }
 
     /** Retrieve parameters provided in the request body. */
-    function getParsedBody(): array/* string[] */ {
+    function getParsedBody(): array {
         if (empty($this->xargs) &&
             !is_null($this->getBody()) &&
             in_array($this->getMethod(), ['POST']) &&
@@ -74,7 +79,7 @@ class ServerRequest extends Request
     }
 
     /** Retrieve normalized file uploads. */
-    function getFiles(): array/* array[] */ {
+    function getFiles(): array {
         return $this->files;
     }
 
@@ -86,7 +91,7 @@ class ServerRequest extends Request
     private $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];
     private $invalidHeaders = ['HTTP_PROXY'];
 
-    private function parseServerHeaders(array $server) {
+    private function parseServerHeaders(array $server): iterable {
         foreach ($server as $key => $value) {
             if (strncmp($key, 'HTTP_', 5) === 0 && !in_array($key, $this->invalidHeaders)) {
                 yield str_replace('_', '-', substr($key, 5)) => (array) $value;
@@ -96,7 +101,7 @@ class ServerRequest extends Request
         }
     }
 
-    private function parseFiles(array $files) {
+    private function parseFiles(array $files): iterable {
         foreach ($files as $key => $file) {
             if (!is_array($file) || !isset($file['error'])) {
                 throw new \UnexpectedValueException('Invalid uploaded file');
