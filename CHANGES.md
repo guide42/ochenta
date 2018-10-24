@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [BC-BREAK] Now `Request::$headers['HOST']` is normalized.
 - New `Request::getHost` to retrieve hostname.
 - [BC-BREAK] Now `Request::$headers` are normalized to make values as arrays.
 - [BC-BREAK] Now `Request` requires host header.

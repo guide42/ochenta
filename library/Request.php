@@ -32,7 +32,9 @@ class Request
             $headers = ['HOST' => [$this->uri['host']]] + $headers;
         }
 
-        if (!isset($headers['HOST'])) {
+        if (isset($headers['HOST'])) {
+            $headers['HOST'] = array_map('strtolower', $headers['HOST']);
+        } else {
             throw new \InvalidArgumentException('Missing host header');
         }
 

@@ -79,6 +79,10 @@ describe('Request', function() {
         it('returns hostname from request uri', function() {
             expect((new Request('GET', 'http://example.com/'))->getHost())->toBe('example.com');
         });
+
+        it('returns hostname in lowercase', function() {
+            expect((new Request('GET', '/', ['Host' => 'ExAmPlE.com']))->getHost())->toBe('example.com');
+        });
     });
 
     describe('->getTarget', function() {
