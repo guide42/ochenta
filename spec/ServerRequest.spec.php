@@ -202,6 +202,18 @@ describe('ServerRequest', function() {
         it('returns true when the HTTPS header is on', function() {
             expect((new ServerRequest(['HTTPS' => 'on']))->isSecure())->toBe(TRUE);
         });
+
+        it('returns true when request uri schema is https', function() {
+            expect((new ServerRequest(['REQUEST_URI' => 'https://example.com/']))->isSecure())->toBe(TRUE);
+        });
+
+        it('returns false when request uri schema is http', function() {
+            expect((new ServerRequest(['REQUEST_URI' => 'http://example.com/']))->isSecure())->toBe(FALSE);
+        });
+
+        it('returns false when request uri schema is not defined', function() {
+            expect((new ServerRequest(['REQUEST_URI' => '/']))->isSecure())->toBe(FALSE);
+        });
     });
 
     describe('->normalizeServer', function() {
