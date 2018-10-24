@@ -71,6 +71,16 @@ describe('Request', function() {
         });
     });
 
+    describe('->getHost', function() {
+        it('returns hostname from header', function() {
+            expect((new Request('GET', '/', ['Host' => 'example.com']))->getHost())->toBe('example.com');
+        });
+
+        it('returns hostname from request uri', function() {
+            expect((new Request('GET', 'http://example.com/'))->getHost())->toBe('example.com');
+        });
+    });
+
     describe('->getTarget', function() {
         it('return forward slash when path component of the uri is not defined', function() {
             expect((new Request('GET', '?queryString', ['Host' => 'example.com']))->getTarget())->toBe('/?queryString');

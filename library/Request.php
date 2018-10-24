@@ -50,6 +50,11 @@ class Request
         return $this->uri;
     }
 
+    /** Retrieves request host name. */
+    function getHost(): string {
+        return current($this->headers['HOST']);
+    }
+
     /** Retrieves the request target. */
     function getTarget(): string {
         return rtrim(($this->uri['path'] ?? '/') . '?' . ($this->uri['query'] ?? ''), '?');
