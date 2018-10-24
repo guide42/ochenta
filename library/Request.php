@@ -26,6 +26,7 @@ class Request
         }
 
         $headers = array_change_key_case($headers, CASE_UPPER);
+        $headers = array_map(function($v) { return is_array($v) ? $v : (array) $v; }, $headers);
 
         if (isset($this->uri['host']) && !isset($headers['HOST'])) {
             $headers = ['HOST' => [$this->uri['host']]] + $headers;

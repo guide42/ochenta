@@ -34,6 +34,13 @@ describe('Request', function() {
             expect($req->getHeaders()['HOST'])->toBe(['example.com']);
         });
 
+        it('assigns headers with values as array', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com', 'Content-Type' => 'text/plain']);
+
+            expect($req->getHeaders())->toBeA('array')->toContainKey('HOST');
+            expect($req->getHeaders()['HOST'])->toBeA('array')->toContainKey(0)->toBe(['example.com']);
+        });
+
         it('assigns host header from uri', function() {
             $req = new Request('GET', 'http://example.com/path?queryString');
 
