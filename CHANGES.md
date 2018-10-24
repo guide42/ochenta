@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.3.0] - 2018-10-24
+
 - [BC-BREAK] Now `ServerRequest::$uri['scheme']` is normalized.
 - [BC-BREAK] Now `Request::$headers['HOST']` is normalized.
 - New `Request::getHost` to retrieve hostname.
