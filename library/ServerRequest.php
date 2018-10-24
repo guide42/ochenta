@@ -151,6 +151,8 @@ class ServerRequest extends Request
 
         if (empty($parts['scheme'])) {
             $parts['scheme'] = $server['HTTPS'] === 'on' ? 'https' : 'http';
+        } else {
+            $parts['scheme'] = strtolower($parts['scheme']);
         }
         $defaultPort = $parts['scheme'] === 'https' ? 443 : 80;
 

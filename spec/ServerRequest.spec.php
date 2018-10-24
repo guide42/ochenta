@@ -284,6 +284,15 @@ describe('ServerRequest', function() {
             expect($req->getUri()['scheme'])->toBe('https');
         });
 
+        it('returns scheme in lowercase', function() {
+            $req = new ServerRequest([
+                'REQUEST_URI' => 'HtTp://example.com/',
+            ]);
+
+            expect($req->getUri())->toContainKey('scheme');
+            expect($req->getUri()['scheme'])->toBe('http');
+        });
+
         it('returns user and pass from PHP_AUTH environment variable', function() {
             $req = new ServerRequest([
                 'REQUEST_URI' => 'http://example.com/path?queryString',
