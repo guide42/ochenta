@@ -72,8 +72,11 @@ class Request
     /** Returns normalized content type without parameters. */
     function getMediaType(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
-            return current(explode(';', strtolower(preg_replace('/\s\s+/', '',
-                    current($this->headers['CONTENT-TYPE'])))));
+            return current(explode(';',
+                strtolower(preg_replace('/\s\s+/', '',
+                    current($this->headers['CONTENT-TYPE'])
+                ))
+            ));
         }
         return null;
     }
@@ -81,8 +84,11 @@ class Request
     /** Returns normalized content type charset. */
     function getCharset(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
-            $params = array_slice(explode(';', strtolower(preg_replace('/\s\s+/', '',
-                        current($this->headers['CONTENT-TYPE'])))), 1);
+            $params = array_slice(explode(';',
+                strtolower(preg_replace('/\s\s+/', '',
+                    current($this->headers['CONTENT-TYPE'])
+                ))
+            ), 1);
             foreach ($params as $param) {
                 $parts = explode('=', trim($param), 2);
                 if (current($parts) === 'charset') {
