@@ -30,9 +30,16 @@ It could also be created with it's defaults values:
 $req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
 ```
 
-That's a request. There is `ochenta\Request` but is not recomended to be used alone as it doesn't normalize any value.
+That's a incoming request.
+Superglobals are available as `$req->getQuery()`, `$req->getParsedBody()` and `$req->getFiles()`.
 
-There is `ochenta\Response` but is no worth using it. What else? Responders.
+Then the low-level `Request` abstraction provides many more methods:
+
+- `$req->getMethod()` and `$req->getTarget()` from the request line.
+- `$req->getHeaders()` to get all headers and `$req->getHost()` for the normalized domain.
+- `$req->getMediaType()` and `$req->getCharset()` from the `Content-Type` header.
+
+There is `Response` but is no worth using it. What else? Responders.
 
 Responders
 ----------
@@ -94,7 +101,7 @@ function add_header(string $name, string $value): callable {
 }
 ```
 
-Complex? This middleware exists at `ochenta\header`. This is how we use it:
+Complex? This middleware exists at `ochenta\header`. This is how to use it:
 
 ```php
 $app = add_header('X-Frame-Options', 'SAMEORIGIN')($app);
