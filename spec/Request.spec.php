@@ -34,7 +34,7 @@ describe('Request', function() {
             expect($req->getHeaders()['HOST'])->toBe(['example.com']);
         });
 
-        it('assigns headers with values as array', function() {
+        it('assigns headers with single value into an array of values', function() {
             $req = new Request('GET', '/', ['Host' => 'example.com', 'Content-Type' => 'text/plain']);
 
             expect($req->getHeaders())->toBeA('array')->toContainKey('HOST');
