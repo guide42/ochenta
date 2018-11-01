@@ -46,7 +46,7 @@ describe('ServerRequest', function() {
 
             expect($req->getHeaders())->toBeA('array')->toContainKey('CONTENT-TYPE')->toContainKey('CONTENT-LENGTH');
             expect($req->getHeaders()['CONTENT-TYPE'])->toBe(['text/plain']);
-            expect($req->getHeaders()['CONTENT-LENGTH'])->toBe([0]);
+            expect($req->getHeaders()['CONTENT-LENGTH'])->toBe(['0']);
         });
 
         it('throws UnexpectedValueException with invalid uploaded file', function() {

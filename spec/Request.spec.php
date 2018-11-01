@@ -41,6 +41,21 @@ describe('Request', function() {
             expect($req->getHeaders()['HOST'])->toBeA('array')->toContainKey(0)->toBe(['example.com']);
         });
 
+        it('assigns headers with trimmed values', function() {
+            $req = new Request('GET', '/', ['Host' => '  example.com  ', 'Content-Type' => "\ttext/plain\n"]);
+
+            expect($req->getHeaders()['HOST'])->toBe(['example.com']);
+            expect($req->getHeaders()['CONTENT-TYPE'])->toBe(['text/plain']);
+        });
+
+        it('assigns headers with values as string', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com', 'Content-Length' => 0, 'X-Hits' => [2, 42]]);
+
+            expect($req->getHeaders()['X-HITS'][0])->toBeA('string');
+            expect($req->getHeaders()['X-HITS'][1])->toBeA('string');
+            expect($req->getHeaders()['CONTENT-LENGTH'][0])->toBeA('string');
+        });
+
         it('assigns host header from uri', function() {
             $req = new Request('GET', 'http://example.com/path?queryString');
 

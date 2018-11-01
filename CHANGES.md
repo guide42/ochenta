@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [BC-BREAK] Now `Request` trims and forces headers values to be string.
+
 ## [0.3.0] - 2018-10-24
 
 - [BC-BREAK] Now `ServerRequest::$uri['scheme']` is normalized.
