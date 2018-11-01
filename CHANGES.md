@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - [BC-BREAK] Now `Request` trims and forces headers values to be string.
 - [BC-BREAK] Now `Request` throws `InvalidArgumentException` on non-string url.
+- [BC-BREAK] Now `Request` filters url as array to be compatible with `parse_url`.
 
 ## [0.3.0] - 2018-10-24
 

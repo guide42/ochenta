@@ -19,7 +19,17 @@ class Request
 
     function __construct(string $method, $uri, array $headers=[], /* ?resource */ $body=NULL) {
         $this->method = strtoupper($method);
-        $this->uri = is_array($uri) ? $uri : parse_url((string) $uri);
+
+        if (is_array($uri)) {
+            $this->uri = array_filter($uri,
+                function($k) {
+                    return in_array($k, ['scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment'], TRUE);
+                },
+                ARRAY_FILTER_USE_KEY
+            );
+        } else {
+            $this->uri = parse_url((string) $uri);
+        }
 
         if ($this->uri === FALSE) {
             throw new \InvalidArgumentException('Invalid uri');

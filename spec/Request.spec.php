@@ -20,6 +20,17 @@ describe('Request', function() {
             expect((new Request('GET', $uri))->getUri())->toBeA('array')->toContainKey('host');
         });
 
+        it('assigns uri from array keeping only the keys that are valid result of parse_url', function() {
+            $req = new Request('GET', [
+                'scheme'     => 'http',
+                'host'       => 'example.com',
+                'controller' => 'view_user',
+                'user_id'    => 123,
+            ]);
+
+            expect($req->getUri())->toBe(['scheme' => 'http', 'host' => 'example.com']);
+        });
+
         it('throws InvalidArgumentException on invalid uri', function() {
             expect(function() {
                 new Request('GET', 'http://@/');
