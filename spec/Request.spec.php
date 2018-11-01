@@ -27,6 +27,11 @@ describe('Request', function() {
             ->toThrow(new InvalidArgumentException);
         });
 
+        it('throws InvalidArgumentException on non-string uri', function() {
+            expect(function() { new Request('GET', 1.42); })->toThrow(new InvalidArgumentException);
+            expect(function() { new Request('GET', true); })->toThrow(new InvalidArgumentException);
+        });
+
         it('assigns headers with keys in uppercase', function() {
             $req = new Request('GET', '/', ['Host' => ['example.com'], 'Content-Type' => ['text/plain']]);
 

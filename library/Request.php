@@ -19,7 +19,7 @@ class Request
 
     function __construct(string $method, $uri, array $headers=[], /* ?resource */ $body=NULL) {
         $this->method = strtoupper($method);
-        $this->uri = is_array($uri) ? $uri : parse_url($uri);
+        $this->uri = is_array($uri) ? $uri : parse_url((string) $uri);
 
         if ($this->uri === FALSE) {
             throw new \InvalidArgumentException('Invalid uri');
