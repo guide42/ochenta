@@ -30,7 +30,7 @@ It could also be created with it's defaults values:
 $req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
 ```
 
-That's a incoming request.
+That's a incoming request.  
 Superglobals are available as `$req->getQuery()`, `$req->getParsedBody()` and `$req->getFiles()`.
 
 Then the low-level `Request` abstraction provides many more methods:
@@ -39,7 +39,7 @@ Then the low-level `Request` abstraction provides many more methods:
 - `$req->getHeaders()` to get all headers and `$req->getHost()` for the normalized domain.
 - `$req->getMediaType()` and `$req->getCharset()` from the `Content-Type` header.
 
-There is `Response` but is no worth using it. What else? Responders.
+There is `Response`, but is no worth using it. What else? Responders.
 
 Responders
 ----------
