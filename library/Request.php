@@ -93,7 +93,7 @@ class Request
                 ))
             ));
         }
-        return null;
+        return NULL;
     }
 
     /** Returns normalized content type charset. */
@@ -111,7 +111,7 @@ class Request
                 }
             }
         }
-        return null;
+        return NULL;
     }
 
     /** Retrieves body. */
