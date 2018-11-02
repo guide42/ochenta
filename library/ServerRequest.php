@@ -24,13 +24,17 @@ class ServerRequest extends Request
     ) {
         if (empty($server)) {
             $server = $_SERVER + [
-                'SERVER_PROTOCOL' => 'HTTP/1.1', // ignored
-                'CONTENT_TYPE'    => 'text/html; charset=utf-8',
-                'HTTP_HOST'       => 'localhost',
-                'SERVER_PORT'     => 80,
-                'SCRIPT_NAME'     => '/',
-                'REQUEST_URI'     => '/',
-                'REQUEST_METHOD'  => 'GET',
+                'SERVER_PROTOCOL'      => 'HTTP/1.1', // ignored
+                'SERVER_NAME'          => 'localhost',
+                'SERVER_PORT'          => 80,
+
+                'SCRIPT_NAME'          => '/index.php',
+                'PATH_INFO'            => '/',
+
+                'HTTP_HOST'            => 'localhost',
+
+                'REQUEST_URI'          => '/',
+                'REQUEST_METHOD'       => 'GET',
             ];
         }
 
