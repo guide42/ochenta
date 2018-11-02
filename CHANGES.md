@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - [BC-BREAK] Now `Request` trims and forces headers values to be string.
 - [BC-BREAK] Now `Request` throws `InvalidArgumentException` on non-string url.
 - [BC-BREAK] Now `Request` filters url as array to be compatible with `parse_url`.
-- [BC-BREAK] Fix `stream_of` when an empty numberic value is given.
+- [BUG] Fix `stream_of` when an empty numberic value is given.
 
 ## [0.3.0] - 2018-10-24
 
@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.3] - 2016-10-08
 
-- Bug with default headers on PSR-7 implementation.
+- [BUG] Default headers on PSR-7 implementation.
 - Adds `Request::isForm`.
 - [BC-BREAK] Now `redirect` and `Response::isRedirect` accepts 307 Temporary Redirect.
 
