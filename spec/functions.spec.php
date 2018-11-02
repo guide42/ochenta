@@ -332,6 +332,13 @@ describe('stream_of', function() {
         expect(stream_get_contents($stream))->toBe('Hello World');
     });
 
+    it('returns a resource with string representation of the given numeric zero', function() {
+        $stream = stream_of(0);
+
+        expect($stream)->toBeA('resource');
+        expect(stream_get_contents($stream))->toBeA('string')->toBe('0');
+    });
+
     it('returns null when null given', function() {
         expect(stream_of(NULL))->toBeNull();
     });
