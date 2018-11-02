@@ -186,6 +186,10 @@ function stream_of($resource)/* ?resource */ {
         return NULL;
     }
 
+    if (is_resource($resource)) {
+        return $resource;
+    }
+
     if (is_scalar($resource)) {
         /** @var resource $stream */
         $stream = fopen('php://temp', 'r+');
@@ -194,10 +198,6 @@ function stream_of($resource)/* ?resource */ {
             fseek($stream, 0);
         }
         return $stream;
-    }
-
-    if (is_resource($resource)) {
-        return $resource;
     }
 
     throw new \InvalidArgumentException('Invalid resource');
