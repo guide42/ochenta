@@ -83,6 +83,15 @@ describe('emit', function() {
         ->toThrow(new RuntimeException);
     });
 
+    it('emit response returned as array', function() {
+        expect(function() {
+            emit(new ServerRequest, function(ServerRequest $req, callable $open) {
+                return ['Hello World'];
+            });
+        })
+        ->toEcho('Hello World');
+    });
+
     it('emit response to beyond', function() {
         allow('headers_sent')->toBeCalled()->andReturn(FALSE);
         allow('header')->toBeCalled()->andRun(function(string $header, bool $replace=TRUE) {
