@@ -127,7 +127,7 @@ responder_of(scalar $resource)                               // ... from content
 
 emit(ServerRequest $req, callable $handler)                  // emits a responder
 
-stack(callable $responder, array $stack)                     // expects items to be a function(callable $next)
+stack(callable $responder, array $stack)                     // expects stack items to be a function(callable $next)
 stack(callable $responder, callable $resolver, array $stack) // ... use resolver as function(callable $prev, $handler)
 
 // MIDDLEWARES
