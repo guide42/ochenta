@@ -83,6 +83,15 @@ describe('emit', function() {
         ->toThrow(new RuntimeException);
     });
 
+    it('emit empty response when returned value is not iterable', function() {
+        expect(function() {
+            emit(new ServerRequest, function(ServerRequest $req, callable $open) {
+                return 'Nothing to emit';
+            });
+        })
+        ->toEcho('');
+    });
+
     it('emit response returned as array', function() {
         expect(function() {
             emit(new ServerRequest, function(ServerRequest $req, callable $open) {
@@ -128,6 +137,23 @@ describe('emit', function() {
         });
 
         expect($closed)->toBe(TRUE);
+    });
+
+    it('calls responder\'s return when handler is not a generator', function() {
+        $closed = FALSE;
+
+        emit(new ServerRequest, function(ServerRequest $req, callable $open) use(&$closed) {
+            return function() use(&$closed) {
+                $closed = TRUE;
+            };
+        });
+
+        expect($closed)->toBe(TRUE);
+    });
+
+    xit('calls flush function when no callable return is given', function() {
+        expect('flush')->toBeCalled()->once();
+        emit(new ServerRequest, function(ServerRequest $req, callable $open) {});
     });
 });
 

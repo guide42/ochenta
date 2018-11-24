@@ -70,20 +70,16 @@ function emit(ServerRequest $req, callable $handler): void {
         throw new \RuntimeException('Output already sent');
     }
 
-    try {
+    if (is_iterable($res)) {
         foreach ($res as $output) {
             echo $output;
         }
-    } finally {
-        try {
-            $close = $res->getReturn();
-        } catch (\Throwable $ex) {
-            $close = NULL;
-        }
-        if (is_callable($close)) {
-            $close();
+        if ($res instanceof \Generator) {
+            $res = $res->getReturn();
         }
     }
+
+    (is_callable($res) ? $res : 'flush')();
 }
 
 /** @throws InvalidArgumentException */
