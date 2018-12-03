@@ -13,7 +13,7 @@ class Request {
     /** Uppercase headers names (as keys) with its list of values. */
     protected/* array */ $headers;
 
-    /** Input body stream or `null` if empty. */
+    /** Input content stream or `null` if empty. */
     protected/* ?resource */ $body;
 
     function __construct(string $method, $uri, array $headers=[], /* ?resource */ $body=NULL) {
