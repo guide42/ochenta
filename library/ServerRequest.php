@@ -3,8 +3,7 @@
 namespace ochenta;
 
 /** An HTTP request for PHP's SAPI. */
-class ServerRequest extends Request
-{
+class ServerRequest extends Request {
     /** Parsed query string. */
     protected/* array */ $query;
 

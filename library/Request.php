@@ -3,8 +3,7 @@
 namespace ochenta;
 
 /** HTTP/1.1 request implementation. */
-class Request
-{
+class Request {
     /** Uppercase HTTP method. */
     protected/* string */ $method;
 

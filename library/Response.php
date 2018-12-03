@@ -3,8 +3,7 @@
 namespace ochenta;
 
 /** HTTP/1.1 response implementation. */
-class Response
-{
+class Response {
     /** Status HTTP code. */
     protected/* int */ $statusCode;
 
