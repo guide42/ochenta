@@ -37,6 +37,10 @@ class ServerRequest extends Request {
             ];
         }
 
+        if (($server['argc'] ?? 0) > 0) {
+            throw new \LogicException('Cannot create server request in a non-server environment');
+        }
+
         $this->query = $query ?: $_GET;
         $this->xargs = $xargs ?: $_POST;
         $this->files = iterator_to_array($this->parseFiles($files ?: $_FILES));

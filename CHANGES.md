@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - [BC-BREAK] Now `Request` throws `InvalidArgumentException` on non-string url.
 - [BC-BREAK] Now `Request` filters url as array to be compatible with `parse_url`.
 - [BUG] Fix `stream_of` when an empty numeric value is given.
+- [BC-BREAK] Now `ServerRequest` throws `LogicException` on cli SAPI.
 
 ## [0.3.0] - 2018-10-24
 
