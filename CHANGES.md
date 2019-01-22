@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.4.0] - 2019-01-22
 
-- [BC-BREAK] Now `emit` will call the returned function is is not a generator.
+- [BC-BREAK] Now `emit` will call the returned function if is not a generator.
 - [BC-BREAK] Now `Request` trims and forces headers values to be string.
 - [BC-BREAK] Now `Request` throws `InvalidArgumentException` on non-string url.
 - [BC-BREAK] Now `Request` filters url as array to be compatible with `parse_url`.
