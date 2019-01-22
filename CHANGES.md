@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.4.0] - 2019-01-22
 
 - [BC-BREAK] Now `emit` will call the returned function is is not a generator.
 - [BC-BREAK] Now `Request` trims and forces headers values to be string.
