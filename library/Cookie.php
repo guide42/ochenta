@@ -114,7 +114,7 @@ class Cookie {
         return $this->secure;
     }
 
-    function matches(ServerRequest $req): bool {
+    function matches(Request $req): bool {
         if ($this->isExpired()) {
             return FALSE;
         }
