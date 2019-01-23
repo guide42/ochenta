@@ -130,6 +130,16 @@ describe('Request', function() {
         });
     });
 
+    describe('->getTargetPath', function() {
+        it('return forward slash when path component of the uri is not defined', function() {
+            expect((new Request('GET', '?queryString', ['Host' => 'example.com']))->getTargetPath())->toBe('/');
+        });
+
+        it('return path of the uri', function() {
+            expect((new Request('GET', 'http://example.com/path?queryString'))->getTargetPath())->toBe('/path');
+        });
+    });
+
     describe('->getTarget', function() {
         it('return forward slash when path component of the uri is not defined', function() {
             expect((new Request('GET', '?queryString', ['Host' => 'example.com']))->getTarget())->toBe('/?queryString');

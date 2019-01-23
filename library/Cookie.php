@@ -140,7 +140,7 @@ class Cookie {
             }
         }
 
-        if ($this->path && stripos($req->getTarget(), $this->path) !== 0) {
+        if ($this->path && stripos($req->getTargetPath(), $this->path) !== 0) {
             return FALSE;
         }
 

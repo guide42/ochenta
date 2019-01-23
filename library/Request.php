@@ -76,9 +76,14 @@ class Request {
         return current($this->headers['HOST']);
     }
 
-    /** Retrieves the request target. */
+    /** Retrieves request target path. */
+    function getTargetPath(): string {
+        return $this->uri['path'] ?? '/';
+    }
+
+    /** Retrieves request target. */
     function getTarget(): string {
-        return rtrim(($this->uri['path'] ?? '/') . '?' . ($this->uri['query'] ?? ''), '?');
+        return rtrim($this->getTargetPath() . '?' . ($this->uri['query'] ?? ''), '?');
     }
 
     /** Retrieves all headers. */
