@@ -102,6 +102,20 @@ describe('Request', function() {
         });
     });
 
+    describe('->isSecure', function() {
+        it('returns true when request uri schema is https', function() {
+            expect((new Request('GET', 'https://example.com/'))->isSecure())->toBe(TRUE);
+        });
+
+        it('returns false when request uri schema is http', function() {
+            expect((new Request('GET', 'http://example.com/'))->isSecure())->toBe(FALSE);
+        });
+
+        it('returns false when request uri schema is not defined', function() {
+            expect((new Request('GET', '/', ['Host' => 'example.com']))->isSecure())->toBe(FALSE);
+        });
+    });
+
     describe('->getHost', function() {
         it('returns hostname from header', function() {
             expect((new Request('GET', '/', ['Host' => 'example.com']))->getHost())->toBe('example.com');

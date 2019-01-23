@@ -66,6 +66,11 @@ class Request {
         return $this->uri;
     }
 
+    /** Returns true if the request is HTTPS, false otherwise. */
+    function isSecure(): bool {
+        return ($this->uri['scheme'] ?? 'http') === 'https';
+    }
+
     /** Retrieves request host name. */
     function getHost(): string {
         return current($this->headers['HOST']);
