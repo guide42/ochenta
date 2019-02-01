@@ -27,7 +27,7 @@ $req = new ServerRequest;
 It could also be created with it's defaults values:
 
 ```php
-$req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, NULL);
+$req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, $_COOKIE, NULL);
 ```
 
 That's a incoming request.  
