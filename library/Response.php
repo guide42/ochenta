@@ -13,6 +13,10 @@ class Response {
     /** Output body stream or `null` if empty. */
     protected/* ?resource */ $body;
 
+    /** Responses objects contains an HTTP status code, a list of headers which
+     *  values should already be normalized and a string or stream body. If any
+     *  parameter is invalid {@throws \InvalidArgumentException}.
+     */
     function __construct(int $statusCode=200, array $headers=[], /* ?resource */ $body=NULL) {
         if ($statusCode < 100 || $statusCode >= 600) {
             throw new \InvalidArgumentException('Status code must be between 100 and 600');
