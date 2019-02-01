@@ -166,6 +166,24 @@ class Cookie {
         return TRUE;
     }
 
+    /** Returns a new instance with the attributes and flags set from
+     *  the given request and optionally set a new expire date.
+     */
+    function prepare(Request $req, \DateTimeInterface $expires=NULL): self {
+        $cookie = clone $this;
+        $cookie->domain = $req->getHost();
+        $cookie->path = $req->getTargetPath();
+        $cookie->secure = $req->isSecure();
+        $cookie->httpOnly = $req instanceof ServerRequest;
+        $cookie->flags['host-only'] = TRUE;
+
+        if ($expires) {
+            $cookie->expires = $expires->getTimestamp();
+        }
+
+        return $cookie;
+    }
+
     /** Returns a string prefix to be applied to the cookie name. */
     function getPrefix(): string {
         if ($this->secure) {

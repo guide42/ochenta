@@ -156,6 +156,51 @@ describe('Cookie', function() {
         });
     });
 
+    describe('->prepare', function() {
+        it('returns an instance of Cookie', function() {
+            expect((new Cookie('foo', 'bar'))->prepare(new ServerRequest))->toBeAnInstanceOf(Cookie::class);
+        });
+
+        it('returns Cookie with request host as domain', function() {
+            $request = new ServerRequest(['HTTP_HOST' => 'example.com']);
+            $cookie = (new Cookie('foo', 'bar'))->prepare($request);
+
+            expect($cookie->__toString())->toMatch('/; Domain=example.com/');
+        });
+
+        it('returns Cookie with request target path as path', function() {
+            $request = new ServerRequest(['REQUEST_URI' => '/foobar.html']);
+            $cookie = (new Cookie('foo', 'bar'))->prepare($request);
+
+            expect($cookie->__toString())->toMatch('/; Path=\/foobar.html/');
+        });
+
+        it('returns Cookie with secure attribute true if request is HTTPS', function() {
+            $request = new ServerRequest(['HTTPS' => 'on']);
+            $cookie = (new Cookie('foo', 'bar'))->prepare($request);
+
+            expect($cookie->__toString())->toMatch('/; Secure/');
+        });
+
+        it('returns Cookie with http-only attribute true if request is a ServerRequest', function() {
+            expect(((new Cookie('foo', 'bar'))->prepare(new ServerRequest))->__toString())->toMatch('/; HttpOnly/');
+        });
+
+        it('returns Cookie with host-only flag true', function() {
+            $requestPrepare = new ServerRequest(['HTTP_HOST' => 'one.example.com']);
+            $requestMatches = new ServerRequest(['HTTP_HOST' => 'foo.one.example.com']);
+
+            expect(((new Cookie('foo', 'bar'))->prepare($requestPrepare))->matches($requestMatches))->toBe(FALSE);
+        });
+
+        it('returns Cookie with given expires', function() {
+            $expires = new \DateTime('2019-12-31 23:42:00');
+            $cookie = (new Cookie('foo', 'bar'))->prepare(new ServerRequest, $expires);
+
+            expect($cookie->__toString())->toMatch('/; Expires=Tuesday, 31-Dec-2019 23:42:00 GMT/');
+        });
+    });
+
     describe('->__toString', function() {
         it('returns key and value', function() {
             $cookie = new Cookie('foo', 'bar', [
