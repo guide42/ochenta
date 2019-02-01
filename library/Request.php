@@ -16,6 +16,11 @@ class Request {
     /** Input content stream or `null` if empty. */
     protected/* ?resource */ $body;
 
+    /** Requests are consisted of a method that will be stored in upper case,
+     *  an url that can be given in a variety of formats and if cannot be
+     *  parsed {@throws \InvalidArgumentException}, a dictionary of headers and
+     *  a string or stream body.
+     */
     function __construct(string $method, $uri, array $headers=[], /* ?resource */ $body=NULL) {
         $this->method = strtoupper($method);
 

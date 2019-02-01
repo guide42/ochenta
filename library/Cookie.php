@@ -34,6 +34,20 @@ class Cookie {
     /** Reference time for relative calculations. */
     private/* int */ $now = 0;
 
+    /** Cookie is represented with a name that if contains any not-allowed
+     *  character {@throws \InvalidArgumentException}, any value and list of
+     *  attributes and flags.
+     *
+     *  Five attributes are accepted: Expires that is a date accepted in
+     *  various formats, Domain and Path to match the request, Secure to
+     *  denote that has to be transmited by HTTPS and HttpOnly to disallow
+     *  sending it in any other protocol.
+     *
+     *  The date of 'creation' and the 'last-access' can be set as flags.
+     *
+     *  A last parameter `$now` can be given as a reference time to compare
+     *  for expired status, function `time()` will be used otherwise.
+     */
     function __construct(string $name, string $value, array $attributes=[], array $flags=[], ?int $now=NULL) {
         $this->now = $now ?: time();
 
@@ -81,24 +95,19 @@ class Cookie {
         ];
     }
 
-    function getPrefix(): string {
-        if ($this->secure) {
-            if ($this->path === '/' && $this->domain === NULL) {
-                return '__Host-';
-            }
-            return '__Secure-';
-        }
-        return '';
-    }
-
+    /** Retrieves cookie name. */
     function getName(): string {
         return $this->name;
     }
 
+    /** Retrieves cookie value. */
     function getValue(): string {
         return $this->value;
     }
 
+    /** Returns the life mesured in seconds of this cookie. Null if it
+     *  doesn't expires.
+     */
     function getLifetime(): ?int {
         if ($this->expires) {
             return $this->expires - $this->now;
@@ -106,14 +115,20 @@ class Cookie {
         return NULL;
     }
 
+    /** Is expired if the reference date is pass the expires date. */
     function isExpired(): bool {
         return $this->expires && $this->expires < $this->now;
     }
 
+    /** Returns secure flag switch. */
     function isSecure(): bool {
         return $this->secure;
     }
 
+    /** Returns true if this cookie is valid for given request. False
+     *  otherwise: when the cookie is expired or the domain and/or path
+     *  doesn't match or if the level of security is not the same.
+     */
     function matches(Request $req): bool {
         if ($this->isExpired()) {
             return FALSE;
@@ -151,6 +166,18 @@ class Cookie {
         return TRUE;
     }
 
+    /** Returns a string prefix to be applied to the cookie name. */
+    function getPrefix(): string {
+        if ($this->secure) {
+            if ($this->path === '/' && $this->domain === NULL) {
+                return '__Host-';
+            }
+            return '__Secure-';
+        }
+        return '';
+    }
+
+    /** Returns the value of the 'Set-Cookie' header. */
     function __toString(): string {
         $ret = $this->getPrefix() . rawurlencode($this->name) . '=';
 

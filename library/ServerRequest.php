@@ -105,6 +105,9 @@ class ServerRequest extends Request {
     private $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];
     private $invalidHeaders = ['HTTP_PROXY'];
 
+    /** Generator that will parse the `$_SERVER` superglobal, extract and yield
+     *  headers: header name as key and an array of values.
+     */
     private function parseServerHeaders(array $server): iterable {
         foreach ($server as $key => $value) {
             if (strncmp($key, 'HTTP_', 5) === 0 && !in_array($key, $this->invalidHeaders)) {
@@ -115,6 +118,10 @@ class ServerRequest extends Request {
         }
     }
 
+    /** Generator that will normalize the `$_FILES` tree to mimic the naming
+     *  structure in which files were submitted. When any of the given files
+     *  is invalid {@throws \UnexpectedValueException}.
+     */
     private function parseFiles(array $files): iterable {
         foreach ($files as $key => $file) {
             if (!is_array($file) || !isset($file['error'])) {
@@ -140,6 +147,7 @@ class ServerRequest extends Request {
         }
     }
 
+    /** Deduce some `$_SERVER` entries from others. */
     private function normalizeServer(array $server): array {
         if (isset($server['SCRIPT_URI'])) {
             $server['HTTPS'] = strpos($server['SCRIPT_URI'], 'https://') === 0 ? 'on' : 'off';
@@ -157,6 +165,9 @@ class ServerRequest extends Request {
         return $server;
     }
 
+    /** Parses the given `$url` and completes with information from the server
+     *  entries. When cannot be parsed {@throws \UnexpectedValueException}.
+     */
     private function normalizeUrl(string $url, array $server): array {
         $parts = parse_url($url);
         if ($parts === FALSE) {
