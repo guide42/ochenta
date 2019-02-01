@@ -26,11 +26,11 @@ class Request {
                 },
                 ARRAY_FILTER_USE_KEY
             );
-        } else {
+        } elseif (is_string($uri)) {
             $this->uri = parse_url((string) $uri);
         }
 
-        if ($this->uri === FALSE) {
+        if (empty($this->uri)) {
             throw new \InvalidArgumentException('Invalid uri');
         }
 

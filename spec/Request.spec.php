@@ -39,8 +39,15 @@ describe('Request', function() {
         });
 
         it('throws InvalidArgumentException on non-string uri', function() {
-            expect(function() { new Request('GET', 1.42); })->toThrow(new InvalidArgumentException);
-            expect(function() { new Request('GET', TRUE); })->toThrow(new InvalidArgumentException);
+            expect(function() { new Request('GET', 1.42, ['Host' => 'example.com']); })->toThrow(new InvalidArgumentException);
+            expect(function() { new Request('GET', TRUE, ['Host' => 'example.com']); })->toThrow(new InvalidArgumentException);
+        });
+
+        it('throws InvalidArgumentException on invalid array uri', function() {
+            expect(function() {
+                new Request('GET', ['foo' => 'bar'], ['Host' => 'example.com']);
+            })
+            ->toThrow(new InvalidArgumentException);
         });
 
         it('assigns headers with keys in uppercase', function() {
