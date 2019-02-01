@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - New `Cookie` class.
 - Move `ServerRequest::isSecure` to `Request::isSecure`.
 - Adds `Request::getTargetPath`.
+- [BC-BREAK] Now `ServerRequest` accepts `$_COOKIE` variable before body.
 
 ## [0.4.0] - 2019-01-22
 

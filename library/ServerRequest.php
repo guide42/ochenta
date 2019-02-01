@@ -13,12 +13,19 @@ class ServerRequest extends Request {
     /** Normalized input files. */
     protected/* array */ $files;
 
-    /** @throws UnexpectedValueException */
+    /** Cookie values. */
+    protected/* array */ $cookie;
+
+    /** When creating a server request, PHP superglobals will be used in place
+     *  of any NULL parameters. This class required that is run in a web SAPI
+     *  environment: {@throws \LogicException} when run from the command line.
+     */
     function __construct(
         array $server=NULL,
         array $query=NULL,
         array $xargs=NULL,
         array $files=NULL,
+        array $cookie=NULL,
         /* ?resource */ $body=NULL
     ) {
         if (empty($server)) {
@@ -44,6 +51,7 @@ class ServerRequest extends Request {
         $this->query = $query ?: $_GET;
         $this->xargs = $xargs ?: $_POST;
         $this->files = iterator_to_array($this->parseFiles($files ?: $_FILES));
+        $this->cookie = $cookie ?: $_COOKIE;
 
         $server = $this->normalizeServer($server);
         $method = $server['REQUEST_METHOD'] ?? 'GET';
@@ -87,6 +95,11 @@ class ServerRequest extends Request {
     /** Retrieve normalized file uploads. */
     function getFiles(): array {
         return $this->files;
+    }
+
+    /** Retrieve cookie values. */
+    function getCookie(): array {
+        return $this->cookie;
     }
 
     private $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH'];

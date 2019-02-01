@@ -131,8 +131,18 @@ describe('ServerRequest', function() {
             expect($req->getFiles()['someform']['avatars'][0]['tmp_name'])->toBe('/tmp/phpLTufCb');
         });
 
+        it('assigns cookie values', function() {
+            $req = new ServerRequest(NULL, NULL, NULL, NULL, [
+                'foo' => 'bar',
+                'bar' => 'baz',
+            ]);
+
+            expect($req->getCookie())->toBeA('array')->toContainKey('foo');
+            expect($req->getCookie()['foo'])->toBe('bar');
+        });
+
         it('assigns the body as a resource if string given', function() {
-            $req = new ServerRequest(NULL, NULL, NULL, NULL, 'Hello World');
+            $req = new ServerRequest(NULL, NULL, NULL, NULL, NULL, 'Hello World');
 
             expect($req->getBody())->toBeA('resource');
             expect(stream_get_contents($req->getBody()))->toBe('Hello World');
@@ -166,10 +176,17 @@ describe('ServerRequest', function() {
                 return fopen($filename, $mode);
             });
 
-            $req = new ServerRequest([
-                'CONTENT_TYPE' => 'text/plain',
-                'CONTENT_LENGTH' => 11,
-            ], NULL, NULL, NULL, 'Hello World');
+            $req = new ServerRequest(
+                [
+                    'CONTENT_TYPE' => 'text/plain',
+                    'CONTENT_LENGTH' => 11,
+                ],
+                /*$_GET=*/NULL,
+                /*$_POST=*/NULL,
+                /*$_FILES*/NULL,
+                /*$_COOKIE=*/NULL,
+                'Hello World'
+            );
 
             expect($req->getBody())->toBeA('resource');
             expect(fread($req->getBody(), 11))->toBe('Hello World');
