@@ -26,7 +26,7 @@ class Response {
             if (is_scalar($header)) {
                 $headers[$name] = [$header];
             } elseif (!is_array($header)) {
-                throw new \InvalidArgumentException('Invalid header ' . $name);
+                throw new \InvalidArgumentException('Invalid "' . $name . '" header value');
             }
         }
 

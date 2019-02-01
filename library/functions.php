@@ -198,5 +198,5 @@ function stream_of($resource)/* ?resource */ {
         return $stream;
     }
 
-    throw new \InvalidArgumentException('Invalid resource type: ' . gettype($resource));
+    throw new \InvalidArgumentException('Invalid resource type ' . gettype($resource));
 }
