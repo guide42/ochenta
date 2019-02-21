@@ -117,7 +117,7 @@ $app = stack(@hola, [
 ]);
 ```
 
-You got this far. Look at [readme.php](readme.php) to see the complete example.
+You got this far. Look at [example.php](example.php) to see the complete example.
 
 API
 ---
