@@ -2,7 +2,11 @@
 
 namespace ochenta;
 
-/** @throws InvalidArgumentException */
+/** Converts the given resource into a response. Input can be an instance
+ *  of `Response` that will be prepared before emitted, any resource will
+ *  be readed, scalars emitted as-is or {@throws \InvalidArgumentException}
+ *  on any other value.
+ */
 function responder_of($resource): callable {
     if ($resource instanceof Response) {
         return function(ServerRequest $req, callable $open) use($resource) {
@@ -45,7 +49,12 @@ function responder_of($resource): callable {
     throw new \InvalidArgumentException('Resource cannot be converted to responder');
 }
 
-/** @throws RuntimeException */
+/** Calls given handler with given server request and a open callable that
+ *  sends the headers. If buffer is already open or headers are already sent
+ *  {@throws RuntimeException}. Iterates over the result of the handler and
+ *  prints it out. Flush function can be replaced returning a callable in the
+ *  handler.
+ */
 function emit(ServerRequest $req, callable $handler): void {
     $res = $handler($req, function(int $status, array $headers) {
         if (headers_sent()) {
@@ -82,7 +91,11 @@ function emit(ServerRequest $req, callable $handler): void {
     (is_callable($res) ? $res : 'flush')();
 }
 
-/** @throws InvalidArgumentException */
+/** Returns a callable that is last of the stack, optionally with a resolver
+ *  callable or {@throws InvalidArgumentException} when any argument is not
+ *  valid: values of the stack (or middlewares) must be callables and accept
+ *  previous value as argument, resolver must be also callables and at least
+ *  one middleware in the stack. */
 function stack(callable $initial, $resolver, ...$stack): callable {
     if (is_array($resolver)) {
         $stack += $resolver;
@@ -112,6 +125,9 @@ function stack(callable $initial, $resolver, ...$stack): callable {
     return array_reduce(array_reverse(iterator_to_array($flatten($stack), FALSE)), $resolver, $initial);
 }
 
+/** Returns a middleware that appends a header with given values.
+ *  Intercepts open function.
+ */
 function header(string $name, ...$values): callable {
     return function(callable $handler) use($name, $values): callable {
         return function(ServerRequest $req, callable $open) use($name, $values, $handler) {
@@ -123,6 +139,7 @@ function header(string $name, ...$values): callable {
     };
 }
 
+/** Returns a middleware that prepends html content before the closing tag. */
 function append(string $content, string $tag='body'): callable {
     return function(callable $handler) use($content, $tag): callable {
         return function(ServerRequest $req, callable $open) use($content, $tag, $handler) {
@@ -143,7 +160,10 @@ function append(string $content, string $tag='body'): callable {
     };
 }
 
-/** @throws InvalidArgumentException */
+/** Returns responder that will add the Location header to the given url with
+ *  optionally another status code than 302 found. Giving invalid values for
+ *  both arguments {@throws InvalidArgumentException}.
+ */
 function redirect($uri, int $statusCode=302): callable {
     if (!is_array($uri) && ($uri = parse_url($uri)) === FALSE) {
         throw new \InvalidArgumentException('Invalid uri');
@@ -172,14 +192,16 @@ function redirect($uri, int $statusCode=302): callable {
     };
 }
 
-/** @throws InvalidArgumentException */
+/** Returns stream resource or null.
+ *  Invalid values {@throws InvalidArgumentException}.
+ */
 function stream_of($resource)/* ?resource */ {
-    if ($resource instanceof Request || $resource instanceof Response) {
-        $resource = $resource->getBody();
-    }
-
     if (is_null($resource)) {
         return NULL;
+    }
+
+    if ($resource instanceof Request || $resource instanceof Response) {
+        $resource = $resource->getBody();
     }
 
     if (is_resource($resource)) {
