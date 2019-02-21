@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.5.0] - 2019-MM-DD
+## [0.5.0] - 2019-02-21
 
 - New `Cookie` class.
 - Move `ServerRequest::isSecure` to `Request::isSecure`.
