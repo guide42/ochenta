@@ -225,7 +225,7 @@ describe('ServerRequest', function() {
         it('returns HTTPS when SCRIPT_URI starts with https://', function() {
             $req = new ServerRequest([
                 'HTTPS' => 'off',
-                'SCRIPT_URI' => 'https://ochenta/',
+                'SCRIPT_URI' => 'hTtPs://ochenta/',
             ]);
 
             expect($req->getUri())->toContainKey('scheme');

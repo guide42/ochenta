@@ -150,7 +150,7 @@ class ServerRequest extends Request {
     /** Deduce some `$_SERVER` entries from others. */
     private function normalizeServer(array $server): array {
         if (isset($server['SCRIPT_URI'])) {
-            $server['HTTPS'] = strpos($server['SCRIPT_URI'], 'https://') === 0 ? 'on' : 'off';
+            $server['HTTPS'] = stripos($server['SCRIPT_URI'], 'https://') === 0 ? 'on' : 'off';
         } elseif (isset($server['HTTPS']) && is_int($server['HTTPS'])) {
             $server['HTTPS'] = $server['HTTPS'] === 1 ? 'on' : 'off';
         } else {
