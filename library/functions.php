@@ -95,7 +95,8 @@ function emit(ServerRequest $req, callable $handler): void {
  *  callable or {@throws InvalidArgumentException} when any argument is not
  *  valid: values of the stack (or middlewares) must be callables and accept
  *  previous value as argument, resolver must be also callables and at least
- *  one middleware in the stack. */
+ *  one middleware in the stack.
+ */
 function stack(callable $initial, $resolver, ...$stack): callable {
     if (is_array($resolver)) {
         $stack += $resolver;
