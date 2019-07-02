@@ -108,7 +108,7 @@ class ServerRequest extends Request {
     /** Generator that will parse the `$_SERVER` superglobal, extract and yield
      *  headers: header name as key and an array of values.
      */
-    private function parseServerHeaders(array $server): iterable {
+    private function parseServerHeaders(array $server): \Generator {
         foreach ($server as $key => $value) {
             if (strncmp($key, 'HTTP_', 5) === 0 && !in_array($key, $this->invalidHeaders)) {
                 yield str_replace('_', '-', substr($key, 5)) => (array) $value;
@@ -122,7 +122,7 @@ class ServerRequest extends Request {
      *  structure in which files were submitted. When any of the given files
      *  is invalid {@throws \UnexpectedValueException}.
      */
-    private function parseFiles(array $files): iterable {
+    private function parseFiles(array $files): \Generator {
         foreach ($files as $key => $file) {
             if (!is_array($file) || !isset($file['error'])) {
                 throw new \UnexpectedValueException('Invalid uploaded file');
