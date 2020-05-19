@@ -137,6 +137,8 @@ stack(callable $responder, callable $resolver, array $stack) // ... use resolver
 header(string $name, array $values)                          // adds a header to responder
 header(string $name, string $value)                          // ... with single value
 
+cookie(Cookie $cookie)                                       // sets cookie into responder
+
 append(string $content)                                      // adds content before body
 append(string $content, string $tag)                         // ... before every given tag
 

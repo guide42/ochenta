@@ -140,6 +140,21 @@ function header(string $name, ...$values): callable {
     };
 }
 
+/** Returns a middleware that sets the given cookie into the response. */
+function cookie(Cookie $cookie): callable {
+    return function(callable $handler) use($cookie): callable {
+        return function(ServerRequest $req, callable $open) use($cookie, $handler) {
+            return $handler($req, function(int $status, array $headers) use($cookie, $open) {
+                if (!isset($headers['Set-Cookie'])) {
+                    $headers['Set-Cookie'] = array();
+                }
+                $headers['Set-Cookie'][] = (string) $cookie;
+                $open($status, $headers);
+            });
+        };
+    };
+}
+
 /** Returns a middleware that prepends html content before the closing tag. */
 function append(string $content, string $tag='body'): callable {
     return function(callable $handler) use($content, $tag): callable {

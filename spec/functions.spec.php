@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use ochenta\{Request, Response, ServerRequest};
-use function ochenta\{responder_of, emit, stack, header, append, redirect, stream_of};
+use ochenta\{Request, Response, ServerRequest, Cookie};
+use function ochenta\{responder_of, emit, stack, header, cookie, append, redirect, stream_of};
 
 describe('responder_of', function() {
     it('throws InvalidArgumentException when an invalid resource is given', function() {
@@ -269,6 +269,34 @@ describe('header', function() {
 
         $handler(new ServerRequest, function(int $status, array $headers) {
             expect($headers)->toBe(['Content-Type' => ['text/plain']]);
+        });
+    });
+});
+
+describe('cookie', function() {
+    it('sets cookie header with cookie in string format', function() {
+        $midware = cookie(new Cookie('foo', 'bar'));
+        $handler = $midware(function(ServerRequest $req, callable $open) {
+            $open(200, []);
+        });
+
+        $handler(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe(['Set-Cookie' => ['__Secure-foo=bar; Secure; HttpOnly']]);
+        });
+    });
+
+    it('adds cookie in string format to list of set cookie header', function() {
+        $midware = cookie(new Cookie('foo', 'bar'));
+        $handler = $midware(function(ServerRequest $req, callable $open) {
+            $open(200, [
+                'Set-Cookie' => ['bar=foo'],
+            ]);
+        });
+
+        $handler(new ServerRequest, function(int $status, array $headers) {
+            expect($headers)->toBe([
+                'Set-Cookie' => ['bar=foo', '__Secure-foo=bar; Secure; HttpOnly'],
+            ]);
         });
     });
 });
