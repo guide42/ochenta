@@ -1,5 +1,5 @@
 <?php
-# php -S 127.0.0.1:8080 readme.php
+# php -S 127.0.0.1:8080 example.php
 
 include __DIR__ . '/vendor/autoload.php';
 
