@@ -194,7 +194,7 @@ describe('Cookie', function() {
         });
 
         it('returns Cookie with given expires', function() {
-            $expires = new \DateTime('2019-12-31 23:42:00');
+            $expires = new \DateTime('2019-12-31 23:42:00', new \DateTimeZone('UTC'));
             $cookie = (new Cookie('foo', 'bar'))->prepare(new ServerRequest, $expires);
 
             expect($cookie->__toString())->toMatch('/; Expires=Tuesday, 31-Dec-2019 23:42:00 GMT/');
@@ -258,7 +258,7 @@ describe('Cookie', function() {
         });
 
         it('returns Expires attribute if is set', function() {
-            $expires = new \DateTime('2019-12-31 23:42:00');
+            $expires = new \DateTime('2019-12-31 23:42:00', new \DateTimeZone('UTC'));
             $cookie = new Cookie('foo', 'bar', [
                 'Expires' => $expires,
                 'Secure' => TRUE,
@@ -269,7 +269,7 @@ describe('Cookie', function() {
         });
 
         it('returns deleted as value and Expires attribute in the past if cookie value is empty string', function() {
-            $now = new \DateTime('2019-01-01 12:21:00');
+            $now = new \DateTime('2019-01-01 12:21:00', new \DateTimeZone('UTC'));
             $cookie = new Cookie('foo', '', ['Secure' => FALSE, 'HttpOnly' => FALSE], [], $now->getTimestamp());
 
             expect($cookie->__toString())->toBe('foo=deleted; Expires=Monday, 01-Jan-2018 12:20:18 GMT; Max-Age=0');
