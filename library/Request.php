@@ -66,6 +66,11 @@ class Request {
         return $this->method;
     }
 
+    /** Verify that the HTTP method matches a given string. */
+    function isMethod(string $method): bool {
+        return $this->method === strtoupper($method);
+    }
+
     /** Retrieves original URI parts. */
     function getUri(): array/* result of php.net/parse_url function */ {
         return $this->uri;

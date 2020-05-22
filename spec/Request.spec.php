@@ -109,6 +109,16 @@ describe('Request', function() {
         });
     });
 
+    describe('isMethod', function() {
+        it('returns true when request method matches', function() {
+            expect((new Request('GET', 'https://example.com/'))->isMethod('GET'))->toBe(TRUE);
+        });
+
+        it('compares method case insensitive', function() {
+            expect((new Request('GET', 'https://example.com/'))->isMethod('Get'))->toBe(TRUE);
+        });
+    });
+
     describe('->isSecure', function() {
         it('returns true when request uri schema is https', function() {
             expect((new Request('GET', 'https://example.com/'))->isSecure())->toBe(TRUE);
