@@ -168,4 +168,46 @@ class Request {
         return isset($this->headers['X-REQUESTED-WITH'])
             && in_array('XMLHttpRequest', $this->headers['X-REQUESTED-WITH']);
     }
+
+    /** Returns parsed Accept header as an associative array with the content
+     *  type related with its key-value attributes. */
+    function getAccept(): ?array {
+        if (isset($this->headers['ACCEPT'])) {
+            return $this->parseAcceptHeader(current($this->headers['ACCEPT']));
+        }
+        return NULL;
+    }
+
+    /** Splits header by commas, putting the first element as key of the
+     *  returned associative array, then spliting the attributes by semicolon to
+     *  form a key-value by spliting a third time by the equal sign. The result
+     *  will be sorted by attribute q (quality) if exists.
+     */
+    private function parseAcceptHeader(string $header): array {
+        $parts = array_map(
+            function($part) {
+                return array_map('trim', explode(';', $part));
+            },
+            explode(',', $header)
+        );
+        $accept = [];
+        foreach ($parts as $part) {
+            $value = array_shift($part);
+            $accept[$value] = array();
+            foreach ($part as $attribute) {
+                list($attrname, $attrvalue) = explode('=', $attribute, 2);
+                $accept[$value][$attrname] = trim($attrvalue, '"');
+            }
+        }
+        $index = array_flip(array_keys($accept));
+        uksort($accept, function(string $a, string $b) use($accept, $index) {
+            $qa = $accept[$a]['q'] ?? 1.0;
+            $qb = $accept[$b]['q'] ?? 1.0;
+            if ($qa == $qb) {
+                return $index[$a] > $index[$b] ? 1 : -1;
+            }
+            return $qa > $qb ? -1 : 1;
+        });
+        return $accept;
+    }
 }

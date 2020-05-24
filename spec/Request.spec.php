@@ -306,4 +306,42 @@ describe('Request', function() {
             expect($req->isAJAX())->toBe(FALSE);
         });
     });
+
+    describe('->getAccept', function() {
+        it('returns Accept header parsed into an associative array', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept' => 'text/plain; q=0.5, text/html'
+            ]);
+            expect($req->getAccept())->toBeAn('array')->toContainKey('text/html');
+            expect($req->getAccept()['text/plain'])->toBeAn('array')->toContainKey('q');
+            expect($req->getAccept()['text/plain']['q'])->toEqual(0.5);
+        });
+
+        it('returns Accept header sorted by quality attribute', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept' => 'text/plain; q=0.5, application/json, text/html; q=0.8'
+            ]);
+            $contentTypes = array_keys($req->getAccept());
+            expect($contentTypes)->toBeAn('array')->toHaveLength(3);
+            expect(array_shift($contentTypes))->toEqual('application/json');
+            expect(array_shift($contentTypes))->toEqual('text/html');
+            expect(array_shift($contentTypes))->toEqual('text/plain');
+        });
+
+        it('return Accept header sorted by index when quality attribute is the same', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept' => 'text/plain; q=0.8, application/json, text/html; q=0.8'
+            ]);
+            $contentTypes = array_keys($req->getAccept());
+            expect($contentTypes)->toEqual(['application/json', 'text/plain', 'text/html']);
+        });
+
+        it('returns NULL when Accept header is not found', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com']);
+            expect($req->getAccept())->toBe(NULL);
+        });
+    });
 });
