@@ -237,6 +237,40 @@ describe('Request', function() {
         });
     });
 
+    describe('->isJSON', function() {
+        it('returns true when Content-Type is application/json', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => 'application/json'
+            ]);
+            expect($req->isJSON())->toBe(TRUE);
+        });
+
+        it('returns true when Content-Type is application/x-json', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => 'application/x-json'
+            ]);
+            expect($req->isJSON())->toBe(TRUE);
+        });
+
+        it('returns true when Content-Type is application/ld+json', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => 'application/ld+json'
+            ]);
+            expect($req->isJSON())->toBe(TRUE);
+        });
+
+        it('returns false when Content-Type is text/plain', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => 'text/plain'
+            ]);
+            expect($req->isJSON())->toBe(FALSE);
+        });
+    });
+
     describe('->isAJAX', function() {
         it('returns true when X-Requested-With is XMLHttpRequest', function() {
             $req = new Request('GET', '/', [
@@ -245,6 +279,7 @@ describe('Request', function() {
             ]);
             expect($req->isAJAX())->toBe(TRUE);
         });
+
         it('returns false when X-Requested-With is not XMLHttpRequest', function() {
             $req = new Request('GET', '/', [
                 'Host' => 'example.com',

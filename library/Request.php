@@ -146,6 +146,11 @@ class Request {
         ]);
     }
 
+    /** True if request is sending JSON content. */
+    function isJSON(): bool {
+        return preg_match('/[-+\/]json/', $this->getMediaType()) === 1;
+    }
+
     /** True if is an AJAX request. */
     function isAJAX(): bool {
         return isset($this->headers['X-REQUESTED-WITH'])
