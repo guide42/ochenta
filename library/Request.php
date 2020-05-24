@@ -17,10 +17,10 @@ class Request {
     protected/* ?resource */ $body;
 
     /** Content media type or `null` if Content-Type header is not found. */
-    protected/* ?string */ $mediaType;
+    private/* ?string */ $mediaType;
 
     /** Content charset or `null`. */
-    protected/* ?string */ $charset;
+    private/* ?string */ $charset;
 
     /** Requests are consisted of a method that will be stored in upper case,
      *  an url that can be given in a variety of formats and if cannot be
