@@ -145,4 +145,10 @@ class Request {
             'multipart/form-data',
         ]);
     }
+
+    /** True if is an AJAX request. */
+    function isAJAX(): bool {
+        return isset($this->headers['X-REQUESTED-WITH'])
+            && in_array('XMLHttpRequest', $this->headers['X-REQUESTED-WITH']);
+    }
 }

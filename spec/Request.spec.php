@@ -236,4 +236,21 @@ describe('Request', function() {
             expect($req->isForm())->toBe(FALSE);
         });
     });
+
+    describe('->isAJAX', function() {
+        it('returns true when X-Requested-With is XMLHttpRequest', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ]);
+            expect($req->isAJAX())->toBe(TRUE);
+        });
+        it('returns false when X-Requested-With is not XMLHttpRequest', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'X-Requested-With' => 'JSONHttpRequest'
+            ]);
+            expect($req->isAJAX())->toBe(FALSE);
+        });
+    });
 });
