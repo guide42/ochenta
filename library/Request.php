@@ -22,6 +22,9 @@ class Request {
     /** Content charset or `null`. */
     private/* ?string */ $charset;
 
+    /** Content media types in the Accept header. */
+    private/* ?array */ $acceptsMediaType;
+
     /** Requests are consisted of a method that will be stored in upper case,
      *  an url that can be given in a variety of formats and if cannot be
      *  parsed {@throws \InvalidArgumentException}, a dictionary of headers and
@@ -173,7 +176,15 @@ class Request {
      *  type related with its key-value attributes. */
     function getAccept(): ?array {
         if (isset($this->headers['ACCEPT'])) {
-            return $this->parseAcceptHeader(current($this->headers['ACCEPT']));
+            if ($this->acceptsMediaType) {
+                return $this->acceptsMediaType;
+            }
+            return $this->acceptsMediaType = $this->parseAcceptHeader(
+                implode(',', $this->headers['ACCEPT'])
+            );
+        }
+        return NULL;
+    }
         }
         return NULL;
     }
