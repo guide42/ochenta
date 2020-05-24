@@ -25,6 +25,15 @@ class Request {
     /** Content media types in the Accept header. */
     private/* ?array */ $acceptsMediaType;
 
+    /** Charsets in the Accept-Charset header. */
+    private/* ?array */ $acceptsCharset;
+
+    /** Encodings in the Accept-Encoding header. */
+    private/* ?array */ $acceptsEncoding;
+
+    /** Normalized languages in the Accept-Language header. */
+    private/* ?array */ $acceptsLanguage;
+
     /** Requests are consisted of a method that will be stored in upper case,
      *  an url that can be given in a variety of formats and if cannot be
      *  parsed {@throws \InvalidArgumentException}, a dictionary of headers and
@@ -185,6 +194,58 @@ class Request {
         }
         return NULL;
     }
+
+    /** Returns acceptable charsets from parsed Accept-Charset header. */
+    function getAcceptCharset(): ?array {
+        if (isset($this->headers['ACCEPT-CHARSET'])) {
+            if ($this->acceptsCharset) {
+                return $this->acceptsCharset;
+            }
+            return $this->acceptsCharset = $this->parseAcceptHeader(
+                implode(',', $this->headers['ACCEPT-CHARSET'])
+            );
+        }
+        return NULL;
+    }
+
+    /** Returns acceptable encodings from parsed Accept-Encoding header. */
+    function getAcceptEncoding(): ?array {
+        if (isset($this->headers['ACCEPT-ENCODING'])) {
+            if ($this->acceptsEncoding) {
+                return $this->acceptsEncoding;
+            }
+            return $this->acceptsEncoding = $this->parseAcceptHeader(
+                implode(',', $this->headers['ACCEPT-ENCODING'])
+            );
+        }
+        return NULL;
+    }
+
+    /** Returns parsed Accept-Language header as an associative array, where
+     *  keys are the languages codes in ISO 639.
+     */
+    function getAcceptLanguage(): ?array {
+        if (isset($this->headers['ACCEPT-LANGUAGE'])) {
+            if ($this->acceptsLanguage) {
+                return $this->acceptsLanguage;
+            }
+            $languages = array_change_key_case(
+                $this->parseAcceptHeader(
+                    implode(',', $this->headers['ACCEPT-LANGUAGE'])
+                ),
+                CASE_UPPER
+            );
+            foreach ($languages as $lang => $attrs) {
+                $codes = explode('-', $lang);
+                $codes[0] = strtolower($codes[0]);
+                if ($codes[0] == 'i' && count($codes) > 1) {
+                    $lang = strtolower($codes[1]);
+                } else {
+                    $lang = implode('-', $codes);
+                }
+                $this->acceptsLanguage[$lang] = $attrs;
+            }
+            return $this->acceptsLanguage;
         }
         return NULL;
     }

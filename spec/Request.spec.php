@@ -352,4 +352,73 @@ describe('Request', function() {
             expect($req->getAccept())->toBe(NULL);
         });
     });
+
+    describe('->getAcceptCharset', function() {
+        it('returns sorted charsets from all Accept-Charset headers joined and parsed together', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept-Charset' => ['ISO-8859-1,utf-8;q=0.7', '*;q=0.7'],
+            ]);
+            expect($req->getAcceptCharset())->toBeAn('array');
+            expect($req->getAcceptCharset())->toEqual([
+                'ISO-8859-1' => [],
+                'utf-8' => ['q' => 0.7],
+                '*' => ['q' => 0.7],
+            ]);
+        });
+
+        it('returns NULL when Accept-Charset header is not found', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com']);
+            expect($req->getAcceptCharset())->toBe(NULL);
+        });
+    });
+
+    describe('->getAcceptEncoding', function() {
+        it('returns sorted encodings from all Accept-Encoding headers joined and parsed together', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept-Encoding' => ['gzip;q=0.4,deflate;q=0.9,compress;q=0.7', '*;q=0.4'],
+            ]);
+            expect($req->getAcceptEncoding())->toBeAn('array');
+            expect($req->getAcceptEncoding())->toEqual([
+                'deflate' => ['q' => 0.9],
+                'compress' => ['q' => 0.7],
+                'gzip' => ['q' => 0.4],
+                '*' => ['q' => 0.4],
+            ]);
+        });
+
+        it('returns NULL when Accept-Encoding header is not found', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com']);
+            expect($req->getAcceptEncoding())->toBe(NULL);
+        });
+    });
+
+    describe('->getAcceptLanguage', function() {
+        it('returns sorted languages from all Accept-Language headers joined and parsed together', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept-Language' => ['en-US', 'en;q=0.5'],
+            ]);
+            expect($req->getAcceptLanguage())->toBeAn('array');
+            expect($req->getAcceptLanguage())->toEqual([
+                'en-US' => [],
+                'en' => ['q' => 0.5],
+            ]);
+        });
+
+        it('return normalized languages from Accept-Language header', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Accept-Language' => 'en-us,es-ar,i-nahuatl',
+            ]);
+            $languages = array_keys($req->getAcceptLanguage());
+            expect($languages)->toEqual(['en-US', 'es-AR', 'nahuatl']);
+        });
+
+        it('returns NULL when Accept-Language header is not found', function() {
+            $req = new Request('GET', '/', ['Host' => 'example.com']);
+            expect($req->getAcceptLanguage())->toBe(NULL);
+        });
+    });
 });
