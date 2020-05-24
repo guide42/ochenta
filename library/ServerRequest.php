@@ -124,6 +124,10 @@ class ServerRequest extends Request {
      */
     private function parseFiles(array $files): \Generator {
         foreach ($files as $key => $file) {
+            if (empty($files[$key])) {
+                continue;
+            }
+
             if (!is_array($file) || !isset($file['error'])) {
                 throw new \UnexpectedValueException('Invalid uploaded file');
             }

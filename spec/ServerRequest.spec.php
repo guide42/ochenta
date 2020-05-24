@@ -131,6 +131,14 @@ describe('ServerRequest', function() {
             expect($req->getFiles()['someform']['avatars'][0]['tmp_name'])->toBe('/tmp/phpLTufCb');
         });
 
+        it('ignores empty files', function() {
+            $req = new ServerRequest(NULL, NULL, NULL, [
+                'someform' => [],
+            ]);
+
+            expect($req->getFiles())->toBeA('array')->not->toContainKey('someform');
+        });
+
         it('assigns cookie values', function() {
             $req = new ServerRequest(NULL, NULL, NULL, NULL, [
                 'foo' => 'bar',
