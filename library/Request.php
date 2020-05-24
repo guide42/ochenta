@@ -77,6 +77,14 @@ class Request {
 
         $this->headers = $headers;
         $this->body = stream_of($body);
+
+        $this->mediaType = null;
+        $this->charset = null;
+
+        $this->acceptsMediaType = null;
+        $this->acceptsCharset = null;
+        $this->acceptsEncoding = null;
+        $this->acceptsLanguage = null;
     }
 
     /** Retrieves HTTP method. */
