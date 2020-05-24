@@ -65,13 +65,13 @@ describe('ServerRequest', function() {
 
         it('assigns simple files', function() {
             $req = new ServerRequest(NULL, NULL, NULL, [
-              'avatar' => [
-                'tmp_name' => '/tmp/phpUxcOty',
-                'name'     => 'avatar.png',
-                'type'     => 'image/png',
-                'size'     => 73096,
-                'error'    => 0,
-              ],
+                'avatar' => [
+                    'tmp_name' => '/tmp/phpUxcOty',
+                    'name'     => 'avatar.png',
+                    'type'     => 'image/png',
+                    'size'     => 73096,
+                    'error'    => 0,
+                ],
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatar');
@@ -81,13 +81,13 @@ describe('ServerRequest', function() {
 
         it('assigns collection files', function() {
             $req = new ServerRequest(NULL, NULL, NULL, [
-              'avatars' => [
-                'tmp_name' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D'],
-                'name'     => [0 => 'avatar-0.png', 1 => 'avatar-1.png'],
-                'type'     => [0 => 'image/png', 1 => 'image/png'],
-                'size'     => [0 => 73097, 1 => 73098],
-                'error'    => [0 => 0, 1 => 0],
-              ],
+                'avatars' => [
+                    'tmp_name' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D'],
+                    'name'     => [0 => 'avatar-0.png', 1 => 'avatar-1.png'],
+                    'type'     => [0 => 'image/png', 1 => 'image/png'],
+                    'size'     => [0 => 73097, 1 => 73098],
+                    'error'    => [0 => 0, 1 => 0],
+                ],
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('avatars');
@@ -98,13 +98,13 @@ describe('ServerRequest', function() {
 
         it('assigns nested simple files', function() {
             $req = new ServerRequest(NULL, NULL, NULL, [
-              'someform' => [
-                'tmp_name' => ['avatar' => '/tmp/phpUxcOty'],
-                'name'     => ['avatar' => 'avatar.png'],
-                'type'     => ['avatar' => 'image/png'],
-                'size'     => ['avatar' => 73096],
-                'error'    => ['avatar' => 0],
-              ],
+                'someform' => [
+                    'tmp_name' => ['avatar' => '/tmp/phpUxcOty'],
+                    'name'     => ['avatar' => 'avatar.png'],
+                    'type'     => ['avatar' => 'image/png'],
+                    'size'     => ['avatar' => 73096],
+                    'error'    => ['avatar' => 0],
+                ],
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');
@@ -115,13 +115,13 @@ describe('ServerRequest', function() {
 
         it('assigns nested collection files', function() {
             $req = new ServerRequest(NULL, NULL, NULL, [
-              'someform' => [
-                'tmp_name' => ['avatars' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D']],
-                'name'     => ['avatars' => [0 => 'avatar-0.png', 1 => 'avatar-1.png']],
-                'type'     => ['avatars' => [0 => 'image/png', 1 => 'image/png']],
-                'size'     => ['avatars' => [0 => 73097, 1 => 73098]],
-                'error'    => ['avatars' => [0 => 0, 1 => 0]],
-              ],
+                'someform' => [
+                    'tmp_name' => ['avatars' => [0 => '/tmp/phpLTufCb', 1 => '/tmp/phpW5Lk9D']],
+                    'name'     => ['avatars' => [0 => 'avatar-0.png', 1 => 'avatar-1.png']],
+                    'type'     => ['avatars' => [0 => 'image/png', 1 => 'image/png']],
+                    'size'     => ['avatars' => [0 => 73097, 1 => 73098]],
+                    'error'    => ['avatars' => [0 => 0, 1 => 0]],
+                ],
             ]);
 
             expect($req->getFiles())->toBeA('array')->toContainKey('someform');

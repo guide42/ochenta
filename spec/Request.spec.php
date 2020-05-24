@@ -109,7 +109,7 @@ describe('Request', function() {
         });
     });
 
-    describe('isMethod', function() {
+    describe('->isMethod', function() {
         it('returns true when request method matches', function() {
             expect((new Request('GET', 'https://example.com/'))->isMethod('GET'))->toBe(TRUE);
         });
