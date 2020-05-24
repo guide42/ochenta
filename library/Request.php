@@ -16,6 +16,12 @@ class Request {
     /** Input content stream or `null` if empty. */
     protected/* ?resource */ $body;
 
+    /** Content media type or `null` if Content-Type header is not found. */
+    protected/* ?string */ $mediaType;
+
+    /** Content charset or `null`. */
+    protected/* ?string */ $charset;
+
     /** Requests are consisted of a method that will be stored in upper case,
      *  an url that can be given in a variety of formats and if cannot be
      *  parsed {@throws \InvalidArgumentException}, a dictionary of headers and
@@ -106,7 +112,10 @@ class Request {
     /** Returns normalized content type without parameters. */
     function getMediaType(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
-            return current(explode(';',
+            if ($this->mediaType) {
+                return $this->mediaType;
+            }
+            return $this->mediaType = current(explode(';',
                 strtolower(preg_replace('/\s\s+/', '',
                     current($this->headers['CONTENT-TYPE'])
                 ))
@@ -118,6 +127,9 @@ class Request {
     /** Returns normalized content type charset. */
     function getCharset(): ?string {
         if (isset($this->headers['CONTENT-TYPE'])) {
+            if ($this->charset) {
+                return $this->charset;
+            }
             $params = array_slice(explode(';',
                 strtolower(preg_replace('/\s\s+/', '',
                     current($this->headers['CONTENT-TYPE'])
@@ -126,7 +138,7 @@ class Request {
             foreach ($params as $param) {
                 $parts = explode('=', trim($param), 2);
                 if (current($parts) === 'charset') {
-                    return trim(array_pop($parts), '"');
+                    return $this->charset = trim(array_pop($parts), '"');
                 }
             }
         }

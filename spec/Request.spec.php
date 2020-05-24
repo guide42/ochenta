@@ -187,6 +187,15 @@ describe('Request', function() {
             ]);
             expect($req->getMediaType())->toBe('text/plain');
         });
+
+        it('returns same value on multiple calls', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => ['text/plain;charset=ISO-8859-4']
+            ]);
+            expect($req->getMediaType())->toBe('text/plain');
+            expect($req->getMediaType())->toBe('text/plain');
+        });
     });
 
     describe('->getCharset', function() {
@@ -207,6 +216,15 @@ describe('Request', function() {
                 'Host' => 'example.com',
                 'Content-Type' => ['text/plain;CHARSET="UTF-8"']
             ]);
+            expect($req->getCharset())->toBe('utf-8');
+        });
+
+        it('returns same value on multiple calls', function() {
+            $req = new Request('GET', '/', [
+                'Host' => 'example.com',
+                'Content-Type' => ['text/plain;CHARSET="UTF-8"']
+            ]);
+            expect($req->getCharset())->toBe('utf-8');
             expect($req->getCharset())->toBe('utf-8');
         });
     });
