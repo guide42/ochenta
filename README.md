@@ -38,6 +38,7 @@ Then the low-level `Request` abstraction provides many more methods:
 - `$req->getMethod()` and `$req->getTarget()` from the request line.
 - `$req->getHeaders()` to get all headers and `$req->getHost()` for the normalized domain.
 - `$req->getMediaType()` and `$req->getCharset()` from the `Content-Type` header.
+- `$req->getAccept*()` returns the parsed Accept* headers.
 
 There is `Response`, but is no worth using it. What else? Responders.
 
