@@ -3,7 +3,7 @@
 use ochenta\{Accept, Request};
 
 describe('Accept', function() {
-    context('->__construct', function() {
+    describe('->__construct', function() {
         it('accepts Request object', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
@@ -17,7 +17,7 @@ describe('Accept', function() {
         });
     });
 
-    context('->getRequest', function() {
+    describe('->getRequest', function() {
         it('returns the Request object given to the constructor', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
@@ -26,7 +26,7 @@ describe('Accept', function() {
         });
     });
 
-    context('->mediatype', function() {
+    describe('->mediatype', function() {
         it('returns NULL when available list is empty', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
@@ -130,7 +130,7 @@ describe('Accept', function() {
         });
     });
 
-    context('->charset', function() {
+    describe('->charset', function() {
         it('returns NULL when available list is empty', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
@@ -176,7 +176,7 @@ describe('Accept', function() {
         });
     });
 
-    context('->encoding', function() {
+    describe('->encoding', function() {
         it('returns NULL when available list is empty', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
@@ -222,7 +222,7 @@ describe('Accept', function() {
         });
     });
 
-    context('->language', function() {
+    describe('->language', function() {
         it('returns NULL when available list is empty', function() {
             $req = new Request('GET', '/', [
                 'host' => 'example.com',
