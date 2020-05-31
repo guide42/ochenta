@@ -191,7 +191,7 @@ class Request {
 
     /** Returns parsed Accept header as an associative array with the content
      *  type related with its key-value attributes. */
-    function getAccept(): ?array {
+    function getAcceptMediaType(): ?array {
         if (isset($this->headers['ACCEPT'])) {
             if ($this->acceptsMediaType) {
                 return $this->acceptsMediaType;
