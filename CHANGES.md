@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - New `Request::isMethod` and `Request::isJSON` and `Request::isAJAX`.
 - New `Request::getAcceptMediaType`, `::getAcceptCharset`, `::getAcceptEncoding` and `::getAcceptLanguage`.
 - [BC-BREAK] Now `ServerRequest::getFiles` ignores empty files.
+- Now status code 308 (Permanent Redirect) can be used for redirect.
 
 ## [0.5.0] - 2019-02-21
 
