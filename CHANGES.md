@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - New `Request::getAcceptMediaType`, `::getAcceptCharset`, `::getAcceptEncoding` and `::getAcceptLanguage`.
 - [BC-BREAK] Now `ServerRequest::getFiles` ignores empty files.
 - Now status code 308 (Permanent Redirect) can be used for redirect.
+- Adds `Response::isEmpty`.
 
 ## [0.5.0] - 2019-02-21
 

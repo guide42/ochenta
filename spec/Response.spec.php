@@ -82,4 +82,10 @@ describe('Response', function() {
             expect((new Response(302))->isRedirect())->toBe(TRUE);
         });
     });
+
+    describe('->isEmpty', function() {
+        it('returns true when status code is 204', function() {
+            expect((new Response(204))->isEmpty())->toBe(TRUE);
+        });
+    });
 });

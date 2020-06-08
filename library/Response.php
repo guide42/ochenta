@@ -75,6 +75,11 @@ class Response {
         return in_array($this->statusCode, [301, 302, 307, 308]);
     }
 
+    /** Returns true if response doesn't need a content, false otherwise. */
+    function isEmpty(): bool {
+        return in_array($this->statusCode, [204, 304]);
+    }
+
     /** Retrieves headers. @see Ochenta\Request::getHeaders() */
     function getHeaders(): array {
         return $this->headers;
