@@ -27,7 +27,7 @@ $req = new ServerRequest;
 It could also be created with it's defaults values:
 
 ```php
-$req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, $_COOKIE, NULL);
+$req = new ServerRequest($_SERVER, $_GET, $_POST, $_FILES, $_COOKIE, fopen('php://input', 'rb'));
 ```
 
 That's a incoming request.  
@@ -40,18 +40,28 @@ Then the low-level `Request` abstraction provides many more methods:
 - `$req->getMediaType()` and `$req->getCharset()` from the `Content-Type` header.
 - `$req->getAccept*()` returns the parsed Accept* headers.
 
-There is `Response`, but is no worth using it. What else? Responders.
+There is also `Response` object, but the response will be given by a responder.
 
 Responders
 ----------
 
-When working in SAPI environment, you could define a response (but not a `ochenta\Response` object) with a responder:
+When working in SAPI environment, you could define a response with a responder:
 
 ```php
 function hola(ServerRequest $req, callable $open) {
     $name = $req->getQuery()['name'] ?? 'World';
     $open(200, ['Content-Language' => ['en', 'es']]);
     yield "Hola $name";
+}
+```
+
+Or using `ochenta\Response` wrapper:
+
+```php
+function hola(ServerRequest $req, callable $open) {
+    $name = $req->getQuery()['name'] ?? 'World';
+    $res = new Response(200, ['Content-Language' => ['en', 'es']], "Hola $name");
+    return responder_of($response)($req, $open);
 }
 ```
 

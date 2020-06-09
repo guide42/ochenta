@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0]
+
 ## [0.6.0] - 2020-06-09
 
 - Adds `cookie` middleware.
