@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [0.6.0]
 
 - Adds `cookie` middleware.
-- Adds `Request::negotiate*` functions to do content negotiation.
+- Adds `accept` functions to do content negotiation.
 - New `Request::isMethod` and `Request::isJSON` and `Request::isAJAX`.
 - New `Request::getAcceptMediaType`, `::getAcceptCharset`, `::getAcceptEncoding` and `::getAcceptLanguage`.
 - [BC-BREAK] Now `ServerRequest::getFiles` ignores empty files.

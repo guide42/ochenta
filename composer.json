@@ -7,8 +7,11 @@
         {"name": "Juan M", "email": "jm@guide42.com"}
     ],
     "autoload": {
-        "files": ["library/functions.php"],
-        "psr-4": {"ochenta\\": "library/"}
+        "psr-4": {"ochenta\\": "library/"},
+        "files": [
+            "library/functions.php",
+            "library/accept.php"
+        ]
     },
     "require-dev": {
         "kahlan/kahlan": "*"

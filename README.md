@@ -148,6 +148,13 @@ append(string $content, string $tag)                         // ... before every
 redirect(string $uri)                                        // redirect to the given url
 redirect(string $uri, int $statusCode)                       // ... with given status code
 
+// CONTENT NEGOTATION
+
+accept\mediatypes(Request $req, array $available)            // negotiate media types
+accept\charsets(Request $req, array $available)              // ... charsets
+accept\encodings(Request $req, array $available)             // ... encodings
+accept\languages(Request $req, array $available)             // ... languages
+
 // HELPERS
 
 stream_of(scalar $resource)                                  // creates tmp file with $resouce content
