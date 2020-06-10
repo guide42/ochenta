@@ -6,8 +6,8 @@ use ochenta\Request;
 
 /** Negotitate from a list of content types and returns all accepted. */
 function mediatypes(Request $req, array $available): array {
-    return negotiate($available, $req->getAcceptMediaType() ?: [],
-        function(string $available, string $acceptable): bool {
+    return negotiate($req->getAcceptMediaType() ?: [], $available,
+        function(string $acceptable, string $available): bool {
             if (strpos($available, '/') === FALSE ||
                 strpos($acceptable, '/') === FALSE) {
                     throw new \UnexpectedValueException('Invalid media type: missing separator');
@@ -43,24 +43,24 @@ function mediatypes(Request $req, array $available): array {
 
 /** Negotitate from a list of charsets and returns all accepted. */
 function charsets(Request $req, array $available): array {
-    return negotiate($available, $req->getAcceptCharset() ?: [],
-        function(string $available, string $acceptable): bool {
+    return negotiate($req->getAcceptCharset() ?: [], $available,
+        function(string $acceptable, string $available): bool {
             return $acceptable == '*' || !strcasecmp($acceptable, $available);
         });
 }
 
 /** Negotitate from a list of encodings and returns all accepted. */
 function encodings(Request $req, array $available): array {
-    return negotiate($available, $req->getAcceptEncoding() ?: [],
-        function(string $available, string $acceptable): bool {
+    return negotiate($req->getAcceptEncoding() ?: [], $available,
+        function(string $acceptable, string $available): bool {
             return $acceptable == '*' || !strcasecmp($acceptable, $available);
         });
 }
 
 /** Negotitate from a list of languages and returns all accepted. */
 function languages(Request $req, array $available): array {
-    return negotiate($available, $req->getAcceptLanguage() ?: [],
-        function(string $available, string $acceptable): bool {
+    return negotiate($req->getAcceptLanguage() ?: [], $available,
+        function(string $acceptable, string $available): bool {
             $availParts = explode('-', $available);
             $acceptParts = explode('-', $acceptable);
 
@@ -79,14 +79,14 @@ function languages(Request $req, array $available): array {
  *  all that call the match function with one available string and one
  *  acceptable string return true, will return empty list otherwise.
  */
-function negotiate(array $available, array $acceptable, callable $match): array {
+function negotiate(array $acceptable, array $available, callable $match): array {
     if (!$available || !$acceptable) {
         return $available;
     }
     $accepted = [];
     foreach ($acceptable as $accept => $attrs) {
         foreach ($available as $avail) {
-            if ($match($avail, $accept)) {
+            if ($match($accept, $avail)) {
                 $accepted[] = $avail;
             }
         }
