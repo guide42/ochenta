@@ -37,9 +37,12 @@ class Response {
         ];
 
         if (($statusCode >= 100 && $statusCode < 200) || in_array($statusCode, [204, 304])) {
-            unset($headers['CONTENT-TYPE']);
-            unset($headers['CONTENT-LENGTH']);
             $body = NULL;
+            unset(
+                $headers['CONTENT-TYPE'], $headers['CONTENT-LENGTH'],
+                $headers['CONTENT-ENCODING'], $headers['CONTENT-LANGUAGE'],
+                $headers['CONTENT-RANGE'], $headers['CONTENT-MD5']
+            );
         } elseif (!isset($headers['CONTENT-TYPE'])) {
             $headers['CONTENT-TYPE'] = ['text/html; charset=utf-8'];
         } elseif (
@@ -60,15 +63,11 @@ class Response {
 
         if ($req->getMethod() === 'HEAD') {
             $res->body = NULL;
-
-            foreach ([
-                'TYPE', 'LENGTH', 'RANGE',
-                'ENCODING', 'LANGUAGE', 'MD5',
-            ] as $prop) {
-                if (isset($res->headers['CONTENT-' . $prop])) {
-                    unset($res->headers['CONTENT-' . $prop]);
-                }
-            }
+            unset(
+                $res->headers['CONTENT-TYPE'], $res->headers['CONTENT-LENGTH'],
+                $res->headers['CONTENT-ENCODING'], $res->headers['CONTENT-LANGUAGE'],
+                $res->headers['CONTENT-RANGE'], $res->headers['CONTENT-MD5']
+            );
         }
 
         return $res;
