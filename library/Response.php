@@ -60,6 +60,15 @@ class Response {
 
         if ($req->getMethod() === 'HEAD') {
             $res->body = NULL;
+
+            foreach ([
+                'TYPE', 'LENGTH', 'RANGE',
+                'ENCODING', 'LANGUAGE', 'MD5',
+            ] as $prop) {
+                if (isset($res->headers['CONTENT-' . $prop])) {
+                    unset($res->headers['CONTENT-' . $prop]);
+                }
+            }
         }
 
         return $res;

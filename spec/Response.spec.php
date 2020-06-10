@@ -75,6 +75,13 @@ describe('Response', function() {
 
             expect($res->prepare($req)->getBody())->toBeNull();
         });
+
+        it('removes content headers if request is HEAD', function() {
+            $res = new Response(200, ['Content-Type' => 'text/plain'], 'Hello World');
+            $req = new Request('HEAD', '/', ['Host' => 'example.com']);
+
+            expect($res->prepare($req)->getHeaders())->not->toContainKey('CONTENT-TYPE');
+        });
     });
 
     describe('->isRedirect', function() {
